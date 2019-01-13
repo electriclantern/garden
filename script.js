@@ -5,7 +5,7 @@ function menu(menu) {
   } else {
     document.getElementById('garden').style.display = "none";
   }
-  document.getElementById('command').autofocus;
+  document.getElementById('command').focus();
 }
 
 menu('garden');

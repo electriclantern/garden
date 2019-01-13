@@ -1,3 +1,5 @@
+html { font-family: monospace; }
+
 #container {
   width: 500px;
   height: 500px;
@@ -23,7 +25,7 @@
 
 #prompt {
   float: right;
-  margin-top: 430px;
+  margin-top: 435px;
   padding-right: 10px;
 }
 #command {
