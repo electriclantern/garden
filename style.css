@@ -1,4 +1,4 @@
-html, body { font-family: monospace; }
+:root { font-family: monospace; }
 
 #container {
   width: 500px;
