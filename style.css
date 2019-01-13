@@ -27,4 +27,5 @@
 }
 .textbutton:hover {
   background: yellow;
+  cursor: pointer;
 }
