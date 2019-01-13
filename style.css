@@ -1,0 +1,20 @@
+#container {
+  width: 500px;
+  height: 500px;
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+}
+#navigation {
+  width: 100px;
+  height: 500px;
+  position: absolute;
+}
+#gamecontainer {}
+#garden {}
+#potions {}
+#dialogue {}
+button {}
