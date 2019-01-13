@@ -8,3 +8,16 @@ function menu(menu) {
 }
 
 menu('garden');
+
+function checkKey(e) {
+  if(e && e.keyCode==13) {
+    var s = q.toLowerCase().replace(/[^a-z0-9]/g, '');
+    q = "";
+    //function
+  }
+}
+
+//function respond() {
+//  if (s=="/seeds") {
+//  }
+//}
