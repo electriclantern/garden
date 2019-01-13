@@ -6,3 +6,5 @@ function menu(menu) {
     document.getElementById('garden').style.display = "none";
   }
 }
+
+menu('garden');

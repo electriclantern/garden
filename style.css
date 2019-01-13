@@ -13,8 +13,18 @@
   height: 500px;
   position: absolute;
 }
-#gamecontainer {}
+#gamecontainer {
+  width: 400px;
+  height: 500px;
+  float: right;
+}
 #garden {}
 #potions {}
 #dialogue {}
-button {}
+
+.textbutton {
+  margin-bottom: 10px;
+}
+.textbutton:hover {
+  background: yellow;
+}
