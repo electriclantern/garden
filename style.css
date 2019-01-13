@@ -18,15 +18,8 @@
   height: 500px;
   float: right;
 }
-#garden {
-  width: 400px;
-  height: 485px;
-}
-#potions {
-  width: 400px;
-  height: 485px;
-}
-#dialogue {}
+#garden { width: 400px; height: 485px; }
+#brewshop { width: 400px; height: 485px; }
 
 #prompt {
   float: right;
@@ -38,15 +31,12 @@
   height: 15px;
   padding: 0px;
   border: none;
+  font-family: inherit;
+  font-size: inherit;
 }
 
-.textbutton {
-  margin-bottom: 10px;
-}
-.textbutton:hover {
-  background: yellow;
-  cursor: pointer;
-}
+.textbutton { margin-bottom: 10px; }
+.textbutton:hover { background: yellow; cursor: pointer; }
 
 .nobluemobileselect {
     -webkit-touch-callout: none;
