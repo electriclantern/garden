@@ -31,25 +31,52 @@ function createResponse(string) {
   output.style.width = "400px";
   output.style.height = "15px";
   output.style.paddingTop = "10px";
-  output.className = "output"
   output.textContent = string;
-  if (window.screen == 'garden') { document.getElementById('garden').appendChild(output); }
+  if (window.screen == 'garden') {
+    document.getElementById('garden').appendChild(output);
+    output.className = "o_garden";
+  }
   else if (window.screen == 'brewshop') {
     document.getElementById('potions').appendChild(output);
+    output.className = "o_potions";
   }
 }
 function respond(s) {
   if (window.screen == 'garden') {
+    //automatically delete top output if overflow
+    //garden: 18
+    outputs = document.getElementsByClassName("o_garden");
+    if (outputs.length > 18) {
+      outputs[0].parentNode.removeChild(outputs[0]);
+    }
+
     if (s == "help") {
       createResponse("help, plots");
+    } else if (s == "clear") {
+      outputs = document.getElementsByClassName("o_garden");
+      while (outputs.length > 0) {
+        outputs[0].parentNode.removeChild(outputs[0]);
+      }
     } else {
-      createResponse("what you say")
+      createResponse("what you say");
     }
   } else if (window.screen == 'brewshop') {
+    //automatically delete top output if overflow
+    //potions: 10
+    outputs = document.getElementsByClassName("o_potions");
+    if (outputs.length > 18) {
+      outputs[0].parentNode.removeChild(outputs[0]);
+    }
+
     if (s == "help") {
-      createResponse("help, inv, etc")
+      createResponse("help, inv, etc");
+    } else if (s == "clear") {
+      outputs = document.getElementsByClassName("o_potions");
+      while (outputs.length > 0) {
+        outputs[0].parentNode.removeChild(outputs[0]);
+      }
     } else {
-      createResponse("what you say")
+      createResponse("what you say");
     }
   }
 }
