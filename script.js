@@ -64,7 +64,7 @@ function respond(s) {
     //automatically delete top output if overflow
     //potions: 10
     outputs = document.getElementsByClassName("o_potions");
-    if (outputs.length > 18) {
+    if (outputs.length > 10) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
 
