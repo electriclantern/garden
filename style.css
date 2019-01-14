@@ -3,7 +3,7 @@ html {
   --border-color: lightgray;
   --text-color: black;
   --background-color: white;
-  --hightlight-color: yellow;
+  --highlight-color: yellow;
 }
 body {
   background-color: var(--background-color);
@@ -58,6 +58,7 @@ body {
   padding-top: 10px;
   font-family: inherit;
   font-size: inherit;
+  background-color: inherit;
 }
 input:focus { outline: none; }
 input::selection, input::moz-selection { background-color: var(--highlight-color); }

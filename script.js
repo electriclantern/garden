@@ -7,11 +7,13 @@ function toggleTheme() {
     html.style.setProperty("--background-color", "white");
     html.style.setProperty("--border-color", "lightgray");
     document.getElementById('darktheme').textContent = "dark";
+    darktheme.cookie = false;
   } else { // turn dark
     html.style.setProperty("--text-color", "white");
     html.style.setProperty("--background-color", "black");
-    html.style.setProperty("--border-color", "gray");
+    html.style.setProperty("--border-color", "darkgray");
     document.getElementById('darktheme').textContent = "light";
+    darktheme.cookie = true;
   }
 }
 
