@@ -13,9 +13,9 @@ menu('garden');
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
   if (key == 13) { //hit enter key
-    window.s = document.getElementById('command').value;
+    s = document.getElementById('command').value;
     document.getElementById('command').value = "";
-    respond();
+    respond(s);
   }
 }
 
@@ -26,7 +26,7 @@ function createResponse(string) {
   output.textContent = string;
   document.getElementById('garden').appendChild(output);
 }
-function respond() {
+function respond(s) {
   if (s == "help") {
     createResponse("you typed help");
   } else if (s != "") {
