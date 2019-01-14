@@ -15,6 +15,14 @@ function menu(menu) {
 //setup
 menu('garden');
 var history = [];
+function history(s) {
+  if (history.length <= 5) {
+    history.push(s);
+  } else {
+    history.shift();
+    history.push(s);
+  }
+}
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
@@ -25,15 +33,6 @@ function checkKey(e, textarea) {
     s = "";
   } else if (key == 38) { // up key. get previous commands
     s = history[history.length-1];
-  }
-}
-
-function history(s) {
-  if (history.length <= 5) {
-    history.push(s);
-  } else {
-    history.shift();
-    history.push(s);
   }
 }
 
