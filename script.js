@@ -13,7 +13,7 @@ menu('garden');
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
   if (key == 13) { //hit enter key
-    s = document.getElementById('command').value;
+    var s = document.getElementById('command').value;
     document.getElementById('command').value = "";
     respond();
   }
@@ -27,7 +27,7 @@ function createResponse(string) {
   document.getElementById('garden').appendChild(output);
 }
 function respond() {
-  if (c=="help") {
+  if (s=="help") {
     createResponse("you typed help");
   } else {
     createResponse("what you say")
