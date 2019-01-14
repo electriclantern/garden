@@ -20,9 +20,10 @@ function checkKey(e, textarea) {
 }
 
 function createResponse(string) {
-  output = document.createElement('output');
+  output = document.createElement('div');
   output.style.width = "400px";
   output.style.height = "15px";
+  output.style.paddingTop = "10px";
   output.textContent = string;
   document.getElementById('garden').appendChild(output);
 }
