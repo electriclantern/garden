@@ -12,13 +12,19 @@ menu('garden');
 
 function checkKey(e) {
   if(e && e.keyCode==13) {
-    var s = q.toLowerCase().replace(/[^a-z0-9]/g, '');
-    q = "";
-    //function
+    c = document.getElementById('command').value
+    var s = c.toLowerCase().replace(/[^a-z0-9]/g, '');
+    c = "";
+    respond()
   }
 }
 
-//function respond() {
-//  if (s=="/seeds") {
-//  }
-//}
+function respond() {
+  if (s=="help") {
+    output = document.createElement('output');
+    output.style.width = "400px";
+    output.style.height = "15px";
+    output.textContent = "you typed help";
+    document.getElementById('garden').appendChild(output);
+  }
+}
