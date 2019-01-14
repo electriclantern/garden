@@ -2,24 +2,38 @@ function menu(menu) {
   document.getElementById(menu).style.display = "block";
   if (menu=='garden') {
     document.getElementById('brewshop').style.display = "none";
-    document.getElementById('gardenbutton').style.background = "lightyellow";
+    document.getElementById('gardenbutton').style.background = "yellow";
     document.getElementById('brewshopbutton').style.background = "none";
   } else {
     document.getElementById('garden').style.display = "none";
     document.getElementById('gardenbutton').style.background = "none";
-    document.getElementById('brewshopbutton').style.background = "lightyellow";
+    document.getElementById('brewshopbutton').style.background = "yellow";
   }
   window.screen = menu;
 }
 
+//setup
 menu('garden');
+var history = [];
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
+  s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
-    s = document.getElementById('command').value;
-    document.getElementById('command').value = "";
     respond(s);
+    history(s);
+    s = "";
+  } else if (key == 38) { // up key. get previous commands
+    s = history[history.length-1];
+  }
+}
+
+function history(s) {
+  if (history.length <= 5) {
+    history.push(s);
+  } else {
+    history.shift();
+    history.push(s);
   }
 }
 
@@ -44,6 +58,8 @@ function respond(s) {
   } else if (window.screen == 'brewshop') {
     if (s == "help") {
       createResponse("help, inv, etc")
+    } else if (s != "") {
+      createResponse("what you say")
     }
   }
 }
