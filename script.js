@@ -28,9 +28,11 @@ function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
   s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
-    respond(s);
-    aHistory(s);
-    s = "";
+    if (s != "") {
+      respond(s);
+      aHistory(s);
+      s = "";
+    }
   } else if (key == 38) { // up key. get previous commands
     s = history[history.length-1];
   }
@@ -51,13 +53,13 @@ function respond(s) {
   if (window.screen == 'garden') {
     if (s == "help") {
       createResponse("help, plots");
-    } else if (s != "") {
+    } else {
       createResponse("what you say")
     }
   } else if (window.screen == 'brewshop') {
     if (s == "help") {
       createResponse("help, inv, etc")
-    } else if (s != "") {
+    } else {
       createResponse("what you say")
     }
   }

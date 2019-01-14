@@ -1,5 +1,4 @@
 :root { font-family: monospace; }
-::selection, ::-moz-selection { background: yellow; }
 
 #container {
   width: 500px;
@@ -23,7 +22,7 @@
   float: right;
 }
 #garden { width: 400px; height: 475px; }
-#brewshop { width: 400px; height: 485px; }
+#brewshop { width: 400px; height: 475px; }
 #potions {
   width: 400px;
   height: 267px;
@@ -51,9 +50,10 @@
   font-size: inherit;
 }
 input:focus { outline: none; }
+input::selection, input::moz-selection { background-color: yellow; }
 
 .textbutton { margin-bottom: 10px; }
-.textbutton:hover { background: yellow; cursor: pointer; }
+.textbutton:hover { cursor: pointer; }
 
 .nobluemobileselect {
     -webkit-touch-callout: none;
