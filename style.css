@@ -8,9 +8,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  border: 1px solid lightgray;
-  padding: 10px;
 }
 #navigation {
   width: 100px;
