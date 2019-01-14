@@ -2,12 +2,14 @@ darktheme.cookie = false;
 
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
-  if darktheme.cookie {
+  if (darktheme.cookie) {
     html.style.setProperty("--text-color", "black");
     html.style.setProperty("--background-color", "white");
+    document.getElementById('darktheme').textContent = "dark";
   } else {
     html.style.setProperty("--text-color", "white");
     html.style.setProperty("--background-color", "black");
+    document.getElementById('darktheme').textContent = "light";
   }
 }
 
