@@ -13,18 +13,23 @@ menu('garden');
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
   if (key == 13) { //hit enter key
-    c = document.getElementById('command').value;
-    c = "";
-    respond()
+    s = document.getElementById('command').value;
+    document.getElementById('command').value = "";
+    respond();
   }
 }
 
+function createResponse(string) {
+  output = document.createElement('output');
+  output.style.width = "400px";
+  output.style.height = "15px";
+  output.textContent = string;
+  document.getElementById('garden').appendChild(output);
+}
 function respond() {
   if (c=="help") {
-    output = document.createElement('output');
-    output.style.width = "400px";
-    output.style.height = "15px";
-    output.textContent = "you typed help";
-    document.getElementById('garden').appendChild(output);
+    createResponse("you typed help");
+  } else {
+    createResponse("what you say")
   }
 }
