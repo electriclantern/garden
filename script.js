@@ -15,7 +15,7 @@ function menu(menu) {
 //setup
 menu('garden');
 var history = [];
-function history(s) {
+function aHistory(s) {
   if (history.length <= 5) {
     history.push(s);
   } else {
@@ -29,7 +29,7 @@ function checkKey(e, textarea) {
   s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
     respond(s);
-    history(s);
+    aHistory(s);
     s = "";
   } else if (key == 38) { // up key. get previous commands
     s = history[history.length-1];
