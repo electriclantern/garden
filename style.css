@@ -8,7 +8,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: none;
+
+  border: 1px solid lightgray;
+  padding: 10px;
 }
 #navigation {
   width: 100px;
@@ -20,8 +22,18 @@
   height: 500px;
   float: right;
 }
-#garden { width: 400px; height: 485px; }
+#garden { width: 400px; height: 475px; }
 #brewshop { width: 400px; height: 485px; }
+#potions {
+  width: 400px;
+  height: 267px;
+}
+#dialogue {
+  width: 400px;
+  height: 196px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid lightgray;
+}
 
 #prompt {
   float: right;
