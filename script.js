@@ -14,15 +14,6 @@ function menu(menu) {
 
 //setup
 menu('garden');
-var history = [];
-function aHistory(s) {
-  if (history.length <= 5) {
-    history.push(s);
-  } else {
-    history.shift();
-    history.push(s);
-  }
-}
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
@@ -30,11 +21,8 @@ function checkKey(e, textarea) {
   if (key == 13) { //hit enter key
     if (s != "") {
       respond(s);
-      aHistory(s);
       document.getElementById('command').value = "";
     }
-  } else if (key == 38) { // up key. get previous commands
-    s = history[history.length-1];
   }
 }
 
@@ -43,6 +31,7 @@ function createResponse(string) {
   output.style.width = "400px";
   output.style.height = "15px";
   output.style.paddingTop = "10px";
+  output.className = "output"
   output.textContent = string;
   if (window.screen == 'garden') { document.getElementById('garden').appendChild(output); }
   else if (window.screen == 'brewshop') {
