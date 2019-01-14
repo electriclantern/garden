@@ -31,7 +31,7 @@ function checkKey(e, textarea) {
     if (s != "") {
       respond(s);
       //aHistory(s);
-      s = "";
+      document.getElementById('command').value = "";
     }
   } //else if (key == 38) { // up key. get previous commands
     //s = history[history.length-1];
