@@ -2,10 +2,15 @@ function menu(menu) {
   document.getElementById(menu).style.display = "block";
   if (menu=='garden') {
     document.getElementById('brewshop').style.display = "none";
+    document.getElementById('gardenbutton').style.background = "lightyellow";
+    document.getElementById('brewshopbutton').style.background = "none";
   } else {
     document.getElementById('garden').style.display = "none";
+    document.getElementById('gardenbutton').style.background = "none";
+    document.getElementById('brewshopbutton').style.background = "lightyellow";
   }
   document.getElementById('command').focus();
+  window.screen = menu;
 }
 
 menu('garden');
@@ -25,12 +30,21 @@ function createResponse(string) {
   output.style.height = "15px";
   output.style.paddingTop = "10px";
   output.textContent = string;
-  document.getElementById('garden').appendChild(output);
+  if (window.screen == 'garden') { document.getElementById('garden').appendChild(output); }
+  else if (window.screen == 'brewshop') {
+    document.getElementById('potions').appendChild(output);
+  }
 }
 function respond(s) {
-  if (s == "help") {
-    createResponse("you typed help");
-  } else if (s != "") {
-    createResponse("what you say")
+  if (window.screen == 'garden') {
+    if (s == "help") {
+      createResponse("help, plots");
+    } else if (s != "") {
+      createResponse("what you say")
+    }
+  } else if (window.screen == 'brewshop') {
+    if (s == "help") {
+      createResponse("help, inv, etc")
+    }
   }
 }
