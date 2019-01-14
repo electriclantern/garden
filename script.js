@@ -1,13 +1,26 @@
+darktheme.cookie = false;
+
+function toggleTheme() {
+  html = document.getElementsByTagName('html')[0];
+  if darktheme.cookie {
+    html.style.setProperty("--text-color", "black");
+    html.style.setProperty("--background-color", "white");
+  } else {
+    html.style.setProperty("--text-color", "white");
+    html.style.setProperty("--background-color", "black");
+  }
+}
+
 function menu(menu) {
   document.getElementById(menu).style.display = "block";
   if (menu=='garden') {
     document.getElementById('brewshop').style.display = "none";
-    document.getElementById('gardenbutton').style.background = "yellow";
+    document.getElementById('gardenbutton').style.background = "var(--highlight-color)";
     document.getElementById('brewshopbutton').style.background = "none";
   } else {
     document.getElementById('garden').style.display = "none";
     document.getElementById('gardenbutton').style.background = "none";
-    document.getElementById('brewshopbutton').style.background = "yellow";
+    document.getElementById('brewshopbutton').style.background = "var(--highlight-color)";
   }
   window.screen = menu;
 }
@@ -30,7 +43,7 @@ function createResponse(string) {
   output = document.createElement('div');
   output.style.width = "400px";
   output.style.height = "15px";
-  output.style.paddingTop = "10px";
+  output.style.paddingBottom = "10px";
   output.textContent = string;
   if (window.screen == 'garden') {
     document.getElementById('garden').appendChild(output);
