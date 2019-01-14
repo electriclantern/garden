@@ -26,9 +26,9 @@ menu('garden');
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
-  s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
     if (s != "") {
+      s = document.getElementById('command').value;
       respond(s);
       //aHistory(s);
       s = "";
