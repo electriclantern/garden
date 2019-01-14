@@ -6,12 +6,14 @@ function toggleTheme() {
     html.style.setProperty("--text-color", "black");
     html.style.setProperty("--background-color", "white");
     html.style.setProperty("--border-color", "lightgray");
+    html.style.setProperty("--highlight-color", "yellow");
     document.getElementById('darktheme').textContent = "dark";
     darktheme.cookie = false;
   } else { // turn dark
     html.style.setProperty("--text-color", "white");
     html.style.setProperty("--background-color", "black");
     html.style.setProperty("--border-color", "darkgray");
+    html.style.setProperty("--highlight-color", "#673ab7");
     document.getElementById('darktheme').textContent = "light";
     darktheme.cookie = true;
   }

@@ -59,6 +59,7 @@ body {
   font-family: inherit;
   font-size: inherit;
   background-color: inherit;
+  color: inherit;
 }
 input:focus { outline: none; }
 input::selection, input::moz-selection { background-color: var(--highlight-color); }
