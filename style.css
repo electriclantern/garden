@@ -19,7 +19,7 @@
   height: 500px;
   float: right;
 }
-#garden { width: 400px; height: 475px; }
+#garden { width: 400px; height: 475px; margin-bottom: 10px;}
 #brewshop { width: 400px; height: 485px; }
 #potions {
   width: 400px;
@@ -27,8 +27,9 @@
 }
 #dialogue {
   width: 400px;
-  height: 196px;
+  height: 186px;
   margin-bottom: 10px;
+  padding-top: 10px;
   border-bottom: 1px solid lightgray;
 }
 
