@@ -1,14 +1,16 @@
 darktheme.cookie = false;
 
 function toggleTheme() {
-  var html = document.getElementsByTagName('html')[0];
-  if (darktheme.cookie==false) {
+  html = document.getElementsByTagName('html')[0];
+  if (darktheme.cookie) { //turn light
     html.style.setProperty("--text-color", "black");
     html.style.setProperty("--background-color", "white");
+    html.style.setProperty("--border-color", "lightgray");
     document.getElementById('darktheme').textContent = "dark";
-  } else {
+  } else { // turn dark
     html.style.setProperty("--text-color", "white");
     html.style.setProperty("--background-color", "black");
+    html.style.setProperty("--border-color", "gray");
     document.getElementById('darktheme').textContent = "light";
   }
 }
