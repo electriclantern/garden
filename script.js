@@ -9,7 +9,6 @@ function menu(menu) {
     document.getElementById('gardenbutton').style.background = "none";
     document.getElementById('brewshopbutton').style.background = "lightyellow";
   }
-  document.getElementById('command').focus();
   window.screen = menu;
 }
 
