@@ -29,7 +29,6 @@ function checkKey(e, textarea) {
   s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
     if (s != "") {
-      s = "";
       respond(s);
       //aHistory(s);
       s = "";
