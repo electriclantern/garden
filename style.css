@@ -1,9 +1,12 @@
 :root { font-family: monospace; }
+::selection, ::-moz-selection { background: yellow; }
 
 #container {
   width: 500px;
   height: 500px;
   position: fixed;
+  padding: 10px;
+  border: 1px solid lightgray;
 
   top: 50%;
   left: 50%;
@@ -19,7 +22,7 @@
   height: 500px;
   float: right;
 }
-#garden { width: 400px; height: 475px; margin-bottom: 10px;}
+#garden { width: 400px; height: 475px; }
 #brewshop { width: 400px; height: 485px; }
 #potions {
   width: 400px;
@@ -42,6 +45,8 @@
   height: 15px;
   padding: 0px;
   border: none;
+  border-top: 1px solid lightgray;
+  padding-top: 10px;
   font-family: inherit;
   font-size: inherit;
 }

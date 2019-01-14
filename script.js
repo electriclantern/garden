@@ -14,7 +14,7 @@ function menu(menu) {
 
 //setup
 menu('garden');
-window.history = [];
+var history = [];
 function aHistory(s) {
   if (history.length <= 5) {
     history.push(s);
