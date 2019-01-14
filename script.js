@@ -10,17 +10,17 @@ function menu(menu) {
 
 menu('garden');
 
-function checkKey(e) {
-  if(e && e.keyCode==13) {
-    c = document.getElementById('command').value
-    var s = c.toLowerCase().replace(/[^a-z0-9]/g, '');
+function checkKey(e, textarea) {
+  key = (e.keyCode ? e.keyCode : e.which);
+  if (key == 13) { //hit enter key
+    c = document.getElementById('command').value;
     c = "";
     respond()
   }
 }
 
 function respond() {
-  if (s=="help") {
+  if (c=="help") {
     output = document.createElement('output');
     output.style.width = "400px";
     output.style.height = "15px";
