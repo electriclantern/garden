@@ -1,8 +1,8 @@
 darktheme.cookie = false;
 
 function toggleTheme() {
-  html = document.getElementsByTagName('html')[0];
-  if (darktheme.cookie) {
+  var html = document.getElementsByTagName('html')[0];
+  if (darktheme.cookie==false) {
     html.style.setProperty("--text-color", "black");
     html.style.setProperty("--background-color", "white");
     document.getElementById('darktheme').textContent = "dark";
