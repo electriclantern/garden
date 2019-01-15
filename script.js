@@ -84,6 +84,10 @@ function checkKey(e, textarea) {
   } else if (key == 40) { // down
     histpos--;
     returnHistory();
+  } else if (key == 27) { // escape
+    histpos = -1;
+    pcom = "";
+    s.value = "";
   }
 }
 

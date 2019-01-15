@@ -19,9 +19,11 @@ function respond(s) {
       } else if (s == "plant") {
         pcom = "plant";
         createInventoryResponse(inventory);
+      } else if (s == "inventory") {
+        createInventoryResponse(inventory);
+      } else {
+        createResponse("what you say");
       }
-    } else {
-      createResponse("what you say");
     }
 
   } else if (window.screen == 'brewshop') {
