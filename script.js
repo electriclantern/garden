@@ -50,7 +50,7 @@ function returnHistory() {
     histpos = -1;
     s = "";
   } else {
-    s = commandHistory[histpos];
+    s = commandHistory[commandHistory.length-1 - histpos];
   }
 }
 
