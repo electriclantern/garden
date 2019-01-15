@@ -47,7 +47,7 @@ function rememberCommand(s) {
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
-  s = document.getElementById('command').value;
+  var s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
     if (s != "") {
       rememberCommand();
@@ -55,7 +55,7 @@ function checkKey(e, textarea) {
       respond(s);
       document.getElementById('command').value = "";
     }
-  } else if (key == 38 /* UP */) {
+  } else if (key == 38) { // up
     document.getElementById("command").value = commandHistory[commandHistory.length - 1];
     console.log("last command:", s);
   }
