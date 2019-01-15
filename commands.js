@@ -28,8 +28,10 @@ function respond(s) {
         createResponse("your inventory:");
         createInventoryResponse(inventory);
       } else if (s && isNaN(s.split(" ")[0])==false && isNaN(s.split(" ")[1])==true && s.split(" ").length==2) {
+        pcom = "";
         plant(parseInt(s.split(" ")[0], 10), s.split(" ")[1]);
       } else if (isNaN(s)==true && s.split(" ").length==1) {
+        pcom = "";
         plant(1, s);
       } else {
         createError();

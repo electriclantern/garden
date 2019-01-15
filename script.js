@@ -129,6 +129,6 @@ function plant(num, plant) {
     inventory[plant] = inventory[plant] - num;
     createResponse("("+num+") "+plant+" planted.");
   } else {
-    createResponse("and just where do you think you'll get that much?")
+    createResponse("what are you planting?")
   }
 }
