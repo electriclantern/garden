@@ -35,7 +35,7 @@ function menu(menu) {
 
 menu('garden');
 
-var commandHistory = ["1", "2", "3"];
+var commandHistory = [];
 function rememberCommand(s) {
   if (commandHistory.length <= 5) {
     commandHistory.push(s);
@@ -43,15 +43,19 @@ function rememberCommand(s) {
     commandHistory.shift();
     commandHistory.push(s);
   }
+  console.log(commandHistory)
 }
 var histpos = -1;
 function returnHistory() {
   if (histpos < 0 || commandHistory == []) {
+    if (histpos-1 > commandHistory.length) {
+      histpos++;
+      document.getElementById('command').value = commandHistory[commandHistory.length-1 - histpos];
+    }
     histpos = -1;
     document.getElementById('command').value = "";
   } else {
     document.getElementById('command').value = commandHistory[commandHistory.length-1 - histpos];
-    console.log(commandHistory[commandHistory.length-1]);
   }
 }
 
@@ -60,19 +64,16 @@ function checkKey(e, textarea) {
   var s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
     if (s != "") {
-      rememberCommand();
-      console.log("remembered command:", s);
+      rememberCommand(); //command not being stored properly
       respond(s);
       document.getElementById('command').value = "";
     }
   } else if (key == 38) { // up
     histpos++;
     returnHistory();
-    console.log("prev command:", s);
   } else if (key == 40) { // down
     histpos--;
     returnHistory();
-    console.log("next command:", s)
   }
 }
 
