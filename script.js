@@ -110,6 +110,9 @@ function createInventoryResponse(obj) {
     if (i != Object.keys(obj).length) {
       inventoryresponse += ", ";
     }
+    console.log(i);
   }
   createResponse(inventoryresponse);
+  console.log(Object.keys(obj).length);
+  console.log(inventoryresponse);
 }
