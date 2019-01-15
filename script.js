@@ -110,7 +110,7 @@ function createResponse(string) {
 function createInventoryResponse(inventory) {
   inventoryresponse = "";
   for (i=0; i<Object.keys(inventory).length; i++) {
-    inventoryresponse += "("+obj.Object.keys(inventory)[i]+") " + Object.keys(inventory)[i];
+    inventoryresponse += "("+inventory.Object.keys(inventory)[i]+") " + Object.keys(inventory)[i];
     if (i != Object.keys(inventory).length) {
       inventoryresponse += ", ";
     }
