@@ -71,9 +71,9 @@ function returnHistory() {
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
-  s.value = s.value.trim();
   if (key == 13) { //hit enter key
     if (s.value != "") {
+      s.value = s.value.trim();
       rememberCommand(s.value);
       histpos = -1;
       respond(s.value);
