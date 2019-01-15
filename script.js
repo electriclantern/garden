@@ -59,7 +59,7 @@ function returnHistory() {
     histpos = -1;
     s.value = "";
   } else {
-    if (histpos-1 > commandHistory.length) {
+    if (histpos > commandHistory.length-1) {
       histpos--;
       s.value = commandHistory[commandHistory.length-1 - histpos];
     }
