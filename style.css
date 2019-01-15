@@ -35,11 +35,11 @@ body {
 #brewshop { width: 400px; height: 475px; }
 #potions {
   width: 400px;
-  height: 267px;
+  height: 277px;
 }
 #dialogue {
   width: 400px;
-  height: 196px;
+  height: 186px;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--border-color);
 }

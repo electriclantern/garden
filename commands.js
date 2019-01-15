@@ -10,17 +10,22 @@ function respond(s) {
     // GARDEN COMMANDS :)
     if (pcom == "") {
       if (s == "help") {
-        createResponse("help, inventory, plant");
+        createResponse("help, inventory, plant, clear");
       } else if (s == "clear") {
         outputs = document.getElementsByClassName("o_garden");
         while (outputs.length > 0) {
           outputs[0].parentNode.removeChild(outputs[0]);
         }
-      } else if (s == "plant") {
+      } else if (s == "plant" || s == "p") {
         pcom = "plant";
+        console.log(inventory);
         createInventoryResponse(inventory);
-      } else if (s == "inventory") {
+      } else if (s == "inventory" || s == "inv") {
         createInventoryResponse(inventory);
+      }
+
+      else if (s == "):") {
+        createResponse("things will work out, friend.")
       } else {
         createResponse("what you say");
       }
@@ -36,7 +41,7 @@ function respond(s) {
 
     // BREWSHOP COMMANDS :)
     if (s == "help") {
-      createResponse("help, inv, etc");
+      createResponse("help, clear");
     } else if (s == "clear") {
       outputs = document.getElementsByClassName("o_potions");
       while (outputs.length > 0) {
