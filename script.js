@@ -52,18 +52,17 @@ function rememberCommand(string) {
     commandHistory.push(string);
   }
   console.log(commandHistory);
-  console.log(histpos);
 }
 var histpos = -1;
 function returnHistory() {
   if (histpos < 0 || commandHistory == []) {
+    histpos = -1;
+    s.value = "";
+  } else {
     if (histpos-1 > commandHistory.length) {
       histpos--;
       s.value = commandHistory[commandHistory.length-1 - histpos];
     }
-    histpos = -1;
-    s.value = "";
-  } else {
     s.value = commandHistory[commandHistory.length-1 - histpos];
   }
 }
@@ -79,9 +78,11 @@ function checkKey(e, textarea) {
   } else if (key == 38) { // up
     histpos++;
     returnHistory();
+    console.log(histpos);
   } else if (key == 40) { // down
     histpos--;
     returnHistory();
+    console.log(histpos);
   }
 }
 
