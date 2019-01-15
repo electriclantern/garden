@@ -35,7 +35,7 @@ function menu(menu) {
 
 menu('garden');
 
-var commandHistory = [];
+var commandHistory = ["1", "2", "3"];
 function rememberCommand(s) {
   if (commandHistory.length <= 5) {
     commandHistory.push(s);
