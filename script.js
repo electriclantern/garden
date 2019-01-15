@@ -48,9 +48,10 @@ var histpos = -1;
 function returnHistory() {
   if (histpos < 0 || commandHistory == []) {
     histpos = -1;
-    s = "";
+    document.getElementById('command').value = "";
   } else {
-    s = commandHistory[commandHistory.length-1 - histpos];
+    document.getElementById('command').value = commandHistory[commandHistory.length-1 - histpos];
+    console.log(commandHistory[commandHistory.length-1 - histpos]);
   }
 }
 
