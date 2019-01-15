@@ -46,7 +46,7 @@ function rememberCommand(s) {
 }
 var histpos = -1;
 function returnHistory() {
-  if (histpos < 0) {
+  if (histpos < 0 || commandHistory == []) {
     histpos = -1;
     s = "";
   } else {
@@ -62,7 +62,7 @@ function checkKey(e, textarea) {
       rememberCommand();
       console.log("remembered command:", s);
       respond(s);
-      s = "";
+      document.getElementById('command').value = "";
     }
   } else if (key == 38) { // up
     histpos++;
