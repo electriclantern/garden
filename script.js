@@ -105,7 +105,7 @@ function createResponse(string) {
   }
   else if (window.screen == 'brewshop') {
     document.getElementById('potions').appendChild(output);
-    output.className = "o_potions";
+    output.className = "o_brewshop";
   }
 }
 function createError(){ createResponse("what you say")}
@@ -119,7 +119,7 @@ function createInventoryResponse(obj) {
       }
     }
   }
-  createResponse(inventoryresponse);
+  createResponse("you've got: "+ inventoryresponse);
   console.log(inventoryresponse);
 }
 
