@@ -107,16 +107,16 @@ function createResponse(string) {
   }
   document.getElementById('prompt').textContent = pcom + ">";
 }
-function createInventoryResponse(inventory) {
+function createInventoryResponse(obj) {
   inventoryresponse = "";
-  for (i=0; i<Object.keys(inventory).length; i++) {
-    inventoryresponse += "("+inventory.Object.keys(inventory)[i]+") " + Object.keys(inventory)[i];
-    if (i != Object.keys(inventory).length) {
-      inventoryresponse += ", ";
+  for (i = 0; i < Object.keys(obj).length; i++) {
+    if (obj[Object.keys(obj)[i]] > 0) {
+      inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i];
+      if (i != Object.keys(obj).length - 1) {
+        inventoryresponse += ". ";
+      }
     }
-    console.log(i);
   }
   createResponse(inventoryresponse);
-  console.log(Object.keys(inventory).length);
   console.log(inventoryresponse);
 }
