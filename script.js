@@ -44,6 +44,15 @@ function rememberCommand(s) {
     commandHistory.push(s);
   }
 }
+var histpos = -1;
+function returnHistory() {
+  if (histpos < 0) {
+    histpos = -1;
+    s = "";
+  } else {
+    s = commandHistory[histpos];
+  }
+}
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
@@ -53,11 +62,16 @@ function checkKey(e, textarea) {
       rememberCommand();
       console.log("remembered command:", s);
       respond(s);
-      document.getElementById('command').value = "";
+      s = "";
     }
   } else if (key == 38) { // up
-    document.getElementById("command").value = commandHistory[commandHistory.length - 1];
-    console.log("last command:", s);
+    histpos++;
+    returnHistory();
+    console.log("prev command:", s);
+  } else if (key == 40) { // down
+    histpos--;
+    returnHistory();
+    console.log("next command:", s)
   }
 }
 
