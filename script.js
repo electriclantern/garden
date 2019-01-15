@@ -1,5 +1,12 @@
 var darktheme = false;
 
+window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([38, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
+
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
   if (darktheme) { //turn light
@@ -35,13 +42,14 @@ function menu(menu) {
 
 menu('garden');
 
+var s = document.getElementById('command');
 var commandHistory = [];
-function rememberCommand(s) {
+function rememberCommand(string) {
   if (commandHistory.length <= 5) {
-    commandHistory.push(s);
+    commandHistory.push(string);
   } else {
     commandHistory.shift();
-    commandHistory.push(s);
+    commandHistory.push(string);
   }
   console.log(commandHistory)
 }
@@ -50,23 +58,22 @@ function returnHistory() {
   if (histpos < 0 || commandHistory == []) {
     if (histpos-1 > commandHistory.length) {
       histpos++;
-      document.getElementById('command').value = commandHistory[commandHistory.length-1 - histpos];
+      s.value = commandHistory[commandHistory.length-1 - histpos];
     }
     histpos = -1;
-    document.getElementById('command').value = "";
+    s.value = "";
   } else {
-    document.getElementById('command').value = commandHistory[commandHistory.length-1 - histpos];
+    s.value = commandHistory[commandHistory.length-1 - histpos];
   }
 }
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
-  var s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
-    if (s != "") {
-      rememberCommand(); //command not being stored properly
-      respond(s);
-      document.getElementById('command').value = "";
+    if (s.value != "") {
+      rememberCommand(s.value); //command not being stored properly
+      respond(s.value);
+      s.value = "";
     }
   } else if (key == 38) { // up
     histpos++;
