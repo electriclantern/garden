@@ -72,6 +72,7 @@ function checkKey(e, textarea) {
   if (key == 13) { //hit enter key
     if (s.value != "") {
       rememberCommand(s.value);
+      histpos = -1;
       respond(s.value);
       s.value = "";
     }
