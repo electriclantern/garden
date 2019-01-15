@@ -18,7 +18,7 @@ function respond(s) {
         }
       } else if (s == "plant" || s == "p") {
         pcom = "plant";
-        console.log(inventory);
+        createResponse("your inventory:");
         createInventoryResponse(inventory);
       } else if (s == "inventory" || s == "inv") {
         createInventoryResponse(inventory);
@@ -27,7 +27,17 @@ function respond(s) {
       else if (s == "):") {
         createResponse("things will work out, friend.")
       } else {
-        createResponse("what you say");
+        createError();
+      }
+    } else if (pcom == "plant") {
+      // get input and split it into number and plant
+      // if input doesn't have a number, assume it's one
+      if (s == "plant") {
+        pcom = "plant";
+        createResponse("your inventory:");
+        createInventoryResponse(inventory);
+      } else if (s && isNaN(s.split(" ")[0])==false && isNaN(s.split(" ")[1])==true && s.split(" ").length==2) {
+        plant(parseInt(s.split(" ")[0], 10), s.split(" ")[1]);
       }
     }
 
@@ -48,7 +58,7 @@ function respond(s) {
         outputs[0].parentNode.removeChild(outputs[0]);
       }
     } else {
-      createResponse("what you say");
+      createError();
     }
   }
 }

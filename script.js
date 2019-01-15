@@ -87,6 +87,7 @@ function checkKey(e, textarea) {
   } else if (key == 27) { // escape
     histpos = -1;
     pcom = "";
+    document.getElementById('prompt').textContent = pcom + ">";
     s.value = "";
   }
 }
@@ -107,6 +108,7 @@ function createResponse(string) {
   }
   document.getElementById('prompt').textContent = pcom + ">";
 }
+function createError(){ createResponse("what you say")}
 function createInventoryResponse(obj) {
   inventoryresponse = "";
   for (i = 0; i < Object.keys(obj).length; i++) {
@@ -119,4 +121,15 @@ function createInventoryResponse(obj) {
   }
   createResponse(inventoryresponse);
   console.log(inventoryresponse);
+}
+
+function plant(num, plant) {
+  if (plant == 'mercury') {
+    if (num <= inventory.mercury) {
+        inventory.mercury = inventory.mercury - num;
+    }
+    createResponse("planting "+num+" mercury...");
+  } else {
+    createResponse("what are you planting?")
+  }
 }
