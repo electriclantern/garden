@@ -51,13 +51,14 @@ function rememberCommand(string) {
     commandHistory.shift();
     commandHistory.push(string);
   }
-  console.log(commandHistory)
+  console.log(commandHistory);
+  console.log(histpos);
 }
 var histpos = -1;
 function returnHistory() {
   if (histpos < 0 || commandHistory == []) {
     if (histpos-1 > commandHistory.length) {
-      histpos++;
+      histpos--;
       s.value = commandHistory[commandHistory.length-1 - histpos];
     }
     histpos = -1;
@@ -71,7 +72,7 @@ function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
   if (key == 13) { //hit enter key
     if (s.value != "") {
-      rememberCommand(s.value); //command not being stored properly
+      rememberCommand(s.value);
       respond(s.value);
       s.value = "";
     }
