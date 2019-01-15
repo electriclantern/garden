@@ -38,6 +38,8 @@ function respond(s) {
         createInventoryResponse(inventory);
       } else if (s && isNaN(s.split(" ")[0])==false && isNaN(s.split(" ")[1])==true && s.split(" ").length==2) {
         plant(parseInt(s.split(" ")[0], 10), s.split(" ")[1]);
+      } else if (isNaN(s)==true && s.split(" ").length==0) {
+        plant(1, s)
       }
     }
 

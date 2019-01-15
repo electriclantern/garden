@@ -71,6 +71,7 @@ function returnHistory() {
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
+  s.trim();
   if (key == 13) { //hit enter key
     if (s.value != "") {
       rememberCommand(s.value);
