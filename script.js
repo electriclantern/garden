@@ -107,7 +107,6 @@ function createResponse(string) {
     document.getElementById('potions').appendChild(output);
     output.className = "o_potions";
   }
-  document.getElementById('prompt').textContent = pcom + ">";
 }
 function createError(){ createResponse("what you say")}
 function createInventoryResponse(obj) {

@@ -69,4 +69,6 @@ function respond(s) {
       createError();
     }
   }
+
+  document.getElementById('prompt').textContent = pcom + ">";
 }
