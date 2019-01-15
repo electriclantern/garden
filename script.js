@@ -1,21 +1,21 @@
-darktheme.cookie = false;
+var darktheme = false;
 
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
-  if (darktheme.cookie) { //turn light
+  if (darktheme) { //turn light
     html.style.setProperty("--text-color", "black");
     html.style.setProperty("--background-color", "white");
     html.style.setProperty("--border-color", "lightgray");
     html.style.setProperty("--highlight-color", "yellow");
     document.getElementById('darktheme').textContent = "dark";
-    darktheme.cookie = false;
+    darktheme = false;
   } else { // turn dark
     html.style.setProperty("--text-color", "white");
     html.style.setProperty("--background-color", "black");
-    html.style.setProperty("--border-color", "darkgray");
+    html.style.setProperty("--border-color", "#4f4f4f");
     html.style.setProperty("--highlight-color", "#673ab7");
     document.getElementById('darktheme').textContent = "light";
-    darktheme.cookie = true;
+    darktheme = true;
   }
 }
 
@@ -33,17 +33,31 @@ function menu(menu) {
   window.screen = menu;
 }
 
-//setup
 menu('garden');
+
+var commandHistory = [];
+function rememberCommand(s) {
+  if (commandHistory.length <= 5) {
+    commandHistory.push(s);
+  } else {
+    commandHistory.shift();
+    commandHistory.push(s);
+  }
+}
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
   s = document.getElementById('command').value;
   if (key == 13) { //hit enter key
     if (s != "") {
+      rememberCommand();
+      console.log("remembered command:", s);
       respond(s);
       document.getElementById('command').value = "";
     }
+  } else if (key == 38 /* UP */) {
+    document.getElementById("command").value = commandHistory[commandHistory.length - 1];
+    console.log("last command:", s);
   }
 }
 
