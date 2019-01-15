@@ -11,20 +11,11 @@ function respond(s) {
     if (pcom == "") {
       if (s == "help") {
         createResponse("help, inventory, plant, clear");
-      } else if (s == "clear") {
-        outputs = document.getElementsByClassName("o_garden");
-        while (outputs.length > 0) {
-          outputs[0].parentNode.removeChild(outputs[0]);
-        }
       } else if (s == "plant" || s == "p") {
         pcom = "plant";
         createResponse("your inventory:");
         createInventoryResponse(inventory);
-      } else if (s == "inventory" || s == "inv") {
-        createInventoryResponse(inventory);
-      }
-
-      else if (s == "):") {
+      } else if (s == "):") {
         createResponse("things will work out, friend.")
       } else {
         createError();
@@ -38,10 +29,23 @@ function respond(s) {
         createInventoryResponse(inventory);
       } else if (s && isNaN(s.split(" ")[0])==false && isNaN(s.split(" ")[1])==true && s.split(" ").length==2) {
         plant(parseInt(s.split(" ")[0], 10), s.split(" ")[1]);
-      } else if (isNaN(s)==true && s.split(" ").length==0) {
-        plant(1, s)
+      } else if (isNaN(s)==true && s.value.trim().split(" ").length==0) {
+        plant(1, s);
+      } else {
+        createError();
       }
     }
+
+    if (s == "clear") {
+      outputs = document.getElementsByClassName("o_garden");
+      while (outputs.length > 0) {
+        outputs[0].parentNode.removeChild(outputs[0]);
+      }
+      pcom = "";
+    } else if (s == "inventory" || s == "inv") {
+      createInventoryResponse(inventory);
+    }
+
 
   } else if (window.screen == 'brewshop') {
     //automatically delete top output if overflow

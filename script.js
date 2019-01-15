@@ -71,7 +71,7 @@ function returnHistory() {
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
-  s.value.trim();
+  s.value = s.value.trim();
   if (key == 13) { //hit enter key
     if (s.value != "") {
       rememberCommand(s.value);
@@ -125,12 +125,10 @@ function createInventoryResponse(obj) {
 }
 
 function plant(num, plant) {
-  if (plant == 'mercury') {
-    if (num <= inventory.mercury) {
-        inventory.mercury = inventory.mercury - num;
-    }
-    createResponse("planting "+num+" mercury...");
+  if (num <= inventory[plant]) {
+    inventory[plant] = inventory[plant] - num;
+    createResponse("("+num+") "+plant+" planted.");
   } else {
-    createResponse("what are you planting?")
+    createResponse("and just where do you think you'll get that much?")
   }
 }
