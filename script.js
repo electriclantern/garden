@@ -1,5 +1,9 @@
 var darktheme = false;
+var pcom = "";
 
+var inventory = {mercury:2, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
+
+menu('garden');
 window.addEventListener("keydown", function(e) {
     // space and arrow keys
     if([38, 40].indexOf(e.keyCode) > -1) {
@@ -24,6 +28,7 @@ function toggleTheme() {
     document.getElementById('darktheme').textContent = "light";
     darktheme = true;
   }
+  pcom = "";
 }
 
 function menu(menu) {
@@ -40,18 +45,15 @@ function menu(menu) {
   window.screen = menu;
 }
 
-menu('garden');
-
 var s = document.getElementById('command');
 var commandHistory = [];
 function rememberCommand(string) {
-  if (commandHistory.length <= 5) {
+  if (commandHistory.length <= 50) {
     commandHistory.push(string);
   } else {
     commandHistory.shift();
     commandHistory.push(string);
   }
-  console.log(commandHistory);
 }
 var histpos = -1;
 function returnHistory() {
@@ -79,11 +81,9 @@ function checkKey(e, textarea) {
   } else if (key == 38) { // up
     histpos++;
     returnHistory();
-    console.log(histpos);
   } else if (key == 40) { // down
     histpos--;
     returnHistory();
-    console.log(histpos);
   }
 }
 
@@ -101,43 +101,15 @@ function createResponse(string) {
     document.getElementById('potions').appendChild(output);
     output.className = "o_potions";
   }
+  document.getElementById('prompt').textContent = pcom + ">";
 }
-function respond(s) {
-  if (window.screen == 'garden') {
-    //automatically delete top output if overflow
-    //garden: 18
-    outputs = document.getElementsByClassName("o_garden");
-    if (outputs.length > 18) {
-      outputs[0].parentNode.removeChild(outputs[0]);
-    }
-
-    if (s == "help") {
-      createResponse("help, plots");
-    } else if (s == "clear") {
-      outputs = document.getElementsByClassName("o_garden");
-      while (outputs.length > 0) {
-        outputs[0].parentNode.removeChild(outputs[0]);
-      }
-    } else {
-      createResponse("what you say");
-    }
-  } else if (window.screen == 'brewshop') {
-    //automatically delete top output if overflow
-    //potions: 10
-    outputs = document.getElementsByClassName("o_potions");
-    if (outputs.length > 10) {
-      outputs[0].parentNode.removeChild(outputs[0]);
-    }
-
-    if (s == "help") {
-      createResponse("help, inv, etc");
-    } else if (s == "clear") {
-      outputs = document.getElementsByClassName("o_potions");
-      while (outputs.length > 0) {
-        outputs[0].parentNode.removeChild(outputs[0]);
-      }
-    } else {
-      createResponse("what you say");
+function createInventoryResponse(obj) {
+  inventoryresponse = "";
+  for (i=0; i<Object.keys(obj).length; i++) {
+    inventoryresponse += "("+obj.Object.keys(obj)[i]+") " + Object.keys(obj)[i];
+    if (i != Object.keys(obj).length) {
+      inventoryresponse += ", ";
     }
   }
+  createResponse(inventoryresponse);
 }
