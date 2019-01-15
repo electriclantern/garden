@@ -51,7 +51,7 @@ function returnHistory() {
     document.getElementById('command').value = "";
   } else {
     document.getElementById('command').value = commandHistory[commandHistory.length-1 - histpos];
-    console.log(commandHistory[commandHistory.length-1 - histpos]);
+    console.log(commandHistory[commandHistory.length-1]);
   }
 }
 
