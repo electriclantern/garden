@@ -58,7 +58,6 @@ function respond(s) {
     if (isOverflown(area)) {
       area.scrollTop = area.scrollHeight;
     }
-    }
   }
 
   //global commands
