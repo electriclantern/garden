@@ -1,4 +1,4 @@
-var ss = s.value.split(" ");
+var ss = document.getElementById('command').value.split(" ");
 var pcommands = ['plant']
 
 function respond(s) {
