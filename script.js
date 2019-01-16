@@ -143,9 +143,11 @@ function plant(num, plant) {
 
 function processThree(command, a, b) {
   if (command == 'plant') { plant(a, b) }
+  else { createError() }
 }
 function processTwo(command, a) {
   if (command == 'plant') { plant(1, a) }
+  else { createError() }
 }
 function processOne(command) {
   if (command == 'plant') {
@@ -154,5 +156,5 @@ function processOne(command) {
     createInventoryResponse(inventory);
   } else if (command == "inventory" || command == "inv") {
     createInventoryResponse(inventory);
-  }
+  } else { createError() }
 }
