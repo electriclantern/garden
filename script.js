@@ -53,11 +53,13 @@ function menu(menu) {
 var s = document.getElementById('command');
 var commandHistory = [];
 function rememberCommand(string) {
-  if (commandHistory.length <= 50) {
-    commandHistory.push(string);
-  } else {
-    commandHistory.shift();
-    commandHistory.push(string);
+  if (string != commandHistory[commandHistory.length-1]) {
+    if (commandHistory.length <= 50) {
+      commandHistory.push(string);
+    } else {
+      commandHistory.shift();
+      commandHistory.push(string);
+    }
   }
 }
 var histpos = -1;

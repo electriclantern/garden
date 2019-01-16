@@ -11,14 +11,23 @@ function respond(s) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
 
+    // garden global commands
+    if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 3) {
+      processThree(ss[0], ss[1], ss[2]);
+    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 2) {
+      processTwo(ss[0], ss[1]);
+    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
+      processOne(s);
+    } else {
+      createError();
+    }
+
     // GARDEN COMMANDS :)
     if (pcom == "") {
       if (s == "help") {
         createResponse("help, inventory, plant, clear");
       } else if (s == "):") {
         createResponse("things will work out, friend.")
-      } else {
-        createError();
       }
     } else if (pcom == "plant") {
       // get input and split it into number and plant
@@ -32,17 +41,6 @@ function respond(s) {
       } else {
         createError();
       }
-    }
-
-    // garden global commands
-    if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 3) {
-      processThree(ss[0], ss[1], ss[2]);
-    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 2) {
-      processTwo(ss[0], ss[1]);
-    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
-      processOne(s);
-    } else {
-      createError();
     }
 
 
