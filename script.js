@@ -33,6 +33,10 @@ function toggleTheme() {
   pcom = "";
 }
 
+function isOverflown(element) {
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+}
+
 function menu(menu) {
   pcom = "";
   commandoverlay.textContent = "";
@@ -153,10 +157,11 @@ function plant(num, plant) {
   if (num <= inventory[plant]) {
     numofsuccess = 0;
 
-    for (num; num > 0; num--) { // for each plant i'm planting:
-      plots[emptyplots[num-1]].push(plant); // put it in the next empty plot.
+    for (i=0; num > 0; i++) { // for each plant i'm planting:
+      plots[emptyplots[i-1]].push(plant); // put it in the next empty plot.
       //begingrowth(); // put a growth variable in the same plot.
       numofsuccess++;
+      num--;
     }
     inventory[plant] = inventory[plant] - numofsuccess;
 

@@ -10,7 +10,7 @@ function respond(s) {
   if (window.screen == 'garden') {
     //automatically delete top output if overflow
     outputs = document.getElementsByClassName("o_garden");
-    if (outputs.length > 18) {
+    if (isOverflown(document.getElementById('garden'))) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
 
@@ -53,7 +53,7 @@ function respond(s) {
   } else if (window.screen == 'brewshop') {
     //automatically delete top output if overflow
     outputs = document.getElementsByClassName("o_brewshop");
-    if (outputs.length > 10) {
+    if (isOverflown(document.getElementById('potions'))) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
 
@@ -89,7 +89,7 @@ function processTwo(command, a) {
 function processOne(command) {
   commandoverlay.textContent = "";
   pcom = "";
-  
+
   if (command == 'plant') {
     pcom = "plant";
     commandoverlay.textContent = "[number] [plant]";
