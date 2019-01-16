@@ -29,7 +29,7 @@ function respond(s) {
         createResponse("help, inventory, plant, plots, clear");
       } else if (s == "):") {
         createResponse("things will work out, friend.")
-      }
+      } else { createError() }
     } else if (pcom == "plant") {
       // get input and split it into number and plant
       // if input doesn't have a number, assume it's one
@@ -42,8 +42,6 @@ function respond(s) {
       } else if (s != "clear"){
         createError();
       }
-    } else {
-      createError()
     }
     console.log("slice 'n dice it: "+ss);
     console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
