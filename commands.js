@@ -1,4 +1,4 @@
-var pcommands = ['plant', 'inventory', 'inv']
+var pcommands = ['plant', 'inventory', 'inv', 'garden', 'harvest']
 var ss = [];
 
 function respond(s) {
@@ -41,7 +41,7 @@ function respond(s) {
       processTwo(ss[0], ss[1]);
     } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
       processOne(ss[0]);
-    } else if (s != "help" && s != "):") { //nonglobal pcom="" commands
+    } else if (s != "help" && s != "):" && pcom=="") { //nonglobal pcom="" commands
       createError();
     }
     console.log(ss);

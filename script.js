@@ -2,7 +2,8 @@ var darktheme = false;
 var pcom = "";
 var commandoverlay = document.getElementById('commandoverlay');
 
-var inventory = {mercury:2, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
+var inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
+var plots = [[], [], [], [], []];
 
 menu('garden');
 window.addEventListener("keydown", function(e) {
@@ -83,7 +84,9 @@ function checkKey(e, textarea) {
   }
 
   if (key == 13) { //hit enter key
-    if (document.getElementById('helpline')) {
+    //remove "type help" thing
+    s.value = s.value.trim();
+    if (s != "" && document.getElementById('helpline')) {
       document.getElementById('helpline').parentNode.removeChild(document.getElementById('helpline'));
     }
 
@@ -139,9 +142,30 @@ function createInventoryResponse(obj) {
 }
 
 function plant(num, plant) {
+  emptyplots = [];
+  for (i=0; i < plots.length; i++) {
+    if (plots[i].length==0) {
+      emptyplots.push(i);
+    }
+  }
+
   if (num <= inventory[plant]) {
-    inventory[plant] = inventory[plant] - num;
-    createResponse("("+num+") "+plant+" planted.");
+    numofsuccess = 0;
+
+    for (i=0; i < emptyplots.length; i++) { // for each plant i'm planting:
+      plots[emptyplots[i]].push(plant); // put it in the next empty plot.
+      //begingrowth(); // put a growth variable in the same plot.
+      numofsuccess++;
+    }
+
+    inventory[plant] = inventory[plant] - numofsuccess;
+
+    if (numofsuccess == num) {
+      createResponse("("+num+") "+plant+" planted.");
+    } else { //no more empty plots to plant in
+      createResponse("out of plots."+numofsuccess+" "+plant+" planted.");
+    }
+    console.log(plots);
   } else if (num > inventory[plant]) {
     createResponse("you don't have enough of that.")
   } else {
@@ -167,4 +191,19 @@ function processOne(command) {
   } else if (command == 'inventory' || command == 'inv') {
     createInventoryResponse(inventory);
   } else { createError() }
+}
+
+function getPlots() {
+  //var plots = [[], [], [], [], []];
+  getplots = "";
+
+  for (i = 0; i < plots.length; i++) {
+    if (plots[i].length == 0) {
+      getplots += "[] ";
+    } else {
+      getplots += "[" + plots[i][0] + ": " + plots[i][1] + "%] ";
+    }
+  }
+  console.log(getplots);
+  createResponse(getplots);
 }
