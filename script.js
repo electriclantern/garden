@@ -72,6 +72,10 @@ function returnHistory() {
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
+  if (48 <= key <= 90 || 96 <= key <= 105) {
+    commandoverlay.textContent = "";
+  }
+
   if (key == 13) { //hit enter key
     if (s.value != "") {
       s.value = s.value.trim();
