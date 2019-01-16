@@ -119,7 +119,7 @@ function createResponse(string) {
     output.className = "o_brewshop";
   }
 }
-function createError(){ createResponse("what you say")}
+function createError(){ createResponse("what you say"); }
 function createInventoryResponse(obj) {
   inventoryresponse = "";
   for (i = 0; i < Object.keys(obj).length; i++) {
@@ -145,11 +145,11 @@ function plant(num, plant) {
 
 function processThree(command, a, b) {
   console.log("processing"+ command+", "+ a+", "+ b);
-  if (command == 'plant') { plant(a, b) }
+  if (command == 'plant') { plant(a, b); }
   else { createError() }
 }
 function processTwo(command, a) {
-  if (command == 'plant') { plant(1, a) }
+  if (command == 'plant') { plant(1, a); }
   else { createError() }
 }
 function processOne(command) {
