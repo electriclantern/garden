@@ -1,4 +1,4 @@
-var ss = document.getElementById('command').value.split(" ");
+var ss = s.value.split(" ");
 var pcommands = ['plant']
 
 function respond(s) {
@@ -44,6 +44,7 @@ function respond(s) {
     } else if (s != "help" && s != "):") {
       createError();
     }
+    console.log(ss);
     console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
 
 
