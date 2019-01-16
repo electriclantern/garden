@@ -121,7 +121,7 @@ function checkKey(e, textarea) {
 function createResponse(string) {
   output = document.createElement('div');
   output.style.width = "400px";
-  output.style.paddingBottom = "10px";
+  output.style.paddingBottom = "var(--margin-size)";
   output.textContent = string;
   if (window.screen == 'garden') {
     document.getElementById('garden').appendChild(output);
