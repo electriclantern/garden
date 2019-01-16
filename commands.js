@@ -1,9 +1,11 @@
+var ss = s.split(" ");
+var pcommands = ['plant']
+
 function respond(s) {
   commandoverlay.textContent = "";
 
   if (window.screen == 'garden') {
     //automatically delete top output if overflow
-    //garden: 18
     outputs = document.getElementsByClassName("o_garden");
     if (outputs.length > 18) {
       outputs[0].parentNode.removeChild(outputs[0]);
@@ -21,10 +23,10 @@ function respond(s) {
     } else if (pcom == "plant") {
       // get input and split it into number and plant
       // if input doesn't have a number, assume it's one
-      if (s && isNaN(s.split(" ")[0])==false && isNaN(s.split(" ")[1])==true && s.split(" ").length==2) {
+      if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==2) {
         pcom = "";
-        plant(parseInt(s.split(" ")[0], 10), s.split(" ")[1]);
-      } else if (isNaN(s)==true && s.split(" ").length==1) {
+        plant(parseInt(ss[0], 10), ss[1]);
+      } else if (isNaN(s)==true && ss.length==1) {
         pcom = "";
         plant(1, s);
       } else {
@@ -32,19 +34,20 @@ function respond(s) {
       }
     }
 
-    //garden global commands
-    if (s == "inventory" || s == "inv") {
-      createInventoryResponse(inventory);
-    } else if (s == "plant" || s == "p") {
-      pcom = "plant";
-      commandoverlay.textContent = "[number] [plant]";
-      createInventoryResponse(inventory);
+    // garden global commands
+    else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 3) {
+      processThree(ss[0], ss[1], ss[2]);
+    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 2) {
+      processTwo(ss[0], ss[1]);
+    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
+      processOne(s);
+    } else {
+      createError();
     }
 
 
   } else if (window.screen == 'brewshop') {
     //automatically delete top output if overflow
-    //potions: 10
     outputs = document.getElementsByClassName("o_brewshop");
     if (outputs.length > 10) {
       outputs[0].parentNode.removeChild(outputs[0]);

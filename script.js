@@ -33,6 +33,10 @@ function toggleTheme() {
 }
 
 function menu(menu) {
+  pcom = "";
+  commandoverlay.textContent = "";
+  document.getElementById('prompt').textContent = pcom + ">";
+
   document.getElementById(menu).style.display = "block";
   if (menu=='garden') {
     document.getElementById('brewshop').style.display = "none";
@@ -72,7 +76,7 @@ function returnHistory() {
 
 function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
-  if (48 <= key <= 90 || 96 <= key <= 105) {
+  if (key >= 48 && key <= 90 || key >= 96 && key <= 105) {
     commandoverlay.textContent = "";
   }
 
@@ -132,7 +136,23 @@ function plant(num, plant) {
   if (num <= inventory[plant]) {
     inventory[plant] = inventory[plant] - num;
     createResponse("("+num+") "+plant+" planted.");
-  } else {
+  } else if (num != 1 && plant != 'plant') {
     createResponse("what are you planting?")
+  }
+}
+
+function processThree(command, a, b) {
+  if (command == 'plant') { plant(a, b) }
+}
+function processTwo(command, a) {
+  if (command == 'plant') { plant(1, a) }
+}
+function processOne(command) {
+  if (command == 'plant') {
+    pcom = "plant";
+    commandoverlay.textContent = "[number] [plant]";
+    createInventoryResponse(inventory);
+  } else if (command == "inventory" || command == "inv") {
+    createInventoryResponse(inventory);
   }
 }
