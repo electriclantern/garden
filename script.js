@@ -84,7 +84,7 @@ function checkKey(e, textarea) {
 
   if (key == 13) { //hit enter key
     if (document.getElementById('helpline')) {
-      document.getElementsById('helpline').parentNode.removeChild(document.getElementById('helpline'));
+      document.getElementById('helpline').parentNode.removeChild(document.getElementById('helpline'));
     }
 
     if (s.value != "") {
