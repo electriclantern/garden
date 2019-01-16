@@ -1,7 +1,8 @@
 var pcommands = ['plant']
+var ss = [];
 
 function respond(s) {
-  var ss = s.value.split(" ");
+  ss = s.value.split(" ");
 
   commandoverlay.textContent = "";
   console.log("input: " + s);
