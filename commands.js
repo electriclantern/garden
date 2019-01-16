@@ -1,4 +1,4 @@
-var pcommands = ['plant', 'inventory', 'inv', 'garden', 'harvest']
+var pcommands = ['plant', 'inventory', 'inv', 'plots', 'harvest']
 var ss = [];
 
 function respond(s) {
@@ -17,7 +17,7 @@ function respond(s) {
     // GARDEN COMMANDS :)
     if (pcom == "") {
       if (s == "help") {
-        createResponse("help, inventory, plant, clear");
+        createResponse("help, inventory, plant, plots, clear");
       } else if (s == "):") {
         createResponse("things will work out, friend.")
       }
@@ -30,6 +30,8 @@ function respond(s) {
       } else if (isNaN(s)==true && ss.length==1) {
         pcom = "";
         plant(1, s);
+      } else if (s != "clear"){
+        createError();
       }
     }
 
@@ -44,7 +46,7 @@ function respond(s) {
     } else if (s != "help" && s != "):" && pcom=="") { //nonglobal pcom="" commands
       createError();
     }
-    console.log(ss);
+    console.log("slice 'n dice it: "+ss);
     console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
 
 
@@ -69,8 +71,29 @@ function respond(s) {
     while (outputs.length > 0) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
+    commandoverlay.textContent = "";
     pcom = "";
   }
 
   document.getElementById('prompt').textContent = pcom + ">";
+}
+
+function processThree(command, a, b) {
+  if (command == 'plant') { plant(a, b); }
+  else { createError() }
+}
+function processTwo(command, a) {
+  if (command == 'plant') { plant(1, a); }
+  else { createError() }
+}
+function processOne(command) {
+  if (command == 'plant') {
+    pcom = "plant";
+    commandoverlay.textContent = "[number] [plant]";
+    createInventoryResponse(inventory);
+  } else if (command == 'inventory' || command == 'inv') {
+    createInventoryResponse(inventory);
+  } else if (command == 'plots') {
+    getPlots();
+  } else { createError() }
 }

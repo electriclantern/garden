@@ -107,6 +107,7 @@ function checkKey(e, textarea) {
     histpos = -1;
     pcom = "";
     document.getElementById('prompt').textContent = pcom + ">";
+    commandoverlay.textContent = "";
     s.value = "";
   }
 }
@@ -152,18 +153,17 @@ function plant(num, plant) {
   if (num <= inventory[plant]) {
     numofsuccess = 0;
 
-    for (i=0; i < emptyplots.length; i++) { // for each plant i'm planting:
-      plots[emptyplots[i]].push(plant); // put it in the next empty plot.
+    for (num; num > 0; num--) { // for each plant i'm planting:
+      plots[emptyplots[num-1]].push(plant); // put it in the next empty plot.
       //begingrowth(); // put a growth variable in the same plot.
       numofsuccess++;
     }
-
     inventory[plant] = inventory[plant] - numofsuccess;
 
-    if (numofsuccess == num) {
+    if (numofsuccess <= emptyplots.length) {
       createResponse("("+num+") "+plant+" planted.");
     } else { //no more empty plots to plant in
-      createResponse("out of plots."+numofsuccess+" "+plant+" planted.");
+      createResponse("out of plots. "+numofsuccess+" "+plant+" planted.");
     }
     console.log(plots);
   } else if (num > inventory[plant]) {
@@ -173,24 +173,6 @@ function plant(num, plant) {
     pcom = "plant";
     commandoverlay.textContent = "[number] [plant]";
   }
-}
-
-function processThree(command, a, b) {
-  if (command == 'plant') { plant(a, b); }
-  else { createError() }
-}
-function processTwo(command, a) {
-  if (command == 'plant') { plant(1, a); }
-  else { createError() }
-}
-function processOne(command) {
-  if (command == 'plant') {
-    pcom = "plant";
-    commandoverlay.textContent = "[number] [plant]";
-    createInventoryResponse(inventory);
-  } else if (command == 'inventory' || command == 'inv') {
-    createInventoryResponse(inventory);
-  } else { createError() }
 }
 
 function getPlots() {
