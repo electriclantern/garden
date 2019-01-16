@@ -121,7 +121,6 @@ function checkKey(e, textarea) {
 function createResponse(string) {
   output = document.createElement('div');
   output.style.width = "400px";
-  output.style.height = "15px";
   output.style.paddingBottom = "10px";
   output.textContent = string;
   if (window.screen == 'garden') {
@@ -159,11 +158,6 @@ function plant(num, plant) {
   }
 
   if (num <= inventory[plant]) {
-    for (i = 0; i < plots.length; i++) {
-      if (plots[i].length == 0) {
-        emptyplots.push(i);
-      }
-    }
     console.log("emptyplots: " + emptyplots);
     for (i = 0; i < num; i++) {
       if (i < emptyplots.length) {
@@ -175,8 +169,8 @@ function plant(num, plant) {
       console.log(plots[emptyplots[i]]);
     }
     console.log(plots);
-    if (successnum==num) { console.log(num + " " + plant + " planted."); }
-    else { console.log("out of plots. "+successnum+" "+plant+" planted.") }
+    if (successnum==num) { createResponse(num + " " + plant + " planted."); }
+    else { createResponse("out of plots. "+successnum+" "+plant+" planted.") }
 
   } else if (num > inventory[plant]) {
     createResponse("you don't have enough of that.")
@@ -198,6 +192,5 @@ function getPlots() {
       getplots += "[" + plots[i][0] + ": " + plots[i][1] + "%] ";
     }
   }
-  console.log(getplots);
   createResponse(getplots);
 }
