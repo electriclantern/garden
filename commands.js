@@ -3,7 +3,7 @@ var pcommands = ['plant']
 
 function respond(s) {
   commandoverlay.textContent = "";
-  console.log("input: " + s.value);
+  console.log("input: " + s);
 
   if (window.screen == 'garden') {
     //automatically delete top output if overflow
@@ -27,7 +27,7 @@ function respond(s) {
         plant(parseInt(ss[0], 10), ss[1]);
       } else if (isNaN(s)==true && ss.length==1) {
         pcom = "";
-        plant(1, s.value);
+        plant(1, s);
       } else {
         createError();
       }
@@ -41,7 +41,7 @@ function respond(s) {
       processTwo(ss[0], ss[1]);
     } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
       processOne(s.value);
-    } else {
+    } else if (s != "help" && s != "):") {
       createError();
     }
     console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
