@@ -1,4 +1,7 @@
 function respond(s) {
+  document.getElementById('prompt').textContent = pcom + ">";
+  commandoverlay.textContent = "";
+
   if (window.screen == 'garden') {
     //automatically delete top output if overflow
     //garden: 18
@@ -11,9 +14,6 @@ function respond(s) {
     if (pcom == "") {
       if (s == "help") {
         createResponse("help, inventory, plant, clear");
-      } else if (s == "plant" || s == "p") {
-        pcom = "plant";
-        createInventoryResponse(inventory);
       } else if (s == "):") {
         createResponse("things will work out, friend.")
       } else {
@@ -36,13 +36,12 @@ function respond(s) {
       }
     }
 
-    if (s == "clear") {
-      outputs = document.getElementsByClassName("o_"+window.screen);
-      while (outputs.length > 0) {
-        outputs[0].parentNode.removeChild(outputs[0]);
-      }
-      pcom = "";
-    } else if (s == "inventory" || s == "inv") {
+    //garden global commands
+    if (s == "inventory" || s == "inv") {
+      createInventoryResponse(inventory);
+    } else if (s == "plant" || s == "p") {
+      pcom = "plant";
+      commandoverlay.textContent = "[number] [plant]";
       createInventoryResponse(inventory);
     }
 
@@ -63,5 +62,12 @@ function respond(s) {
     }
   }
 
-  document.getElementById('prompt').textContent = pcom + ">";
+  //global commands
+  if (s == "clear") {
+    outputs = document.getElementsByClassName("o_"+window.screen);
+    while (outputs.length > 0) {
+      outputs[0].parentNode.removeChild(outputs[0]);
+    }
+    pcom = "";
+  }
 }

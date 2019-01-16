@@ -1,5 +1,6 @@
 var darktheme = false;
 var pcom = "";
+var commandoverlay = document.getElementById('commandoverlay');
 
 var inventory = {mercury:2, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
 

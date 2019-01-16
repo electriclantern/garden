@@ -63,6 +63,12 @@ body {
 }
 input:focus { outline: none; }
 input::selection, input::moz-selection { background-color: var(--highlight-color); }
+#commandoverlay {
+  z-index: 10;
+  width: 400px;
+  height: 15px;
+  color: var(--border-color);
+}
 
 .textbutton { margin-bottom: 10px; }
 .textbutton:hover { cursor: pointer; }
