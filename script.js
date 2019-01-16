@@ -158,7 +158,7 @@ function processOne(command) {
     pcom = "plant";
     commandoverlay.textContent = "[number] [plant]";
     createInventoryResponse(inventory);
-  } else if (command == "inventory" || command == "inv") {
+  } else if (command == 'inventory' || command == 'inv') {
     createInventoryResponse(inventory);
   } else { createError() }
 }
