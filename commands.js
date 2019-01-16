@@ -40,10 +40,10 @@ function respond(s) {
     console.log("slice 'n dice it: "+ss);
     console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
 
-    //automatically delete top output if overflow
-    outputs = document.getElementsByClassName("o_garden");
-    while (isOverflown(document.getElementById('garden'))) {
-      outputs[0].parentNode.removeChild(outputs[0]);
+    //automatically delete 56 characters from top output if overflow
+    area = document.getElementById('garden');
+    if (isOverflown(area)) {
+      area.scrollTop = area.scrollHeight;
     }
   } else if (window.screen == 'brewshop') {
     // BREWSHOP COMMANDS :)
@@ -54,9 +54,10 @@ function respond(s) {
     }
 
     //automatically delete top output if overflow
-    outputs = document.getElementsByClassName("o_brewshop");
-    while (isOverflown(document.getElementById('potions'))) {
-      outputs[0].parentNode.removeChild(outputs[0]);
+    area = document.getElementById('potions');
+    if (isOverflown(area)) {
+      area.scrollTop = area.scrollHeight;
+    }
     }
   }
 
