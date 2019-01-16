@@ -83,6 +83,10 @@ function checkKey(e, textarea) {
   }
 
   if (key == 13) { //hit enter key
+    if (document.getElementById('helpline')) {
+      document.getElementsById('helpline').parentNode.removeChild(document.getElementById('helpline'));
+    }
+
     if (s.value != "") {
       s.value = s.value.trim();
       rememberCommand(s.value);
