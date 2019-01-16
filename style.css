@@ -35,21 +35,24 @@ body {
   width: 400px;
   height: 500px;
   float: right;
+  overflow: hidden;
 }
 #garden { width: inherit; height: 450px; overflow: scroll; }
-#brewshop { width: inherit; height: 450px; }
+#brewshop { width: inherit; height: 450px; overflow: hidden; }
 #potions {
   width: inherit;
   height: calc(60% - var(--margin-size));
   height: -moz-calc(60% - var(--margin-size));
   height: -webkit-calc(60% - var(--margin-size));
   height: -o-calc(60% - var(--margin-size));
+  overflow: scroll;
 }
 #dialogue {
   width: inherit;
   height: 40%;
   margin-bottom: var(--margin-size);
   border-bottom: 1px solid var(--border-color);
+  overflow: scroll;
 }
 
 #prompt {
@@ -76,7 +79,7 @@ input::selection, input::moz-selection { background-color: var(--highlight-color
 #commandoverlay {
   z-index: -10;
   position: absolute;
-  margin-top: 20px;
+  margin-top: calc(var(--margin-size)*2);
   width: 400px;
   height: var(--margin-size);
   color: var(--border-color);
