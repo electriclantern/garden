@@ -27,7 +27,7 @@ function respond(s) {
         plant(parseInt(ss[0], 10), ss[1]);
       } else if (isNaN(s)==true && ss.length==1) {
         pcom = "";
-        plant(1, s);
+        plant(1, s.value);
       } else {
         createError();
       }
