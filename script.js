@@ -34,7 +34,7 @@ function toggleTheme() {
 }
 
 function isOverflown(element) {
-    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+    return element.scrollHeight > element.clientHeight-10 || element.scrollWidth > element.clientWidth;
 }
 
 function menu(menu) {
@@ -69,15 +69,17 @@ function rememberCommand(string) {
 }
 var histpos = -1;
 function returnHistory() {
-  if (histpos < 0 || commandHistory == []) {
-    histpos = -1;
-    s.value = "";
-  } else {
-    if (histpos > commandHistory.length-1) {
-      histpos--;
+  if (commandHistory.length > 0) {
+    if (histpos < 0 || commandHistory == []) {
+      histpos = -1;
+      s.value = "";
+    } else {
+      if (histpos > commandHistory.length-1) {
+        histpos--;
+        s.value = commandHistory[commandHistory.length-1 - histpos];
+      }
       s.value = commandHistory[commandHistory.length-1 - histpos];
     }
-    s.value = commandHistory[commandHistory.length-1 - histpos];
   }
 }
 
@@ -148,6 +150,8 @@ function createInventoryResponse(obj) {
 
 function plant(num, plant) {
   emptyplots = [];
+  successnum = 0;
+
   for (i=0; i < plots.length; i++) {
     if (plots[i].length==0) {
       emptyplots.push(i);
@@ -155,22 +159,25 @@ function plant(num, plant) {
   }
 
   if (num <= inventory[plant]) {
-    numofsuccess = 0;
-
-    for (i=0; num > 0; i++) { // for each plant i'm planting:
-      plots[emptyplots[i-1]].push(plant); // put it in the next empty plot.
-      //begingrowth(); // put a growth variable in the same plot.
-      numofsuccess++;
-      num--;
+    for (i = 0; i < plots.length; i++) {
+      if (plots[i].length == 0) {
+        emptyplots.push(i);
+      }
     }
-    inventory[plant] = inventory[plant] - numofsuccess;
-
-    if (numofsuccess <= emptyplots.length) {
-      createResponse("("+numofsuccess+") "+plant+" planted.");
-    } else { //no more empty plots to plant in
-      createResponse("out of plots. "+numofsuccess+" "+plant+" planted.");
+    console.log("emptyplots: " + emptyplots);
+    for (i = 0; i < num; i++) {
+      if (i < emptyplots.length) {
+        plots[emptyplots[i]].push(plant);
+        successnum++;
+        inventory[plant]--;
+      }
+      console.log(i);
+      console.log(plots[emptyplots[i]]);
     }
     console.log(plots);
+    if (successnum==num) { console.log(num + " " + plant + " planted."); }
+    else { console.log("out of plots. "+successnum+" "+plant+" planted.") }
+
   } else if (num > inventory[plant]) {
     createResponse("you don't have enough of that.")
   } else {
