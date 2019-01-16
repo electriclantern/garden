@@ -44,7 +44,7 @@ function respond(s) {
     } else {
       createError();
     }
-    console.log("processing"+ ss[0]+", "+ ss[1]+", "+ ss[2]);
+    console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
 
 
   } else if (window.screen == 'brewshop') {
