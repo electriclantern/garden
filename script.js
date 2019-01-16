@@ -138,13 +138,14 @@ function plant(num, plant) {
   if (num <= inventory[plant]) {
     inventory[plant] = inventory[plant] - num;
     createResponse("("+num+") "+plant+" planted.");
-  } else if (num != 1 && plant != 'plant') {
+  } else if (num > inventory[plant]) {
+    createResponse("you don't have enough of that.")
+  } else {
     createResponse("what are you planting?")
   }
 }
 
 function processThree(command, a, b) {
-  console.log("processing"+ command+", "+ a+", "+ b);
   if (command == 'plant') { plant(a, b); }
   else { createError() }
 }

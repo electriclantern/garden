@@ -42,8 +42,8 @@ function respond(s) {
     } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 2) {
       processTwo(ss[0], ss[1]);
     } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
-      processOne(s.value);
-    } else if (s != "help" && s != "):") {
+      processOne(s[0]);
+    } else if (s != "help" && s != "):") { //nonglobal pcom="" commands
       createError();
     }
     console.log(ss);
