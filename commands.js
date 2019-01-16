@@ -10,7 +10,7 @@ function respond(s) {
   if (window.screen == 'garden') {
     //automatically delete top output if overflow
     outputs = document.getElementsByClassName("o_garden");
-    if (isOverflown(document.getElementById('garden'))) {
+    while (isOverflown(document.getElementById('garden'))) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
 
@@ -50,7 +50,7 @@ function respond(s) {
   } else if (window.screen == 'brewshop') {
     //automatically delete top output if overflow
     outputs = document.getElementsByClassName("o_brewshop");
-    if (isOverflown(document.getElementById('potions'))) {
+    while (isOverflown(document.getElementById('potions'))) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
 

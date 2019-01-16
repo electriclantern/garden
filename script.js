@@ -143,7 +143,11 @@ function createInventoryResponse(obj) {
       }
     }
   }
-  createResponse("you've got: "+ inventoryresponse);
+  if (Object.keys(inventory).length > 0) {
+    createResponse("you've got: "+ inventoryresponse);
+  } else {
+    createResponse("you've got nothing.") //NOTHING, you hear?
+  }
   console.log(inventoryresponse);
 }
 
@@ -189,7 +193,7 @@ function getPlots() {
     if (plots[i].length == 0) {
       getplots += "[] ";
     } else {
-      getplots += "[" + plots[i][0] + ": " + plots[i][1] + "%] ";
+      getplots += "[" + plots[i][0] + " " + plots[i][1];
     }
   }
   createResponse(getplots);
