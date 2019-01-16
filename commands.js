@@ -32,6 +32,7 @@ function respond(s) {
       }
     }
 
+    console.log("processing"+ ss[0]+", "+ ss[1]+", "+ ss[2]);
     // garden global commands
     // if ss[0] is in pcommands && there are 1-3 arguments
     else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 3) {
