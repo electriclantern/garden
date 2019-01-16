@@ -2,7 +2,7 @@ var pcommands = ['plant']
 var ss = [];
 
 function respond(s) {
-  ss = s.value.split(" ");
+  ss = document.getElementById('command').value.split(" ");
 
   commandoverlay.textContent = "";
   console.log("input: " + s);
