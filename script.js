@@ -142,6 +142,8 @@ function plant(num, plant) {
     createResponse("you don't have enough of that.")
   } else {
     createResponse("what are you planting?")
+    pcom = "plant";
+    commandoverlay.textContent = "[number] [plant]";
   }
 }
 

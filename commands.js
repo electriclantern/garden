@@ -30,8 +30,6 @@ function respond(s) {
       } else if (isNaN(s)==true && ss.length==1) {
         pcom = "";
         plant(1, s);
-      } else {
-        createError();
       }
     }
 
