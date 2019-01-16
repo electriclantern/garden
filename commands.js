@@ -1,5 +1,4 @@
 function respond(s) {
-  document.getElementById('prompt').textContent = pcom + ">";
   commandoverlay.textContent = "";
 
   if (window.screen == 'garden') {
@@ -22,10 +21,7 @@ function respond(s) {
     } else if (pcom == "plant") {
       // get input and split it into number and plant
       // if input doesn't have a number, assume it's one
-      if (s == "plant") {
-        pcom = "plant";
-        createInventoryResponse(inventory);
-      } else if (s && isNaN(s.split(" ")[0])==false && isNaN(s.split(" ")[1])==true && s.split(" ").length==2) {
+      if (s && isNaN(s.split(" ")[0])==false && isNaN(s.split(" ")[1])==true && s.split(" ").length==2) {
         pcom = "";
         plant(parseInt(s.split(" ")[0], 10), s.split(" ")[1]);
       } else if (isNaN(s)==true && s.split(" ").length==1) {
@@ -70,4 +66,6 @@ function respond(s) {
     }
     pcom = "";
   }
+
+  document.getElementById('prompt').textContent = pcom + ">";
 }
