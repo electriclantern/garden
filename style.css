@@ -31,15 +31,18 @@ body {
   height: 500px;
   float: right;
 }
-#garden { width: 400px; height: 475px; }
-#brewshop { width: 400px; height: 475px; }
+#garden { width: inherit; height: 475px; }
+#brewshop { width: inherit; height: 475px; }
 #potions {
-  width: 400px;
-  height: 277px;
+  width: inherit;
+  height: calc(60% - 10px);
+  height: -moz-calc(60% - 10px);
+  height: -webkit-calc(60% - 10px);
+  height: -o-calc(60% - 10px);
 }
 #dialogue {
-  width: 400px;
-  height: 186px;
+  width: inherit;
+  height: 40%;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--border-color);
 }
@@ -50,7 +53,7 @@ body {
   padding-right: 10px;
 }
 #command {
-  width: 400px;
+  width: inherit;
   height: 15px;
   padding: 0px;
   border: none;

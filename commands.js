@@ -35,7 +35,7 @@ function respond(s) {
     }
 
     // garden global commands
-    else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 3) {
+    if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 3) {
       processThree(ss[0], ss[1], ss[2]);
     } else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 2) {
       processTwo(ss[0], ss[1]);
