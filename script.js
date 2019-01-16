@@ -161,7 +161,7 @@ function plant(num, plant) {
     inventory[plant] = inventory[plant] - numofsuccess;
 
     if (numofsuccess <= emptyplots.length) {
-      createResponse("("+num+") "+plant+" planted.");
+      createResponse("("+numofsuccess+") "+plant+" planted.");
     } else { //no more empty plots to plant in
       createResponse("out of plots. "+numofsuccess+" "+plant+" planted.");
     }

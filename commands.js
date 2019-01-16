@@ -87,6 +87,9 @@ function processTwo(command, a) {
   else { createError() }
 }
 function processOne(command) {
+  commandoverlay.textContent = "";
+  pcom = "";
+  
   if (command == 'plant') {
     pcom = "plant";
     commandoverlay.textContent = "[number] [plant]";
