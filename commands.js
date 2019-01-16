@@ -15,7 +15,16 @@ function respond(s) {
     }
 
     // GARDEN COMMANDS :)
-    if (pcom == "") {
+    //global
+    if (pcommands.indexOf(ss[0]) != -1 && ss.length == 3) {
+      processThree(ss[0], ss[1], ss[2]);
+    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 2) {
+      processTwo(ss[0], ss[1]);
+    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
+      processOne(ss[0]);
+    }
+
+    else if (pcom == "") {
       if (s == "help") {
         createResponse("help, inventory, plant, plots, clear");
       } else if (s == "):") {
@@ -33,18 +42,8 @@ function respond(s) {
       } else if (s != "clear"){
         createError();
       }
-    }
-
-    // garden global commands
-    // if ss[0] is in pcommands && there are 1-3 arguments
-    if (pcommands.indexOf(ss[0]) != -1 && ss.length == 3) {
-      processThree(ss[0], ss[1], ss[2]);
-    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 2) {
-      processTwo(ss[0], ss[1]);
-    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
-      processOne(ss[0]);
-    } else if (s != "help" && s != "):" && pcom=="") { //nonglobal pcom="" commands
-      createError();
+    } else {
+      createError()
     }
     console.log("slice 'n dice it: "+ss);
     console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
