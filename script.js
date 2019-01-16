@@ -151,6 +151,20 @@ function createInventoryResponse(obj) {
   console.log(inventoryresponse);
 }
 
+function getPlots() {
+  //var plots = [[], [], [], [], []];
+  getplots = "";
+
+  for (i = 0; i < plots.length; i++) {
+    if (plots[i].length == 0) {
+      getplots += "[] ";
+    } else {
+      getplots += "[" + plots[i][0] + " " + plots[i][1] + "] ";
+    }
+  }
+  createResponse(getplots);
+}
+
 function plant(num, plant) {
   emptyplots = [];
   successnum = 0;
@@ -166,6 +180,7 @@ function plant(num, plant) {
     for (i = 0; i < num; i++) {
       if (i < emptyplots.length) {
         plots[emptyplots[i]].push(plant);
+        grow(plots[emptyplots[i]]);
         successnum++;
         inventory[plant]--;
       }
@@ -184,17 +199,6 @@ function plant(num, plant) {
     commandoverlay.textContent = "[number] [plant]";
   }
 }
-
-function getPlots() {
-  //var plots = [[], [], [], [], []];
-  getplots = "";
-
-  for (i = 0; i < plots.length; i++) {
-    if (plots[i].length == 0) {
-      getplots += "[] ";
-    } else {
-      getplots += "[" + plots[i][0] + " " + plots[i][1];
-    }
-  }
-  createResponse(getplots);
+function grow(plot) {
+  plot.push('sprout');
 }

@@ -8,12 +8,6 @@ function respond(s) {
   console.log("input: " + s);
 
   if (window.screen == 'garden') {
-    //automatically delete top output if overflow
-    outputs = document.getElementsByClassName("o_garden");
-    while (isOverflown(document.getElementById('garden'))) {
-      outputs[0].parentNode.removeChild(outputs[0]);
-    }
-
     // GARDEN COMMANDS :)
     //global
     if (pcommands.indexOf(ss[0]) != -1 && ss.length == 3) {
@@ -46,19 +40,23 @@ function respond(s) {
     console.log("slice 'n dice it: "+ss);
     console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
 
-
-  } else if (window.screen == 'brewshop') {
     //automatically delete top output if overflow
-    outputs = document.getElementsByClassName("o_brewshop");
-    while (isOverflown(document.getElementById('potions'))) {
+    outputs = document.getElementsByClassName("o_garden");
+    while (isOverflown(document.getElementById('garden'))) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
-
+  } else if (window.screen == 'brewshop') {
     // BREWSHOP COMMANDS :)
     if (s == "help") {
       createResponse("help, clear");
     } else {
       createError();
+    }
+
+    //automatically delete top output if overflow
+    outputs = document.getElementsByClassName("o_brewshop");
+    while (isOverflown(document.getElementById('potions'))) {
+      outputs[0].parentNode.removeChild(outputs[0]);
     }
   }
 
