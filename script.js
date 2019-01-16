@@ -144,6 +144,7 @@ function plant(num, plant) {
 }
 
 function processThree(command, a, b) {
+  console.log("processing"+ command+", "+ a+", "+ b);
   if (command == 'plant') { plant(a, b) }
   else { createError() }
 }

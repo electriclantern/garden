@@ -11,17 +11,6 @@ function respond(s) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
 
-    // garden global commands
-    if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 3) {
-      processThree(ss[0], ss[1], ss[2]);
-    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 2) {
-      processTwo(ss[0], ss[1]);
-    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
-      processOne(s);
-    } else {
-      createError();
-    }
-
     // GARDEN COMMANDS :)
     if (pcom == "") {
       if (s == "help") {
@@ -41,6 +30,18 @@ function respond(s) {
       } else {
         createError();
       }
+    }
+
+    // garden global commands
+    // if ss[0] is in pcommands && there are 1-3 arguments
+    else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 3) {
+      processThree(ss[0], ss[1], ss[2]);
+    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length >= 1 && ss.length <= 2) {
+      processTwo(ss[0], ss[1]);
+    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
+      processOne(s);
+    } else {
+      createError();
     }
 
 
