@@ -34,7 +34,7 @@ function toggleTheme() {
 }
 
 function isOverflown(element) {
-    return element.scrollHeight+10 > element.clientHeight || element.scrollWidth > element.clientWidth;
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
 }
 
 function menu(menu) {
