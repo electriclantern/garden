@@ -5,6 +5,7 @@ html {
   --background-color: white;
   --highlight-color: yellow;
   --margin-size: 15px;
+  --plant-color: lightgreen;
 }
 body {
   background-color: var(--background-color);
@@ -38,7 +39,16 @@ body {
 }
 #gardenarea { width: inherit; height: 450px; }
 #garden { width: inherit; height: 450px; overflow: scroll; margin-right: -50px; padding-right: 50px;}
-#plots { width: inherit; display: none; border-bottom: 1px solid var(--border-color); margin-bottom: var(--margin-size); }
+#plots { width: inherit; display: none; border-bottom: 1px solid var(--border-color); margin-bottom: var(--margin-size); position: relative; }
+.o_plots_progress {
+  background-color: var(--plant-color);
+  z-index: -10;
+  position: absolute;
+  height: var(--margin-size);
+  top: 0px;
+  margin-bottom: var(--margin-size);
+}
+
 #brewshop { width: inherit; height: 450px; }
 #potions {
   width: inherit;

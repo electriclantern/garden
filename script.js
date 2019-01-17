@@ -166,6 +166,9 @@ function hidePlots() {
   while(document.getElementsByClassName("o_plots").length > 0) {
     document.getElementsByClassName("o_plots")[0].parentNode.removeChild(document.getElementsByClassName("o_plots")[0]);
   }
+  while(document.getElementByClassName("o_plots_progress").length > 0) {
+    document.getElementByClassName("o_plots_progress")[0].parentNode.removeChild(document.getElementByClassName("o_plots_progress")[0]);
+  }
   document.getElementById('plots').style.display = 'none';
   document.getElementById('garden').style.height = "450px";
 }
@@ -176,24 +179,29 @@ function getPlots() {
   // change 'garden's height to 450-(15*plots.length +15)
   // insert plots
 
-  newplotheight = 30*plots.length+3;
+  newplotheight = 30*plots.length+4;
   document.getElementById('plots').style.height = newplotheight + "px";
   newgardenheight = 450-newplotheight-15;
   document.getElementById('garden').style.height = newgardenheight + "px";
 
   for (i = 0; i < plots.length; i++) {
 		output = document.createElement('div');
-    output.style.paddingBottom = "15px";//var(--margin-size)
+    output.style.paddingBottom = "var(--margin-size)";//var(--margin-size)
+    progressbar = document.createElement('div');
+    progressbar.className = "o_plots_progress";
 
     if (!Array.isArray(plots[i]) || !plots[i].length) {
       output.textContent = "[]";
     }
     else {
       output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]";
+      progress = plots[i][2];
+      progressbar.style.width = progress+"px";
     }
 
     output.className = "o_plots";
     document.getElementById('plots').appendChild(output);
+    document.getElementById('plots').appendChild(progressbar);
   }
 }
 
@@ -233,4 +241,5 @@ function plant(num, plant) {
 }
 function grow(plot) {
   plot.push('sprout');
+  plot.push(50);
 }

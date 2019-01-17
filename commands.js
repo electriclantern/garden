@@ -93,5 +93,7 @@ function processOne(command) {
     createResponse("help, inventory, plant, plots, clear");
   } else if (command == "):") {
     createResponse("things will work out, friend.")
+  } else if (command == ":)") {
+    createResponse(":)")
   } else { createError() }
 }
