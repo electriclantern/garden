@@ -1,11 +1,16 @@
 :root { font-family: monospace; }
 html {
-  --border-color: lightgray;
-  --text-color: black;
-  --background-color: white;
-  --highlight-color: yellow;
+  --border-color: lightgray; /* #4f4f4f */
+  --text-color: black; /* white */
+  --background-color: white; /* black */
+  --highlight-color: yellow; /* #673ab7 */
   --margin-size: 15px;
-  --plant-color: lightgreen;
+
+  --sprout: lightgreen;
+  --seedling: green;
+  --in-bloom: pink;
+  --ripe: purple;
+  --wilting: "8d7896";
 }
 body {
   background-color: var(--background-color);
@@ -41,7 +46,6 @@ body {
 #garden { width: inherit; height: 450px; overflow: scroll; margin-right: -50px; padding-right: 50px;}
 #plots { width: inherit; display: none; border-bottom: 1px solid var(--border-color); margin-bottom: var(--margin-size); position: relative; }
 .o_plots_progress {
-  background-color: var(--plant-color);
   z-index: -10;
   position: absolute;
   height: var(--margin-size);
@@ -107,7 +111,7 @@ input:focus { outline: none; }
   color: var(--border-color);
 }
 
-.textbutton { margin-bottom: var(--margin-size); }
+.textbutton { margin-bottom: var(--margin-size); height: var(--margin-size); }
 .textbutton:hover { cursor: pointer; }
 
 .nobluemobileselect {
