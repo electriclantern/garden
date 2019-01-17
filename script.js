@@ -178,14 +178,20 @@ function getPlots() {
 
   newplotheight = 30 * plots.length;
   document.getElementById('plots').style.height = newplotheight + "px";
-  newgardenheight = 450-newplotheight;
+  newgardenheight = 450-newplotheight-15;
   document.getElementById('garden').style.height = newgardenheight + "px";
 
   for (i = 0; i <= plots.length; i++) {
 		output = document.createElement('div');
     output.style.paddingBottom = "15px";//var(--margin-size)
-    if (plots[i][0] != undefined || plots.length > 0) { output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; }
-    else { output.textContent = "[]"; }
+
+    if (plots[i][0] == undefined || plots.length == 0) {
+      output.textContent = "[]";
+    }
+    else {
+      output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]";
+    }
+
     output.className = "o_plots";
     document.getElementById('plots').appendChild(output);
   }

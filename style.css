@@ -38,7 +38,7 @@ body {
 }
 #gardenarea { width: inherit; height: 450px; }
 #garden { width: inherit; height: 450px; overflow: scroll; margin-right: -50px; padding-right: 50px;}
-#plots { width: inherit; display: none; border-bottom: 1px solid var(--border-color); }
+#plots { width: inherit; display: none; border-bottom: 1px solid var(--border-color); margin-bottom: var(--margin-size); }
 #brewshop { width: inherit; height: 450px; }
 #potions {
   width: inherit;
