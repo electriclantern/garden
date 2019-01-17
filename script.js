@@ -156,7 +156,7 @@ function createInventoryResponse(obj) {
 var inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
 var plots = [[], [], [], [], []];
 
-setInterval(function(){ updatePlots() }, 1000);
+setInterval(function(){ updatePlots() }, 3000);
 
 function updatePlots() {
   fullplots = [];
@@ -171,7 +171,7 @@ function updatePlots() {
     status = plots[fullplots[i]][1];
     growth = plots[fullplots[i]][2];
     progressbarforcolor = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
-  	if (growth <= 100) { //increment
+  	if (growth < 100) { //increment
     	plots[fullplots[i]][2]++;
       console.log('+1');
     }
@@ -242,8 +242,8 @@ function getPlots() {
     }
     else {
       output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]";
-      progress = plots[i][2];
-      progressbar.style.width = progress+"%";
+      progressbar.style.width = plots[i][2]+"%";
+      console.log(plots[i][0]+plots[i][1]+plots[i][2]);
     }
 
     output.className = "o_plots";
