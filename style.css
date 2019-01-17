@@ -50,6 +50,7 @@ body {
   position: absolute;
   height: var(--margin-size);
   margin-bottom: var(--margin-size);
+  background-color: var(--sprout);
 }
 
 #brewshop { width: inherit; height: 450px; }
