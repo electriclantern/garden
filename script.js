@@ -189,6 +189,8 @@ function getPlots() {
     output.style.paddingBottom = "var(--margin-size)";//var(--margin-size)
     progressbar = document.createElement('div');
     progressbar.className = "o_plots_progress";
+    progressbartop = (i+1)*15+1;
+    progressbar.style.top = progressbartop+"px";
 
     if (!Array.isArray(plots[i]) || !plots[i].length) {
       output.textContent = "[]";
@@ -196,7 +198,7 @@ function getPlots() {
     else {
       output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]";
       progress = plots[i][2];
-      progressbar.style.width = progress+"px";
+      progressbar.style.width = progress+"%";
     }
 
     output.className = "o_plots";

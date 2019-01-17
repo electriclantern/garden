@@ -45,7 +45,6 @@ body {
   z-index: -10;
   position: absolute;
   height: var(--margin-size);
-  top: 0px;
   margin-bottom: var(--margin-size);
 }
 
