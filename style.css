@@ -75,7 +75,8 @@ body {
   position: absolute;
 }
 input:focus { outline: none; }
-input::selection, input::moz-selection { background-color: var(--highlight-color); }
+::selection { background-color: var(--highlight-color); }
+::moz-selection { background-color: var(--highlight-color); }
 #commandoverlay {
   z-index: -10;
   position: absolute;
