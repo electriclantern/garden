@@ -37,7 +37,7 @@ body {
   float: right;
   overflow: hidden;
 }
-#garden { width: inherit; height: 450px; overflow: scroll; }
+#garden { width: inherit; height: 450px; overflow: scroll; margin-right: -50px; padding-right: 50px;}
 #brewshop { width: inherit; height: 450px; overflow: hidden; }
 #potions {
   width: inherit;
@@ -46,6 +46,7 @@ body {
   height: -webkit-calc(60% - var(--margin-size));
   height: -o-calc(60% - var(--margin-size));
   overflow: scroll;
+  margin-right: -50px; padding-right: 50px;
 }
 #dialogue {
   width: inherit;
@@ -53,6 +54,7 @@ body {
   margin-bottom: var(--margin-size);
   border-bottom: 1px solid var(--border-color);
   overflow: scroll;
+  margin-right: -50px; padding-right: 50px;
 }
 
 #prompt {
