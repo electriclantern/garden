@@ -170,7 +170,7 @@ function updatePlots() {
     plant = plots[fullplots[i]][0];
     status = plots[fullplots[i]][1];
     growth = plots[fullplots[i]][2];
-    progressbar = getElementsByClassName('o_plots_progress')[fullplots[i]];
+    progressbar = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
   	if (growth <= 100) { //increment
     	growth++;
     }
