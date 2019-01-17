@@ -170,27 +170,32 @@ function updatePlots() {
     plant = plots[fullplots[i]][0];
     status = plots[fullplots[i]][1];
     growth = plots[fullplots[i]][2];
-    oplotsprogress = document.getElementsByClassName("o_plots_progress");
+
+    if (document.querySelector('.o_plots_progress') !== null) { //if progress bars exist
+      progressbar = document.getElementsByClassName("o_plots_progress");
+      if (growth >= 80) {
+        progressbar[fullplots[i]].style.backgroundColor = "var(--wilting)";
+        status = 'wilting';
+      } else if (growth >= 60) {
+        oplotsprogress[fullplots[i]].style.backgroundColor = "var(--ripe)";
+        status = 'ripe';
+      } else if (growth >= 40) {
+        oplotsprogress[fullplots[i]].style.backgroundColor = "var(--in-bloom)";
+        status = 'in bloom';
+      } else if (growth >= 20) {
+        oplotsprogress[fullplots[i]].style.backgroundColor = "var(--seedling)";
+        status = 'seedling';
+      } else {
+        oplotsprogress[fullplots[i]].style.backgroundColor = "var(--sprout)";
+        status = 'sprout';
+      }
+    }
+
   	if (growth < 100) { //increment
     	plots[fullplots[i]][2]++;
     }
-    if (growth >= 80) {
-      oplotsprogress[fullplots[i]].style.backgroundColor = 'var(--wilting)';
-      status = 'wilting';
-    } else if (growth >= 60) {
-      oplotsprogress[fullplots[i]].style.backgroundColor = 'var(--ripe)';
-      status = 'ripe';
-    } else if (growth >= 40) {
-      oplotsprogress[fullplots[i]].style.backgroundColor = 'var(--in-bloom)';
-      status = 'in bloom';
-    } else if (growth >= 20) {
-      oplotsprogress[fullplots[i]].style.backgroundColor = "var(--seedling)";
-      status = 'seedling';
-    } else {
-      oplotsprogress[fullplots[i]].style.backgroundColor = "var(--sprout)";
-      status = 'sprout';
-    }
-    console.log(plant+" "+status+" "+growth);
+
+    console.log(plots);
   }
 
   if (document.getElementById('plots').style.display == 'block') {
@@ -217,31 +222,31 @@ function hidePlots() {
   document.getElementById('garden').style.height = "450px";
 }
 function getPlots() {
-	hidePlots();
-  document.getElementById('plots').style.display = 'block';
-  // change 'plot's height to 15*plots.length +15
-  // change 'garden's height to 450-(15*plots.length +15)
-  // insert plots
+	hidePlots(); //start fresh
 
+  //show plots and shorten garden
+  document.getElementById('plots').style.display = 'block';
   newplotheight = 30*plots.length+4;
   document.getElementById('plots').style.height = newplotheight + "px";
   newgardenheight = 450-newplotheight-15;
   document.getElementById('garden').style.height = newgardenheight + "px";
 
-  for (i = 0; i < plots.length; i++) {
-		output = document.createElement('div');
-    output.style.paddingBottom = "var(--margin-size)";//var(--margin-size)
-    progressbar = document.createElement('div');
+  //draw
+  for (i = 0; i < plots.length; i++) { //for each plot
+		output = document.createElement('div'); //create name
+    output.style.paddingBottom = "var(--margin-size)";
+
+    progressbar = document.createElement('div'); //create progress bar
     progressbar.className = "o_plots_progress";
     progressbartop = i*30+1;
     progressbar.style.top = progressbartop+"px";
 
-    if (!Array.isArray(plots[i]) || !plots[i].length) {
+    if (!Array.isArray(plots[i]) || !plots[i].length) { //if there is no plant in this plot
       output.textContent = "[]";
     }
-    else {
-      output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]";
-      progressbar.style.width = plots[i][2]+"%";
+    else { //if there is plant in this plot
+      output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; //write name
+      progressbar.style.width = plots[i][2]+"%"; //draw progress bar
       console.log(plots[i][0]+plots[i][1]+plots[i][2]);
     }
 
