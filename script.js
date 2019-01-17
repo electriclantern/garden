@@ -166,8 +166,8 @@ function hidePlots() {
   while(document.getElementsByClassName("o_plots").length > 0) {
     document.getElementsByClassName("o_plots")[0].parentNode.removeChild(document.getElementsByClassName("o_plots")[0]);
   }
-  while(document.getElementByClassName("o_plots_progress").length > 0) {
-    document.getElementByClassName("o_plots_progress")[0].parentNode.removeChild(document.getElementByClassName("o_plots_progress")[0]);
+  while(document.getElementsByClassName("o_plots_progress").length > 0) {
+    document.getElementsByClassName("o_plots_progress")[0].parentNode.removeChild(document.getElementsByClassName("o_plots_progress")[0]);
   }
   document.getElementById('plots').style.display = 'none';
   document.getElementById('garden').style.height = "450px";
