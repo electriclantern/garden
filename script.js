@@ -155,15 +155,14 @@ function createInventoryResponse(obj) {
 
 var plotsize = "";
 function togglePlots() {
-  console.log('entering function');
   if (document.getElementById('plots').style.display == 'block') {
     hidePlots();
   } else {
-    console.log('getplots');
     getPlots();
   }
 }
 function hidePlots() {
+	document.getElementById('plots').style.display = 'none';
   while(document.getElementsByClassName("o_plots").length > 0) {
     document.getElementsByClassName("o_plots")[0].parentNode.removeChild(document.getElementsByClassName("o_plots")[0]);
   }
@@ -171,24 +170,22 @@ function hidePlots() {
   document.getElementById('garden').style.height = "450px";
 }
 function getPlots() {
-  hidePlots();
-  plotsize = "";
+	hidePlots();
+  document.getElementById('plots').style.display = 'block';
+  // change 'plot's height to 15*plots.length +15
+  // change 'garden's height to 450-(15*plots.length +15)
+  // insert plots
 
-  plots = document.getElementById('plots'); //make div plots appear
-  plots.style.display = 'block';
-  a = getComputedStyle(document.html).getPropertyValue('--margin-size')*15+15;
-  plotsize += a + "px"; //change div plots height to (15*plots.length)+15
-  plots.style.height = plotsize;
-  gardensize = "";
-  b = 450-a;
-  gardensize += b+"px";
-  document.getElementById('garden').style.height = gardensize; //make div garden shorter by (15*plots.length)+15
+  newplotheight = 30 * plots.length;
+  document.getElementById('plots').style.height = newplotheight + "px";
+  newgardenheight = 450-newplotheight;
+  document.getElementById('garden').style.height = newgardenheight + "px";
 
-  for (i=0; i<plots.length; i++) { //insert plots
-    output = document.createElement('div');
-    //output.style.width = "400px";
-    output.style.paddingBottom = "var(--margin-size)";
-    output.textContent = plots[i][0];
+  for (i = 0; i <= plots.length; i++) {
+		output = document.createElement('div');
+    output.style.paddingBottom = "15px";//var(--margin-size)
+    if (plots[i][0]) { output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; }
+    else { output.textContent = "[]"; }
     output.className = "o_plots";
     document.getElementById('plots').appendChild(output);
   }
