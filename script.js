@@ -173,6 +173,7 @@ function updatePlots() {
     progressbar = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
   	if (growth <= 100) { //increment
     	growth++;
+      console.log('+1');
     }
     if (growth >= 80) {
       progressbar.style.backgroundColor = 'var(--wilting)';
@@ -190,6 +191,7 @@ function updatePlots() {
       progressbar.style.backgroundColor = "var(--sprout)";
       status = 'sprout';
     }
+    console.log(plant+" "+status+" "+growth);
   }
 
   if (document.getElementById('plots').style.display == 'block') {
