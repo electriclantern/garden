@@ -184,7 +184,7 @@ function getPlots() {
   for (i = 0; i <= plots.length; i++) {
 		output = document.createElement('div');
     output.style.paddingBottom = "15px";//var(--margin-size)
-    if (plots[i][0]) { output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; }
+    if (plots[i][0] != undefined || array.length > 0) { output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; }
     else { output.textContent = "[]"; }
     output.className = "o_plots";
     document.getElementById('plots').appendChild(output);
