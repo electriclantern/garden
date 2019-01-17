@@ -172,7 +172,7 @@ function updatePlots() {
     growth = plots[fullplots[i]][2];
     progressbarforcolor = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
   	if (growth <= 100) { //increment
-    	growth++;
+    	plots[fullplots[i]][2]++;
       console.log('+1');
     }
     if (growth >= 80) {
