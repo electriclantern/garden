@@ -185,7 +185,7 @@ function getPlots() {
 		output = document.createElement('div');
     output.style.paddingBottom = "15px";//var(--margin-size)
 
-    if (!Array.isArray(plots) || !plots.length) {
+    if (!Array.isArray(plots[i]) || !plots[i].length) {
       output.textContent = "[]";
     }
     else {
