@@ -51,9 +51,18 @@ body {
   width: inherit;
   height: 40%;
   margin-bottom: var(--margin-size);
-  border-bottom: 1px solid var(--border-color);
   overflow: scroll;
   margin-right: -50px; padding-right: 50px;
+  padding-bottom: var(--margin-size);
+}
+#dialogue:after {
+  content: "";
+  background: var(--border-color);
+  position: absolute;
+  top: 40%;
+  left: 114px;
+  height: 1px;
+  width: inherit;
 }
 
 #prompt {
