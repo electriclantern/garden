@@ -177,16 +177,16 @@ function updatePlots() {
         progressbar[fullplots[i]].style.backgroundColor = "var(--wilting)";
         status = 'wilting';
       } else if (growth >= 60) {
-        oplotsprogress[fullplots[i]].style.backgroundColor = "var(--ripe)";
+        progressbar[fullplots[i]].style.backgroundColor = "var(--ripe)";
         status = 'ripe';
       } else if (growth >= 40) {
-        oplotsprogress[fullplots[i]].style.backgroundColor = "var(--in-bloom)";
+        progressbar[fullplots[i]].style.backgroundColor = "var(--in-bloom)";
         status = 'in bloom';
       } else if (growth >= 20) {
-        oplotsprogress[fullplots[i]].style.backgroundColor = "var(--seedling)";
+        progressbar[fullplots[i]].style.backgroundColor = "var(--seedling)";
         status = 'seedling';
       } else {
-        oplotsprogress[fullplots[i]].style.backgroundColor = "var(--sprout)";
+        progressbar[fullplots[i]].style.backgroundColor = "var(--sprout)";
         status = 'sprout';
       }
     }

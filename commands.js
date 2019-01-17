@@ -1,4 +1,4 @@
-var pcommands = ['plant', 'inventory', 'inv', 'plots', 'help', '):']
+var pcommands = ['plant', 'inventory', 'inv', 'plots', 'help', '):', ':)']
 var ss = [];
 
 function respond(s) {
