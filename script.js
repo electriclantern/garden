@@ -2,9 +2,6 @@ var darktheme = false;
 var pcom = "";
 var commandoverlay = document.getElementById('commandoverlay');
 
-var inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
-var plots = [[], [], [], [], []];
-
 menu('gardenarea');
 document.getElementById('command').focus();
 window.addEventListener("keydown", function(e) {
@@ -153,7 +150,33 @@ function createInventoryResponse(obj) {
   console.log(inventoryresponse);
 }
 
-var plotsize = "";
+////////////////////////////////////////////
+// PLANTING & GROWING //////////////////////
+////////////////////////////////////////////
+var inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
+var plots = [[], [], [], [], []];
+
+setInterval(function(){ updatePlots() }, 1000);
+
+function updatePlots() {
+  fullplots = [];
+  for (i = 0; i < plots.length; i++) {
+    if (plots[i].length) {
+      fullplots.push(i);
+    }
+  }
+
+  for (i = 0; i < fullplots.length; i++) {
+  	if (plots[fullplots[i]][2] <= 100) {
+    	plots[fullplots[i]][2]++;
+    }
+  }
+
+  if (document.getElementById('plots').style.display == 'block') {
+    getPlots();
+  }
+}
+
 function togglePlots() {
   if (document.getElementById('plots').style.display == 'block') {
     hidePlots();
@@ -189,7 +212,7 @@ function getPlots() {
     output.style.paddingBottom = "var(--margin-size)";//var(--margin-size)
     progressbar = document.createElement('div');
     progressbar.className = "o_plots_progress";
-    progressbartop = (i+1)*15+1;
+    progressbartop = i*30+1;
     progressbar.style.top = progressbartop+"px";
 
     if (!Array.isArray(plots[i]) || !plots[i].length) {
