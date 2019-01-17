@@ -166,7 +166,7 @@ function hidePlots() {
     document.getElementsByClassName("o_plots")[0].parentNode.removeChild(document.getElementsByClassName("o_plots")[0]);
   }
   document.getElementById('plots').style.display = 'none';
-  document.getElementById('garden').style.height = getComputedStyle(document.getElementById('garden')).getPropertyValue('height')+plotsize;
+  document.getElementById('garden').style.height = "450px";
 }
 function getPlots() {
   hidePlots();
@@ -174,9 +174,13 @@ function getPlots() {
 
   plots = document.getElementById('plots'); //make div plots appear
   plots.style.display = 'block';
-  plotsize += getComputedStyle(document.html).getPropertyValue('--margin-size')*15+15 + "px"; //change div plots height to (15*plots.length)+15
+  a = getComputedStyle(document.html).getPropertyValue('--margin-size')*15+15;
+  plotsize += a + "px"; //change div plots height to (15*plots.length)+15
   plots.style.height = plotsize;
-  document.getElementById('garden').style.height = getComputedStyle(document.getElementById('garden')).getPropertyValue('height')-plotsize; //make div garden shorter by (15*plots.length)+15
+  gardensize = "";
+  b = 450-a;
+  gardensize += b+"px";
+  document.getElementById('garden').style.height = gardensize; //make div garden shorter by (15*plots.length)+15
 
   for (i=0; i<plots.length; i++) { //insert plots
     output = document.createElement('div');
