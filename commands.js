@@ -7,7 +7,7 @@ function respond(s) {
   commandoverlay.textContent = "";
   console.log("input: " + s);
 
-  if (window.screen == 'garden') {
+  if (window.screen == 'gardenarea') {
     // GARDEN COMMANDS :)
     // garden
     if (pcommands.indexOf(ss[0]) != -1 && ss.length == 3) {
@@ -86,7 +86,8 @@ function processOne(command) {
   } else if (command == 'inventory' || command == 'inv') {
     createInventoryResponse(inventory);
   } else if (command == 'plots') {
-    console.log('plots entered')
+    createResponse("plots toggled.");
+    console.log('plots entered');
     togglePlots();
   } else if (command == 'help') {
     createResponse("help, inventory, plant, plots, clear");
