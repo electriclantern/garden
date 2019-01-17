@@ -35,10 +35,9 @@ body {
   width: 400px;
   height: 500px;
   float: right;
-  overflow: hidden;
 }
 #garden { width: inherit; height: 450px; overflow: scroll; margin-right: -50px; padding-right: 50px;}
-#brewshop { width: inherit; height: 450px; overflow: hidden; }
+#brewshop { width: inherit; height: 450px; }
 #potions {
   width: inherit;
   height: calc(60% - var(--margin-size));
