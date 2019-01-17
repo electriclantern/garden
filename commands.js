@@ -86,6 +86,7 @@ function processOne(command) {
   } else if (command == 'inventory' || command == 'inv') {
     createInventoryResponse(inventory);
   } else if (command == 'plots') {
+    console.log('plots entered')
     togglePlots();
   } else if (command == 'help') {
     createResponse("help, inventory, plant, plots, clear");

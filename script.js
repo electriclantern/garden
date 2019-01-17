@@ -155,6 +155,7 @@ function createInventoryResponse(obj) {
 
 var plotsize = "";
 function togglePlots() {
+  console.log('entering function');
   if (document.getElementById('plots').style.display == 'block') {
     hidePlots();
   } else {
