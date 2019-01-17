@@ -170,25 +170,25 @@ function updatePlots() {
     plant = plots[fullplots[i]][0];
     status = plots[fullplots[i]][1];
     growth = plots[fullplots[i]][2];
-    progressbar = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
+    progressbarforcolor = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
   	if (growth <= 100) { //increment
     	growth++;
       console.log('+1');
     }
     if (growth >= 80) {
-      progressbar.style.backgroundColor = 'var(--wilting)';
+      progressbarforcolor.style.backgroundColor = 'var(--wilting)';
       status = 'wilting';
     } else if (growth >= 60) {
-      progressbar.style.backgroundColor = 'var(--ripe)';
+      progressbarforcolor.style.backgroundColor = 'var(--ripe)';
       status = 'ripe';
     } else if (growth >= 40) {
-      progressbar.style.backgroundColor = 'var(--in-bloom)';
+      progressbarforcolor.style.backgroundColor = 'var(--in-bloom)';
       status = 'in bloom';
     } else if (growth >= 20) {
-      progressbar.style.backgroundColor = "var(--seedling)";
+      progressbarforcolor.style.backgroundColor = "var(--seedling)";
       status = 'seedling';
     } else {
-      progressbar.style.backgroundColor = "var(--sprout)";
+      progressbarforcolor.style.backgroundColor = "var(--sprout)";
       status = 'sprout';
     }
     console.log(plant+" "+status+" "+growth);
