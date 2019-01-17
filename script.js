@@ -176,7 +176,7 @@ function getPlots() {
   // change 'garden's height to 450-(15*plots.length +15)
   // insert plots
 
-  newplotheight = 30 * plots.length;
+  newplotheight = 30*plots.length+3;
   document.getElementById('plots').style.height = newplotheight + "px";
   newgardenheight = 450-newplotheight-15;
   document.getElementById('garden').style.height = newgardenheight + "px";
@@ -185,7 +185,7 @@ function getPlots() {
 		output = document.createElement('div');
     output.style.paddingBottom = "15px";//var(--margin-size)
 
-    if (plots[i][0] == undefined || plots.length == 0) {
+    if (!Array.isArray(plots) || !plots.length) {
       output.textContent = "[]";
     }
     else {
