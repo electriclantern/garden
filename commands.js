@@ -28,6 +28,8 @@ function respond(s) {
       } else if (s != "clear"){
         createError();
       }
+    } else {
+      createError();
     }
     console.log("slice 'n dice it: "+ss);
     console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
@@ -84,7 +86,7 @@ function processOne(command) {
   } else if (command == 'inventory' || command == 'inv') {
     createInventoryResponse(inventory);
   } else if (command == 'plots') {
-    getPlots();
+    togglePlots();
   } else if (command == 'help') {
     createResponse("help, inventory, plant, plots, clear");
   } else if (command == "):") {

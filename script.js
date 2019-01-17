@@ -5,7 +5,7 @@ var commandoverlay = document.getElementById('commandoverlay');
 var inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
 var plots = [[], [], [], [], []];
 
-menu('garden');
+menu('gardenarea');
 document.getElementById('command').focus();
 window.addEventListener("keydown", function(e) {
     // space and arrow keys
@@ -44,12 +44,12 @@ function menu(menu) {
   document.getElementById('prompt').textContent = pcom + ">";
 
   document.getElementById(menu).style.display = "block";
-  if (menu=='garden') {
+  if (menu=='gardenarea') {
     document.getElementById('brewshop').style.display = "none";
     document.getElementById('gardenbutton').style.background = "var(--highlight-color)";
     document.getElementById('brewshopbutton').style.background = "none";
   } else {
-    document.getElementById('garden').style.display = "none";
+    document.getElementById('gardenarea').style.display = "none";
     document.getElementById('gardenbutton').style.background = "none";
     document.getElementById('brewshopbutton').style.background = "var(--highlight-color)";
   }
@@ -70,6 +70,7 @@ function rememberCommand(string) {
 }
 var histpos = -1;
 function returnHistory() {
+  commandoverlay.textContent = "";
   if (commandHistory.length > 0) {
     if (histpos < 0 || commandHistory == []) {
       histpos = -1;
@@ -152,18 +153,39 @@ function createInventoryResponse(obj) {
   console.log(inventoryresponse);
 }
 
-function getPlots() {
-  //var plots = [[], [], [], [], []];
-  getplots = "";
-
-  for (i = 0; i < plots.length; i++) {
-    if (plots[i].length == 0) {
-      getplots += "[] ";
-    } else {
-      getplots += "[" + plots[i][0] + " " + plots[i][1] + "] ";
-    }
+var plotsize = "";
+function togglePlots() {
+  if (document.getElementById('plots').style.display == 'block') {
+    hidePlots();
+  } else {
+    getPlots();
   }
-  createResponse(getplots);
+}
+function hidePlots() {
+  while(document.getElementsByClassName("o_plots").length > 0) {
+    document.getElementsByClassName("o_plots")[0].parentNode.removeChild(document.getElementsByClassName("o_plots")[0]);
+  }
+  document.getElementById('plots').style.display = 'none';
+  document.getElementById('garden').style.height = getComputedStyle(document.getElementById('garden')).getPropertyValue('height')+plotsize;
+}
+function getPlots() {
+  hidePlots();
+  plotsize = "";
+
+  plots = document.getElementById('plots'); //make div plots appear
+  plots.style.display = 'block';
+  plotsize += getComputedStyle(document.html).getPropertyValue('--margin-size')*15+15 + "px"; //change div plots height to (15*plots.length)+15
+  plots.style.height = plotsize;
+  document.getElementById('garden').style.height = getComputedStyle(document.getElementById('garden')).getPropertyValue('height')-plotsize; //make div garden shorter by (15*plots.length)+15
+
+  for (i=0; i<plots.length; i++) { //insert plots
+    output = document.createElement('div');
+    //output.style.width = "400px";
+    output.style.paddingBottom = "var(--margin-size)";
+    output.textContent = plots[i][0];
+    output.className = "o_plots";
+    document.getElementById('plots').appendChild(output);
+  }
 }
 
 function plant(num, plant) {

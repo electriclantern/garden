@@ -6,15 +6,18 @@
   <div id="darktheme" class="textbutton" style="width:40px;" onclick="toggleTheme()">dark</div>
   <div id="container" class="nobluemobileselect">
     <div id="navigation">
-      <div id="gardenbutton" class="textbutton" onclick="menu('garden')">garden</div>
+      <div id="gardenbutton" class="textbutton" onclick="menu('gardenarea')">garden</div>
       <div id="brewshopbutton" class="textbutton" onclick="menu('brewshop')">brewshop</div>
 
       <div id="prompt">></div>
     </div>
 
     <div id="gamecontainer">
-      <div id="garden">
-        <div style="width: 400px; height: 15px; padding-bottom: 10px; color: var(--border-color);" id="helpline">type "help" to get a list of commands</div>
+      <div id="gardenarea">
+        <div id="plots"></div>
+        <div id="garden">
+          <div style="width: 400px; height: 15px; padding-bottom: 10px; color: var(--border-color);" id="helpline">type "help" to get a list of commands</div>
+        </div>
       </div>
       <div id="brewshop">
         <div id="dialogue">dialogue</div>

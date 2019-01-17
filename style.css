@@ -36,7 +36,9 @@ body {
   height: 500px;
   float: right;
 }
+#gardenarea { width: inherit; height: 450px; }
 #garden { width: inherit; height: 450px; overflow: scroll; margin-right: -50px; padding-right: 50px;}
+#plots { width: inherit; display: none; }
 #brewshop { width: inherit; height: 450px; }
 #potions {
   width: inherit;
