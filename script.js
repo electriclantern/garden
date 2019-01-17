@@ -6,6 +6,7 @@ var inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranu
 var plots = [[], [], [], [], []];
 
 menu('garden');
+document.getElementById('command').focus();
 window.addEventListener("keydown", function(e) {
     // space and arrow keys
     if([38, 40].indexOf(e.keyCode) > -1) {
@@ -184,13 +185,13 @@ function plant(num, plant) {
         successnum++;
         inventory[plant]--;
       }
-      console.log(i);
-      console.log(plots[emptyplots[i]]);
     }
     console.log(plots);
     if (successnum==num) { createResponse(num + " " + plant + " planted."); }
     else { createResponse("out of plots. "+successnum+" "+plant+" planted.") }
-
+    getPlots();
+    commandoverlay.textContent = "";
+    pcom = "";
   } else if (num > inventory[plant]) {
     createResponse("you don't have enough of that.")
   } else {

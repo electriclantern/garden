@@ -1,4 +1,4 @@
-var pcommands = ['plant', 'inventory', 'inv', 'plots', 'harvest']
+var pcommands = ['plant', 'inventory', 'inv', 'plots', 'help', '):']
 var ss = [];
 
 function respond(s) {
@@ -9,7 +9,7 @@ function respond(s) {
 
   if (window.screen == 'garden') {
     // GARDEN COMMANDS :)
-    //global
+    // garden
     if (pcommands.indexOf(ss[0]) != -1 && ss.length == 3) {
       processThree(ss[0], ss[1], ss[2]);
     } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 2) {
@@ -18,15 +18,7 @@ function respond(s) {
       processOne(ss[0]);
     }
 
-    else if (pcom == "") {
-      if (s == "help") {
-        createResponse("help, inventory, plant, plots, clear");
-      } else if (s == "):") {
-        createResponse("things will work out, friend.")
-      } else { createError() }
-    } else if (pcom == "plant") {
-      // get input and split it into number and plant
-      // if input doesn't have a number, assume it's one
+    else if (pcom == "plant") {
       if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==2) {
         pcom = "";
         plant(parseInt(ss[0], 10), ss[1]);
@@ -93,5 +85,9 @@ function processOne(command) {
     createInventoryResponse(inventory);
   } else if (command == 'plots') {
     getPlots();
+  } else if (command == 'help') {
+    createResponse("help, inventory, plant, plots, clear");
+  } else if (command == "):") {
+    createResponse("things will work out, friend.")
   } else { createError() }
 }
