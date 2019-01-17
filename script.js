@@ -127,7 +127,7 @@ function createResponse(string) {
   output.textContent = string;
   if (window.screen == 'gardenarea') {
     document.getElementById('garden').appendChild(output);
-    output.className = "o_garden";
+    output.className = "o_gardenarea";
   }
   else if (window.screen == 'brewshop') {
     document.getElementById('potions').appendChild(output);
@@ -181,7 +181,7 @@ function getPlots() {
   newgardenheight = 450-newplotheight-15;
   document.getElementById('garden').style.height = newgardenheight + "px";
 
-  for (i = 0; i <= plots.length; i++) {
+  for (i = 0; i < plots.length; i++) {
 		output = document.createElement('div');
     output.style.paddingBottom = "15px";//var(--margin-size)
 
