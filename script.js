@@ -158,6 +158,7 @@ function togglePlots() {
   if (document.getElementById('plots').style.display == 'block') {
     hidePlots();
   } else {
+    console.log('getplots');
     getPlots();
   }
 }
