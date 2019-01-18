@@ -156,7 +156,7 @@ function createInventoryResponse(obj) {
 var inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
 var plots = [[], [], [], [], []];
 
-//var timer = setInterval(updatePlots, 3000);
+var timer = setInterval(updatePlots, 3000);
 
 function updatePlots() {
   fullplots = [];

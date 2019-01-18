@@ -33,6 +33,7 @@ body {
   transform: translate(-50%, -50%);
 }
 #navigation {
+  top: var(--margin-size);
   width: 100px;
   height: 500px;
   position: absolute;

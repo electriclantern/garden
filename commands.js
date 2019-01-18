@@ -5,7 +5,7 @@ function respond(s) {
   ss = document.getElementById('command').value.split(" ");
 
   commandoverlay.textContent = "";
-  console.log("input: " + s);
+  //console.log("input: " + s);
 
   if (window.screen == 'gardenarea') {
     // GARDEN COMMANDS :)
@@ -21,24 +21,18 @@ function respond(s) {
     else if (pcom == "plant") {
       if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==2) {
         pcom = "";
-        clearInterval(timer);
-        console.log('about to plant '+parseInt(ss[0], 10)+ss[1]);
         plant(parseInt(ss[0], 10), ss[1]);
-        var timer = setInterval(updatePlots, 3000);
       } else if (isNaN(s)==true && ss.length==1) {
         pcom = "";
-        clearInterval(timer);
-        console.log('about to plant 1'+s);
         plant(1, s);
-        var timer = setInterval(updatePlots, 3000);
       } else if (s != "clear"){
         createError();
       }
     } else {
       createError();
     }
-    console.log("slice 'n dice it: "+ss);
-    console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
+    //console.log("slice 'n dice it: "+ss);
+    //console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
 
     //automatically delete 56 characters from top output if overflow
     area = document.getElementById('garden');
@@ -74,21 +68,11 @@ function respond(s) {
 }
 
 function processThree(command, a, b) {
-  if (command == 'plant') {
-    clearInterval(timer);
-    console.log('about to plant '+a+b);
-    plant(a, b);
-    var timer = setInterval(updatePlots, 3000);
-  }
+  if (command == 'plant') { plant(a, b); }
   else { createError() }
 }
 function processTwo(command, a) {
-  if (command == 'plant') {
-    clearInterval(timer);
-    console.log('about to plant 1'+a);
-    plant(1, a);
-    var timer = setInterval(updatePlots, 3000);
-  }
+  if (command == 'plant') { plant(1, a); }
   else { createError() }
 }
 function processOne(command) {
@@ -102,7 +86,6 @@ function processOne(command) {
   } else if (command == 'inventory' || command == 'inv') {
     createInventoryResponse(inventory);
   } else if (command == 'plots') {
-    console.log('plots entered');
     togglePlots();
   } else if (command == 'help') {
     createResponse("help, inventory, plant, plots, clear");
