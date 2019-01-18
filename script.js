@@ -166,8 +166,8 @@ function updatePlots() {
     }
   }
 
-  for (i = 0; i < fullplots.length; i++) {
-    plant = plots[fullplots[i]][0];
+  for (i = 0; i < fullplots.length; i++) { //for each plot that is full
+    //plant = plots[fullplots[i]][0];
     status = plots[fullplots[i]][1];
     growth = plots[fullplots[i]][2];
 
