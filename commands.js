@@ -22,13 +22,13 @@ function respond(s) {
       if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==2) {
         pcom = "";
         clearInterval(timer);
-        console.log('about to plant '+num+plant);
+        console.log('about to plant '+parseInt(ss[0], 10)+ss[1]);
         plant(parseInt(ss[0], 10), ss[1]);
         var timer = setInterval(updatePlots, 3000);
       } else if (isNaN(s)==true && ss.length==1) {
         pcom = "";
         clearInterval(timer);
-        console.log('about to plant '+num+plant);
+        console.log('about to plant 1'+s);
         plant(1, s);
         var timer = setInterval(updatePlots, 3000);
       } else if (s != "clear"){
@@ -76,7 +76,7 @@ function respond(s) {
 function processThree(command, a, b) {
   if (command == 'plant') {
     clearInterval(timer);
-    console.log('about to plant '+num+plant);
+    console.log('about to plant '+a+b);
     plant(a, b);
     var timer = setInterval(updatePlots, 3000);
   }
@@ -85,7 +85,7 @@ function processThree(command, a, b) {
 function processTwo(command, a) {
   if (command == 'plant') {
     clearInterval(timer);
-    console.log('about to plant '+num+plant);
+    console.log('about to plant 1'+a);
     plant(1, a);
     var timer = setInterval(updatePlots, 3000);
   }
