@@ -234,12 +234,6 @@ function getPlots() {
   }
 }
 function plant(num, plant) {
-  clearInterval(timer);
-  console.log('about to plant '+num+plant);
-  actualplant(num, plant);
-  var timer = setInterval(updatePlots, 3000);
-}
-function actualplant(num, plant) {
   emptyplots = [];
   successnum = 0;
 
