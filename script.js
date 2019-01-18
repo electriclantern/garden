@@ -235,10 +235,12 @@ function getPlots() {
     document.getElementById('plots').appendChild(progressbar);
   }
 }
-
 function plant(num, plant) {
-  //clearInterval(timer);
-
+  clearInterval(timer);
+  function actualplant(num, plant);
+  var timer = setInterval(updatePlots, 3000);
+}
+function actualplant(num, plant) {
   emptyplots = [];
   successnum = 0;
 
@@ -271,8 +273,6 @@ function plant(num, plant) {
     pcom = "plant";
     commandoverlay.textContent = "[number] [plant]";
   }
-
-  //var timer = setInterval(updatePlots, 3000);
 }
 function grow(plot) {
   plot.push('sprout');
