@@ -11,6 +11,7 @@ html {
   --in-bloom: pink;
   --ripe: purple;
   --wilting: "8d7896";
+  --decaying: gray;
 }
 body {
   background-color: var(--background-color);

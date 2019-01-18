@@ -167,12 +167,33 @@ function updatePlots() {
   }
 
   for (i = 0; i < fullplots.length; i++) { //for each plot that is full
-    //plant = plots[fullplots[i]][0];
-    status = plots[fullplots[i]][1];
-    growth = plots[fullplots[i]][2];
+    let plant = plots[fullplots[i]][0];
+    let status = plots[fullplots[i]][1];
+    let growth = plots[fullplots[i]][2];
+    let plot = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
 
   	if (growth < 100) { //increment
     	plots[fullplots[i]][2]++;
+    }
+
+    if (growth == 100) {
+      plot.style.backgroundColor = 'var(--decaying)';
+      status = 'decaying';
+    } else if (growth >= 80) {
+      plot.style.backgroundColor = 'var(--wilting)';
+      status = 'wilting';
+    } else if (growth >= 60) {
+      plot.style.backgroundColor = 'var(--ripe)';
+      status = 'ripe';
+    } else if (growth >= 40) {
+      plot.style.backgroundColor = 'var(--in-bloom)';
+      status = 'in bloom';
+    } else if (growth >= 20) {
+      plot.style.backgroundColor = 'var(--seedling)';
+      status = 'seedling';
+    } else {
+      plot.style.backgroundColor = 'var(--sprout)';
+      status = 'sprout';
     }
   }
 
