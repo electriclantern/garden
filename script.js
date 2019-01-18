@@ -12,7 +12,7 @@ window.addEventListener("keydown", function(e) {
 }, false);
 
 function toggleTheme() {
-  html = document.getElementsByClassName('html')[0];
+  html = document.getElementsByTagName('html')[0];
   if (darktheme) { //turn light
     html.style.setProperty("--text-color", "black");
     html.style.setProperty("--background-color", "white");
