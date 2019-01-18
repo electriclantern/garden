@@ -12,7 +12,7 @@ window.addEventListener("keydown", function(e) {
 }, false);
 
 function toggleTheme() {
-  html = document.getElementsBycommandrootName('html')[0];
+  html = document.getElementsByClassName('html')[0];
   if (darktheme) { //turn light
     html.style.setProperty("--text-color", "black");
     html.style.setProperty("--background-color", "white");
@@ -167,33 +167,30 @@ function updatePlots() {
   }
 
   for (i = 0; i < fullplots.length; i++) { //for each plot that is full
-    let plant = plots[fullplots[i]][0];
-    let status = plots[fullplots[i]][1];
-    let growth = plots[fullplots[i]][2];
-    let plot = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
+    growth = plots[fullplots[i]][2];
 
   	if (growth < 100) { //increment
     	plots[fullplots[i]][2]++;
     }
 
     if (growth == 100) {
-      plot.style.backgroundColor = 'var(--decaying)';
-      status = 'decaying';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--decaying)';
+      plots[fullplots[i]][1] = 'decaying';
     } else if (growth >= 80) {
-      plot.style.backgroundColor = 'var(--wilting)';
-      status = 'wilting';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--wilting)';
+      plots[fullplots[i]][1] = 'wilting';
     } else if (growth >= 60) {
-      plot.style.backgroundColor = 'var(--ripe)';
-      status = 'ripe';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--ripe)';
+      plots[fullplots[i]][1] = 'ripe';
     } else if (growth >= 40) {
-      plot.style.backgroundColor = 'var(--in-bloom)';
-      status = 'in bloom';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--in-bloom)';
+      plots[fullplots[i]][1] = 'in bloom';
     } else if (growth >= 20) {
-      plot.style.backgroundColor = 'var(--seedling)';
-      status = 'seedling';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--seedling)';
+      plots[fullplots[i]][1] = 'seedling';
     } else {
-      plot.style.backgroundColor = 'var(--sprout)';
-      status = 'sprout';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--sprout)';
+      plots[fullplots[i]][1] = 'sprout';
     }
   }
 
