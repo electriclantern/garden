@@ -174,8 +174,6 @@ function updatePlots() {
   	if (growth < 100) { //increment
     	plots[fullplots[i]][2]++;
     }
-
-    console.log(plots);
   }
 
   if (document.getElementById('plots').style.display == 'block') {
@@ -237,6 +235,7 @@ function getPlots() {
 }
 function plant(num, plant) {
   clearInterval(timer);
+  console.log('about to plant '+num+plant);
   actualplant(num, plant);
   var timer = setInterval(updatePlots, 3000);
 }
