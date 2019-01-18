@@ -1,11 +1,11 @@
-var darktheme = false;
-var commandroot = "";
-var commandoverlay = document.getElementById('commandoverlay');
+darktheme = false;
+commandroot = "";
+commandoverlay = document.getElementById('commandoverlay');
 
 menu('gardenarea');
 document.getElementById('command').focus();
 window.addEventListener("keydown", function(e) {
-    // space and arrow keys
+    // disable space and arrow keys
     if([38, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
     }
@@ -53,8 +53,8 @@ function menu(menu) {
   window.screen = menu;
 }
 
-var s = document.getElementById('command');
-var commandHistory = [];
+s = document.getElementById('command');
+commandHistory = [];
 function rememberCommand(string) {
   if (string != commandHistory[commandHistory.length-1]) {
     if (commandHistory.length <= 50) {
@@ -65,7 +65,7 @@ function rememberCommand(string) {
     }
   }
 }
-var histpos = -1;
+histpos = -1;
 function returnHistory() {
   commandoverlay.textContent = "";
   if (commandHistory.length > 0) {
@@ -153,8 +153,8 @@ function createInventoryResponse(obj) {
 ////////////////////////////////////////////
 // PLANTING & GROWING //////////////////////
 ////////////////////////////////////////////
-var inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
-var plots = [[], [], [], [], []];
+inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
+plots = [[], [], [], [], []];
 
 var timer = setInterval(updatePlots, 3000);
 
