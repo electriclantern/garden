@@ -1,5 +1,5 @@
 var darktheme = false;
-var pcom = "";
+var commandroot = "";
 var commandoverlay = document.getElementById('commandoverlay');
 
 menu('gardenarea');
@@ -12,7 +12,7 @@ window.addEventListener("keydown", function(e) {
 }, false);
 
 function toggleTheme() {
-  html = document.getElementsByTagName('html')[0];
+  html = document.getElementsBycommandrootName('html')[0];
   if (darktheme) { //turn light
     html.style.setProperty("--text-color", "black");
     html.style.setProperty("--background-color", "white");
@@ -28,7 +28,7 @@ function toggleTheme() {
     document.getElementById('darktheme').textContent = "light";
     darktheme = true;
   }
-  pcom = "";
+  commandroot = "";
 }
 
 function isOverflown(element) {
@@ -36,9 +36,9 @@ function isOverflown(element) {
 }
 
 function menu(menu) {
-  pcom = "";
+  commandroot = "";
   commandoverlay.textContent = "";
-  document.getElementById('prompt').textContent = pcom + ">";
+  document.getElementById('prompt').textContent = commandroot + ">";
 
   document.getElementById(menu).style.display = "block";
   if (menu=='gardenarea') {
@@ -110,8 +110,8 @@ function checkKey(e, textarea) {
     returnHistory();
   } else if (key == 27) { // escape
     histpos = -1;
-    pcom = "";
-    document.getElementById('prompt').textContent = pcom + ">";
+    commandroot = "";
+    document.getElementById('prompt').textContent = commandroot + ">";
     commandoverlay.textContent = "";
     s.value = "";
   }
@@ -258,12 +258,12 @@ function plant(num, plant) {
     else { createResponse("out of plots. "+successnum+" "+plant+" planted.") }
     getPlots();
     commandoverlay.textContent = "";
-    pcom = "";
+    commandroot = "";
   } else if (num > inventory[plant]) {
     createResponse("you don't have enough of that.")
   } else {
     createResponse("what are you planting?")
-    pcom = "plant";
+    commandroot = "plant";
     commandoverlay.textContent = "[number] [plant]";
   }
 }

@@ -1,5 +1,5 @@
-var pcommands = ['plant', 'inventory', 'inv', 'plots', 'help', '):', ':)']
-var ss = [];
+globalgardencommands = ['plant', 'inventory', 'inv', 'plots', 'help', '):', ':)']
+ss = [];
 
 function respond(s) {
   ss = document.getElementById('command').value.split(" ");
@@ -10,20 +10,20 @@ function respond(s) {
   if (window.screen == 'gardenarea') {
     // GARDEN COMMANDS :)
     // garden
-    if (pcommands.indexOf(ss[0]) != -1 && ss.length == 3) {
+    if (globalgardencommands.indexOf(ss[0]) != -1 && ss.length == 3) {
       processThree(ss[0], ss[1], ss[2]);
-    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 2) {
+    } else if (globalgardencommands.indexOf(ss[0]) != -1 && ss.length == 2) {
       processTwo(ss[0], ss[1]);
-    } else if (pcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
+    } else if (globalgardencommands.indexOf(ss[0]) != -1 && ss.length == 1) {
       processOne(ss[0]);
     }
 
-    else if (pcom == "plant") {
+    else if (commandroot == "plant") {
       if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==2) {
-        pcom = "";
+        commandroot = "";
         plant(parseInt(ss[0], 10), ss[1]);
       } else if (isNaN(s)==true && ss.length==1) {
-        pcom = "";
+        commandroot = "";
         plant(1, s);
       } else if (s != "clear"){
         createError();
@@ -61,10 +61,10 @@ function respond(s) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
     commandoverlay.textContent = "";
-    pcom = "";
+    commandroot = "";
   }
 
-  document.getElementById('prompt').textContent = pcom + ">";
+  document.getElementById('prompt').textContent = commandroot + ">";
 }
 
 function processThree(command, a, b) {
@@ -77,10 +77,10 @@ function processTwo(command, a) {
 }
 function processOne(command) {
   commandoverlay.textContent = "";
-  pcom = "";
+  commandroot = "";
 
   if (command == 'plant') {
-    pcom = "plant";
+    commandroot = "plant";
     commandoverlay.textContent = "[number] [plant]";
     createInventoryResponse(inventory);
   } else if (command == 'inventory' || command == 'inv') {
