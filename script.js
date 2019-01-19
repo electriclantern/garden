@@ -175,22 +175,22 @@ function updatePlots() {
     }
 
     if (growth == 100) {
-      plotelement.className += plots[fullplots[i]][1];
+      plotelement.className += ' '+plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'decaying';
     } else if (growth >= 80) {
-      plotelement.className += plots[fullplots[i]][1];
+      plotelement.className += ' '+plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'wilting';
     } else if (growth >= 60) {
-      plotelement.className += plots[fullplots[i]][1];
+      plotelement.className += ' '+plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'ripe';
     } else if (growth >= 40) {
-      plotelement.className += plots[fullplots[i]][1];
+      plotelement.className += ' '+plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'in-bloom';
     } else if (growth >= 20) {
       plotelement.className += ' '+plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'seedling';
     } else {
-      plotelement.className += plots[fullplots[i]][1];
+      plotelement.className += ' '+plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'sprout';
     }
   }
