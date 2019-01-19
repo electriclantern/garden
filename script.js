@@ -190,6 +190,7 @@ function updatePlots() {
       plots[fullplots[i]][1] = 'seedling';
     } else {
       document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--sprout)';
+      console.log(document.getElementsByClassName('o_plots_progress')[fullplots[i]]); //checkin
       plots[fullplots[i]][1] = 'sprout';
     }
   }
