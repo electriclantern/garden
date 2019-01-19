@@ -174,22 +174,22 @@ function updatePlots() {
     }
 
     if (growth == 100) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--decaying)';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].classList.toggle('decaying');
       plots[fullplots[i]][1] = 'decaying';
     } else if (growth >= 80) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--wilting)';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].classList.toggle('wilting');
       plots[fullplots[i]][1] = 'wilting';
     } else if (growth >= 60) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--ripe)';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].classList.toggle('ripe');
       plots[fullplots[i]][1] = 'ripe';
     } else if (growth >= 40) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--in-bloom)';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].classList.toggle('in-bloom');
       plots[fullplots[i]][1] = 'in bloom';
     } else if (growth >= 20) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--seedling)';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].classList.toggle('seedling');
       plots[fullplots[i]][1] = 'seedling';
     } else {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].style.backgroundColor = 'var(--sprout)';
+      document.getElementsByClassName('o_plots_progress')[fullplots[i]].classList.toggle('sprout');
       console.log(document.getElementsByClassName('o_plots_progress')[fullplots[i]]); //checkin
       plots[fullplots[i]][1] = 'sprout';
     }

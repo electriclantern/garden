@@ -52,8 +52,13 @@ body {
   position: absolute;
   height: var(--margin-size);
   margin-bottom: var(--margin-size);
-  background-color: var(--sprout);
 }
+.o_plots_progress.sprout { background-color: var(--sprout); }
+.o_plots_progress.seedling { background-color: var(--seedling); }
+.o_plots_progress.in-bloom { background-color: var(--in-bloom); }
+.o_plots_progress.ripe { background-color: var(--ripe); }
+.o_plots_progress.wilting { background-color: var(--wilting); }
+.o_plots_progress.decaying { background-color: var(--decaying); }
 
 #brewshop { width: inherit; height: 450px; }
 #potions {
