@@ -191,7 +191,6 @@ function updatePlots() {
       plots[fullplots[i]][1] = 'seedling';
     } else {
       changeGrowthLevel(plotelement, 'sprout');
-      console.log(plotelement.classList);
       plots[fullplots[i]][1] = 'sprout';
     }
   }
@@ -202,6 +201,7 @@ function updatePlots() {
 }
 
 function changeGrowthLevel(element, growthclass) {
+  if
   if (!element.classList.contains(growthclass)) {
     var classString = element.className;
     var newClass = classString.concat(' '+growthclass);
