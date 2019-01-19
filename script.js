@@ -190,7 +190,7 @@ function updatePlots() {
       if (!plotelement.classList.contains('seedling')) { plotelement.classList.replace('sprout', 'seedling'); }
       plots[fullplots[i]][1] = 'seedling';
     } else {
-      if (!plotelement.classList.contains('sprout')) { plotelement.className += 'sprout'; }
+      if (!plotelement.classList.contains('sprout')) { plotelement.className += ' sprout'; }
       plots[fullplots[i]][1] = 'sprout';
     }
   }
