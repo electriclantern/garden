@@ -175,22 +175,22 @@ function updatePlots() {
     }
 
     if (growth == 100) {
-      if (!plotelement.classList.contains('decaying')) { plotelement.classList.replace('wilting', 'decaying') }
+      changeGrowthLevel(plotelement, 'decaying');
       plots[fullplots[i]][1] = 'decaying';
     } else if (growth >= 80) {
-      if (!plotelement.classList.contains('wilting')) { plotelement.classList.replace('ripe', 'wilting'); }
+      changeGrowthLevel(plotelement, 'wilting');
       plots[fullplots[i]][1] = 'wilting';
     } else if (growth >= 60) {
-      if (!plotelement.classList.contains('ripe')) { plotelement.classList.replace('in-bloom', 'ripe'); }
+      changeGrowthLevel(plotelement, 'ripe');
       plots[fullplots[i]][1] = 'ripe';
     } else if (growth >= 40) {
-      if (!plotelement.classList.contains('in-bloom')) { plotelement.classList.replace('seedling', 'in-bloom'); }
+      changeGrowthLevel(plotelement, 'in-bloom');
       plots[fullplots[i]][1] = 'in bloom';
     } else if (growth >= 20) {
-      if (!plotelement.classList.contains('seedling')) { plotelement.classList.replace('sprout', 'seedling'); }
+      changeGrowthLevel(plotelement, 'seedling');
       plots[fullplots[i]][1] = 'seedling';
     } else {
-      if (!plotelement.classList.contains('sprout')) { plotelement.className += ' sprout'; }
+      changeGrowthLevel(plotelement, 'sprout');
       console.log(plotelement.classList);
       plots[fullplots[i]][1] = 'sprout';
     }
@@ -198,6 +198,14 @@ function updatePlots() {
 
   if (document.getElementById('plots').style.display == 'block') {
     getPlots();
+  }
+}
+
+function changeGrowthLevel(element, growthclass) {
+  if (!element.classList.contains(growthclass)) {
+    var classString = element.className;
+    var newClass = classString.concat(' '+growthclass);
+    element.className = newClass;
   }
 }
 
