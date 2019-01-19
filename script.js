@@ -168,29 +168,29 @@ function updatePlots() {
 
   for (i = 0; i < fullplots.length; i++) { //for each plot that is full
     growth = plots[fullplots[i]][2];
+    var plotelement = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
 
   	if (growth < 100) { //increment
     	plots[fullplots[i]][2]++;
     }
 
     if (growth == 100) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].className = 'decaying';
+      if (!plotelement.classList.contains('decaying')) { plotelement.classList.replace('wilting', 'decaying') }
       plots[fullplots[i]][1] = 'decaying';
     } else if (growth >= 80) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].className = 'decaying';
+      if (!plotelement.classList.contains('wilting')) { plotelement.classList.replace('ripe', 'wilting'); }
       plots[fullplots[i]][1] = 'wilting';
     } else if (growth >= 60) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].className = 'decaying';
+      if (!plotelement.classList.contains('ripe')) { plotelement.classList.replace('in-bloom', 'ripe'); }
       plots[fullplots[i]][1] = 'ripe';
     } else if (growth >= 40) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].className = 'decaying';
+      if (!plotelement.classList.contains('in-bloom')) { plotelement.classList.replace('seedling', 'in-bloom'); }
       plots[fullplots[i]][1] = 'in bloom';
     } else if (growth >= 20) {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].className = 'decaying';
+      if (!plotelement.classList.contains('seedling')) { plotelement.classList.replace('sprout', 'seedling'); }
       plots[fullplots[i]][1] = 'seedling';
     } else {
-      document.getElementsByClassName('o_plots_progress')[fullplots[i]].className = 'decaying';
-      console.log(document.getElementsByClassName('o_plots_progress')[fullplots[i]]); //checkin
+      if (!plotelement.classList.contains('sprout')) { plotelement.className += 'sprout'; }
       plots[fullplots[i]][1] = 'sprout';
     }
   }
