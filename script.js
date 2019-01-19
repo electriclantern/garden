@@ -11,10 +11,6 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 
-function testtesttest() {
-  document.getElementById('body').className = 'sprout';
-}
-
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
   if (darktheme) { //turn light
@@ -172,7 +168,7 @@ function updatePlots() {
 
   for (i = 0; i < fullplots.length; i++) { //for each plot that is full
     growth = plots[fullplots[i]][2];
-    var plotelement = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
+    plotelement = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
 
   	if (growth < 100) { //increment
     	plots[fullplots[i]][2]++;
