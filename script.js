@@ -201,7 +201,6 @@ function updatePlots() {
 }
 
 function changeGrowthLevel(element, growthclass) {
-  if
   if (!element.classList.contains(growthclass)) {
     var classString = element.className;
     var newClass = classString.concat(' '+growthclass);
