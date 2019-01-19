@@ -175,37 +175,28 @@ function updatePlots() {
     }
 
     if (growth == 100) {
-      changeGrowthLevel(plotelement, 'decaying');
+      plotelement.className = plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'decaying';
     } else if (growth >= 80) {
-      changeGrowthLevel(plotelement, 'wilting');
+      plotelement.className = plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'wilting';
     } else if (growth >= 60) {
-      changeGrowthLevel(plotelement, 'ripe');
+      plotelement.className = plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'ripe';
     } else if (growth >= 40) {
-      changeGrowthLevel(plotelement, 'in-bloom');
-      plots[fullplots[i]][1] = 'in bloom';
+      plotelement.className = plots[fullplots[i]][1];
+      plots[fullplots[i]][1] = 'in-bloom';
     } else if (growth >= 20) {
-      changeGrowthLevel(plotelement, 'seedling');
+      plotelement.className = plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'seedling';
     } else {
-      changeGrowthLevel(plotelement, 'sprout');
+      plotelement.className = plots[fullplots[i]][1];
       plots[fullplots[i]][1] = 'sprout';
     }
   }
 
   if (document.getElementById('plots').style.display == 'block') {
     getPlots();
-  }
-}
-
-function changeGrowthLevel(element, growthclass) {
-  //if there are two classes in element then delete last class
-  if (!element.classList.contains(growthclass)) {
-    var classString = element.className;
-    var newClass = classString.concat(' '+growthclass);
-    element.className = newClass;
   }
 }
 
