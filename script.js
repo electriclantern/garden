@@ -11,6 +11,10 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 
+function testtesttest() {
+  document.getElementById('body').className = 'sprout';
+}
+
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
   if (darktheme) { //turn light
@@ -201,6 +205,7 @@ function updatePlots() {
 }
 
 function changeGrowthLevel(element, growthclass) {
+  //if there are two classes in element then delete last class
   if (!element.classList.contains(growthclass)) {
     var classString = element.className;
     var newClass = classString.concat(' '+growthclass);
