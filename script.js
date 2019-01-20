@@ -257,7 +257,6 @@ function getPlots() {
         plotelement.className = 'o_plots_progress '+plots[i][1];
       }
     }
-    }
 
     output.className = "o_plots";
     document.getElementById('plots').appendChild(output);
