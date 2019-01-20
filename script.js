@@ -167,12 +167,27 @@ function updatePlots() {
   }
 
   for (i = 0; i < fullplots.length; i++) { //for each plot that is full
-    growth = plots[fullplots[i]][2];
-    plotelement = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
+    var growth = plots[fullplots[i]][2];
+    var plotelement = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
 
   	if (growth < 100) { //increment
     	plots[fullplots[i]][2]++;
     }
+
+    if (growth == 100) {
+      plots[fullplots[i]][1] = 'decaying';
+    } else if (growth >= 80) {
+      plots[fullplots[i]][1] = 'wilting';
+    } else if (growth >= 60) {
+      plots[fullplots[i]][1] = 'ripe';
+    } else if (growth >= 40) {
+      plots[fullplots[i]][1] = 'in-bloom';
+    } else if (growth >= 20) {
+      plots[fullplots[i]][1] = 'seedling';
+    } else {
+      plots[fullplots[i]][1] = 'sprout';
+    }
+  }
 
   if (document.getElementById('plots').style.display == 'block') {
     getPlots();
@@ -229,23 +244,17 @@ function getPlots() {
       var plotelement = document.getElementsByClassName('o_plots_progress')[i];
 
       if (growth == 100) {
-        plots[i][1] = 'decaying';
-        plotelement.className = 'o_plots_progress '+plots[fullplots[i]][1];
+        plotelement.className = 'o_plots_progress '+plots[i][1];
       } else if (growth >= 80) {
-        plots[i][1] = 'wilting';
-        plotelement.className = 'o_plots_progress '+plots[fullplots[i]][1];
+        plotelement.className = 'o_plots_progress '+plots[i][1];
       } else if (growth >= 60) {
-        plots[i][1] = 'ripe';
-        plotelement.className = 'o_plots_progress '+plots[fullplots[i]][1];
+        plotelement.className = 'o_plots_progress '+plots[i][1];
       } else if (growth >= 40) {
-        plots[i][1] = 'in-bloom';
-        plotelement.className = 'o_plots_progress '+plots[fullplots[i]][1];
+        plotelement.className = 'o_plots_progress '+plots[i][1];
       } else if (growth >= 20) {
-        plots[i][1] = 'seedling';
-        plotelement.className = 'o_plots_progress '+plots[fullplots[i]][1];
+        plotelement.className = 'o_plots_progress '+plots[i][1];
       } else {
-        plots[i][1] = 'sprout';
-        plotelement.className = 'o_plots_progress '+plots[fullplots[i]][1];
+        plotelement.className = 'o_plots_progress '+plots[i][1];
       }
     }
     }
