@@ -1,4 +1,4 @@
-globalgardencommands = ['help', 'plant', 'plots', 'inventory', 'inv', 'garden', 'brewshop', ':)', ':()']
+globalgardencommands = ['help', 'plant', 'plots', 'inventory', 'inv', 'brewshop', ':)', ':(', 'dark', 'light'];
 ss = [];
 
 function respond(s) {
@@ -88,7 +88,7 @@ function processOne(command) {
   } else if (command == 'plots') {
     togglePlots();
   } else if (command == 'help') {
-    createResponse("help, inventory, plant, plots, clear. tip: many of the words you see are commands.");
+    createResponse("help, inventory, plant, plots, clear. (tip: many of the words you see can be used as commands.)");
   } else if (command == "):") {
     createResponse("things will work out, friend.")
   } else if (command == ":)") {
@@ -97,5 +97,7 @@ function processOne(command) {
     menu('garden');
   } else if (command == 'brewshop') {
     menu('brewshop');
+  } else if (command == 'dark' || command == 'light') {
+    toggleTheme();
   } else { createError() }
 }
