@@ -18,6 +18,13 @@ function toggleTheme() {
     html.style.setProperty("--background-color", "white");
     html.style.setProperty("--border-color", "lightgray");
     html.style.setProperty("--highlight-color", "yellow");
+
+    html.style.setProperty("--sprout", "#7af442");
+    html.style.setProperty("--seedling", "#4bc910");
+    html.style.setProperty("--in-bloom", "#e278cb");
+    html.style.setProperty("--ripe", "#d30ad3");
+    html.style.setProperty("--wilting", "#c08bd6");
+    html.style.setProperty("--decaying", "#b2b2b2");
     document.getElementById('darktheme').textContent = "dark";
     darktheme = false;
   } else { // turn dark
@@ -25,6 +32,13 @@ function toggleTheme() {
     html.style.setProperty("--background-color", "black");
     html.style.setProperty("--border-color", "#4f4f4f");
     html.style.setProperty("--highlight-color", "#673ab7");
+
+    html.style.setProperty("--sprout", "#48bf11");
+    html.style.setProperty("--seedling", "#318709");
+    html.style.setProperty("--in-bloom", "#e05cc3");
+    html.style.setProperty("--ripe", "purple");
+    html.style.setProperty("--wilting", "#654572");
+    html.style.setProperty("--decaying", "#6d6d6d");
     document.getElementById('darktheme').textContent = "light";
     darktheme = true;
   }
@@ -143,9 +157,9 @@ function createInventoryResponse(obj) {
     }
   }
   if (Object.keys(inventory).length > 0) {
-    createResponse("you've got: "+ inventoryresponse);
+    createResponse("inventory: "+ inventoryresponse);
   } else {
-    createResponse("you've got nothing.") //NOTHING, you hear?
+    createResponse("inventory: empty.");
   }
   console.log(inventoryresponse);
 }
@@ -157,6 +171,7 @@ inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0,
 plots = [[], [], [], [], []];
 
 var timer = setInterval(updatePlots, 3000);
+getPlots();
 
 function updatePlots() {
   fullplots = [];
@@ -239,7 +254,8 @@ function getPlots() {
     document.getElementById('plots').appendChild(progressbar);
 
     if (!Array.isArray(plots[i]) || !plots[i].length) { //if there is no plant in this plot
-      output.textContent = "[]";
+      output.textContent = "[ ]";
+      if (i == 0) { output.innerHTML += "<p style='display:inline; color:var(--border-color)'> plant something!</p>" }
     }
     else { //if there is plant in this plot
       output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; //write name
@@ -303,3 +319,7 @@ function grow(plot) {
   plot.push('sprout');
   plot.push(1);
 }
+
+////////////////////////////////////////////
+// HARVESTING /////// //////////////////////
+////////////////////////////////////////////

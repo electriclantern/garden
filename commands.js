@@ -1,4 +1,4 @@
-globalgardencommands = ['plant', 'inventory', 'inv', 'plots', 'help', '):', ':)']
+globalgardencommands = ['help', 'plant', 'plots', 'inventory', 'garden', 'brewshop']
 ss = [];
 
 function respond(s) {
@@ -93,5 +93,9 @@ function processOne(command) {
     createResponse("things will work out, friend.")
   } else if (command == ":)") {
     createResponse(":)")
+  } else if (command == 'garden') {
+    menu(garden);
+  } else if (command == 'brewshop') {
+    menu(brewshop);
   } else { createError() }
 }

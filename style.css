@@ -6,12 +6,12 @@ html {
   --highlight-color: yellow; /* #673ab7 */
   --margin-size: 15px;
 
-  --sprout: lightgreen;
-  --seedling: green;
-  --in-bloom: pink;
-  --ripe: purple;
-  --wilting: #8d7896;
-  --decaying: gray;
+  --sprout: #7af442; /* #48bf11 */
+  --seedling: #4bc910; /* #318709 */
+  --in-bloom: #e278cb; /* #e05cc3 */
+  --ripe: #d30ad3; /* purple */
+  --wilting: #c08bd6; /* #654572 */
+  --decaying: #b2b2b2; /* #6d6d6d */
 }
 body {
   background-color: var(--background-color);
@@ -87,6 +87,8 @@ body {
   height: 1px;
   width: inherit;
 }
+
+.label { float: right; }
 
 #prompt {
   float: right;
