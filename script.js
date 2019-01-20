@@ -21,7 +21,7 @@ function toggleTheme() {
 
     html.style.setProperty("--sprout", "#7af442");
     html.style.setProperty("--seedling", "#4bc910");
-    html.style.setProperty("--in-bloom", "#e278cb");
+    html.style.setProperty("--in-bloom", "#f767d7");
     html.style.setProperty("--ripe", "#d30ad3");
     html.style.setProperty("--wilting", "#c08bd6");
     html.style.setProperty("--decaying", "#b2b2b2");
@@ -171,7 +171,6 @@ inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0,
 plots = [[], [], [], [], []];
 
 var timer = setInterval(updatePlots, 3000);
-getPlots();
 
 function updatePlots() {
   fullplots = [];
@@ -260,7 +259,7 @@ function getPlots() {
     else { //if there is plant in this plot
       output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; //write name
       progressbar.style.width = plots[i][2]+"%"; //draw progress bar
-      console.log(plots[i][0]+plots[i][1]+plots[i][2]);
+      //console.log(plots[i][0]+plots[i][1]+plots[i][2]);
 
       var growth = plots[i][2];
       var plotelement = document.getElementsByClassName('o_plots_progress')[i];
