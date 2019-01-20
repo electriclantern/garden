@@ -232,6 +232,10 @@ function getPlots() {
     progressbartop = i*30+1;
     progressbar.style.top = progressbartop+"px";
 
+    output.className = "o_plots";
+    document.getElementById('plots').appendChild(output);
+    document.getElementById('plots').appendChild(progressbar);
+
     if (!Array.isArray(plots[i]) || !plots[i].length) { //if there is no plant in this plot
       output.textContent = "[]";
     }
@@ -257,10 +261,6 @@ function getPlots() {
         plotelement.className = 'o_plots_progress '+plots[i][1];
       }
     }
-
-    output.className = "o_plots";
-    document.getElementById('plots').appendChild(output);
-    document.getElementById('plots').appendChild(progressbar);
   }
 }
 function plant(num, plant) {
