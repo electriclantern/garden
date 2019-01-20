@@ -174,6 +174,8 @@ function updatePlots() {
     	plots[fullplots[i]][2]++;
     }
 
+    var growth = plots[fullplots[i]][2];
+
     if (growth == 100) {
       plots[fullplots[i]][1] = 'decaying';
     } else if (growth >= 80) {

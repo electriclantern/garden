@@ -10,7 +10,7 @@ html {
   --seedling: green;
   --in-bloom: pink;
   --ripe: purple;
-  --wilting: "8d7896";
+  --wilting: "#8d7896";
   --decaying: gray;
 }
 body {
