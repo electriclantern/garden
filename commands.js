@@ -1,4 +1,4 @@
-gardencommands = ['help', 'plant', 'plots', 'inventory', 'inv', 'harvest', 'brewshop', ':)', ':(', 'dark', 'light'];
+gardencommands = ['help', 'plant', 'plots', 'inventory', 'inv', 'harvest', :)', ':(', 'dark', 'light'];
 brewshopcommands = ['help'];
 ss = [];
 
@@ -75,6 +75,14 @@ function respond(s) {
     commandroot = "";
   } else if (s == 'inventory' || s == 'inv') {
     createInventoryResponse(inventory);
+  } else if (s == 'garden') {
+    menu('garden');
+  } else if (s == 'brewshop') {
+    menu('brewshop');
+  } else if (s == ":()) {
+    createResponse("things will work out, friend.")
+  } else if (s == ":)") {
+    createResponse(":)")
   }
 
   document.getElementById('prompt').textContent = commandroot + ">";
@@ -110,14 +118,6 @@ function processOne(command) {
       togglePlots();
     } else if (command == 'help') {
       createResponse("help, inventory, plant, plots, clear. (tip: many of the words you see can be used as commands.)");
-    } else if (command == ":()) {
-      createResponse("things will work out, friend.")
-    } else if (command == ":)") {
-      createResponse(":)")
-    } else if (command == 'garden') {
-      menu('garden');
-    } else if (command == 'brewshop') {
-      menu('brewshop');
     } else if (command == 'dark' || command == 'light') {
       toggleTheme();
     } else if (command == 'harvest') {
