@@ -110,9 +110,9 @@ function checkKey(e, textarea) {
     }
 
     if (s.value != "") {
-      s.value = s.value.trim();
       rememberCommand(s.value);
       histpos = -1;
+      s.value = s.value.toLowerCase();
       respond(s.value);
       s.value = "";
     }
@@ -168,7 +168,7 @@ function createInventoryResponse(obj) {
 // PLANTING & GROWING //////////////////////
 ////////////////////////////////////////////
 inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
-plots = [[], [], [], [], []];
+plots = [[], [], []];
 
 var timer = setInterval(updatePlots, 3000);
 
@@ -322,3 +322,14 @@ function grow(plot) {
 ////////////////////////////////////////////
 // HARVESTING /////// //////////////////////
 ////////////////////////////////////////////
+function harvest(num, plant, status) {
+  for (i=0; i<plots.length; i++) { //check each array
+    if (num>0) {
+      if (plots[i][0] == plant && plots[i][1] == status) {
+        plots[i] = [];
+        inventory[plant+' '+status] += 1;
+      }
+      num--;
+    }
+  }
+}

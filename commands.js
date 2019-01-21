@@ -1,4 +1,4 @@
-globalgardencommands = ['help', 'plant', 'plots', 'inventory', 'inv', 'brewshop', ':)', ':(', 'dark', 'light'];
+globalgardencommands = ['help', 'plant', 'plots', 'inventory', 'inv', 'harvest', 'brewshop', ':)', ':(', 'dark', 'light'];
 ss = [];
 
 function respond(s) {
@@ -10,7 +10,9 @@ function respond(s) {
   if (window.screen == 'gardenarea') {
     // GARDEN COMMANDS :)
     // garden
-    if (globalgardencommands.indexOf(ss[0]) != -1 && ss.length == 3) {
+    if (globalgardencommands.indexOf(ss[0]) != -1 && ss.length == 4) {
+      processFour(ss[0], ss[1], ss[2], ss[3]);
+    } else if (globalgardencommands.indexOf(ss[0]) != -1 && ss.length == 3) {
       processThree(ss[0], ss[1], ss[2]);
     } else if (globalgardencommands.indexOf(ss[0]) != -1 && ss.length == 2) {
       processTwo(ss[0], ss[1]);
@@ -20,11 +22,19 @@ function respond(s) {
 
     else if (commandroot == "plant") {
       if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==2) {
-        commandroot = "";
         plant(parseInt(ss[0], 10), ss[1]);
       } else if (isNaN(s)==true && ss.length==1) {
-        commandroot = "";
         plant(1, s);
+      } else if (s != "clear"){
+        createError();
+      }
+    } else if (commandroot == "harvest") {
+      if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==3) {
+        commandroot = "";
+        harvest(parseInt(ss[0], 10), ss[1], ss[2]);
+      } else if (isNaN(s)==true && ss.length==2) {
+        commandroot = "";
+        harvest(1, ss[1], ss[2]);
       } else if (s != "clear"){
         createError();
       }
@@ -66,7 +76,10 @@ function respond(s) {
 
   document.getElementById('prompt').textContent = commandroot + ">";
 }
-
+function processFour(command, a, b, c) {
+  if (command == 'harvest') { harvest(command, a, b, c); }
+  else { createError() }
+}
 function processThree(command, a, b) {
   if (command == 'plant') { plant(a, b); }
   else { createError() }
@@ -99,5 +112,8 @@ function processOne(command) {
     menu('brewshop');
   } else if (command == 'dark' || command == 'light') {
     toggleTheme();
+  } else if (command == 'harvest') {
+    commandroot = "harvest";
+    commandoverlay.textContent = "[number] [plant] [status]";
   } else { createError() }
 }
