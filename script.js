@@ -173,7 +173,7 @@ plots = [[], [], []];
 var timer = setInterval(updatePlots, 3000);
 
 function updatePlots() {
-  fullplots = [];
+  var fullplots = [];
   for (i = 0; i < plots.length; i++) { //get fullplots
     if (plots[i].length) {
       fullplots.push(i);
@@ -338,6 +338,7 @@ function harvest(num, plant, status) {
     for (n=0; n<num; n++) {
       if (plots[harvestableplots[n]][0] == plant && plots[harvestableplots[n]][1] == status) {
         plots[harvestableplots[n]] == [];
+        console.log(plots);
         if (harvesting in inventory) {
           inventory[harvesting] += 1;
         } else { inventory[harvesting] = 1; }
