@@ -147,7 +147,7 @@ function createResponse(string) {
 }
 function createError(){ createResponse("what you say"); }
 function createInventoryResponse(obj) {
-  inventoryresponse = "";
+  var inventoryresponse = "";
   for (i = 0; i < Object.keys(obj).length; i++) {
     if (obj[Object.keys(obj)[i]] > 0) {
       inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i];
@@ -344,6 +344,6 @@ function harvest(num, plant, status) {
         } else { inventory[harvesting] = 1; }
       }
     }
-    createInventoryResponse();
+    createInventoryResponse(inventory);
   } else { createResponse("what are you harvesting?") }
 }
