@@ -1,4 +1,4 @@
-gardencommands = ['help', 'plant', 'plots', 'inventory', 'inv', 'harvest', :)', ':(', 'dark', 'light'];
+gardencommands = ['help', 'plant', 'plots', 'inventory', 'inv', 'harvest', ':)', ':(', 'dark', 'light'];
 brewshopcommands = ['help'];
 ss = [];
 
