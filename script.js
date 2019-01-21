@@ -338,12 +338,12 @@ function harvest(num, plant, status) {
     for (n=0; n<num; n++) {
       if (plots[harvestableplots[n]][0] == plant && plots[harvestableplots[n]][1] == status) {
         plots[harvestableplots[n]] = [];
-        console.log(plots);
         if (harvesting in inventory) {
           inventory[harvesting] += 1;
         } else { inventory[harvesting] = 1; }
       }
     }
     createInventoryResponse(inventory);
+    getPlots();
   } else { createResponse("what are you harvesting?") }
 }

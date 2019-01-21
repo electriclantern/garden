@@ -77,7 +77,7 @@ function respond(s) {
   document.getElementById('prompt').textContent = commandroot + ">";
 }
 function processFour(command, a, b, c) {
-  if (command == 'harvest') { harvest(command, a, b, c); }
+  if (command == 'harvest') { harvest(a, b, c); }
   else { createError() }
 }
 function processThree(command, a, b) {
