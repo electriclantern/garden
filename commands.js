@@ -79,7 +79,7 @@ function respond(s) {
     menu('garden');
   } else if (s == 'brewshop') {
     menu('brewshop');
-  } else if (s == ":()) {
+  } else if (s == ":(") {
     createResponse("things will work out, friend.")
   } else if (s == ":)") {
     createResponse(":)")
