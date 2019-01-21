@@ -76,7 +76,7 @@ function respond(s) {
   } else if (s == 'inventory' || s == 'inv') {
     createInventoryResponse(inventory);
   } else if (s == 'garden') {
-    menu('garden');
+    menu('gardenarea');
   } else if (s == 'brewshop') {
     menu('brewshop');
   } else if (s == ":(") {
