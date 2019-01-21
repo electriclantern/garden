@@ -7,7 +7,27 @@ function respond(s) {
   commandoverlay.textContent = "";
   //console.log("input: " + s);
 
-  if (window.screen == 'gardenarea') { //GARDEN COMMANDS :)
+  //global commands
+  if (s == "clear") {
+    outputs = document.getElementsByClassName("o_"+window.screen);
+    while (outputs.length > 0) {
+      outputs[0].parentNode.removeChild(outputs[0]);
+    }
+    commandoverlay.textContent = "";
+    commandroot = "";
+  } else if (s == 'inventory' || s == 'inv') {
+    createInventoryResponse(inventory);
+  } else if (s == 'garden') {
+    menu('gardenarea');
+  } else if (s == 'brewshop') {
+    menu('brewshop');
+  } else if (s == ":(") {
+    createResponse("things will work out, friend.")
+  } else if (s == ":)") {
+    createResponse(":)")
+  }
+
+  else if (window.screen == 'gardenarea') { //GARDEN COMMANDS :)
     if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 4) {
       processFour(ss[0], ss[1], ss[2], ss[3]);
     } else if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 3) {
@@ -63,26 +83,6 @@ function respond(s) {
     if (isOverflown(area)) {
       area.scrollTop = area.scrollHeight;
     }
-  }
-
-  //global commands
-  if (s == "clear") {
-    outputs = document.getElementsByClassName("o_"+window.screen);
-    while (outputs.length > 0) {
-      outputs[0].parentNode.removeChild(outputs[0]);
-    }
-    commandoverlay.textContent = "";
-    commandroot = "";
-  } else if (s == 'inventory' || s == 'inv') {
-    createInventoryResponse(inventory);
-  } else if (s == 'garden') {
-    menu('gardenarea');
-  } else if (s == 'brewshop') {
-    menu('brewshop');
-  } else if (s == ":(") {
-    createResponse("things will work out, friend.")
-  } else if (s == ":)") {
-    createResponse(":)")
   }
 
   document.getElementById('prompt').textContent = commandroot + ">";
