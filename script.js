@@ -228,6 +228,7 @@ function hidePlots() {
   document.getElementById('plots').style.display = 'none';
   document.getElementById('garden').style.height = "450px";
 }
+var firstplant = false;
 function getPlots() {
 	hidePlots(); //start fresh
 
@@ -254,7 +255,7 @@ function getPlots() {
 
     if (!Array.isArray(plots[i]) || !plots[i].length) { //if there is no plant in this plot
       output.textContent = "[ ]";
-      if (i == 0) { output.innerHTML += "<p style='display:inline; color:var(--border-color)'> plant something!</p>" }
+      if (i == 0 && firstplant == false) { output.innerHTML += "<p style='display:inline; color:var(--border-color)'> plant something!</p>" }
     }
     else { //if there is plant in this plot
       output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; //write name
@@ -281,6 +282,8 @@ function getPlots() {
   }
 }
 function plant(num, plant) {
+  firstplant = true;
+
   emptyplots = [];
   successnum = 0;
 
@@ -343,6 +346,8 @@ function harvest(num, plant, status) {
         } else { inventory[harvesting] = 1; }
       }
     }
+    commandoverlay.textContent = "";
+    commandroot = "";
     createInventoryResponse(inventory);
     getPlots();
   } else { createResponse("what are you harvesting?") }
