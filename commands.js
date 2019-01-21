@@ -82,6 +82,7 @@ function processFour(command, a, b, c) {
 }
 function processThree(command, a, b) {
   if (command == 'plant') { plant(a, b); }
+  else if (command == 'harvest') { harvest(1, a, b) }
   else { createError() }
 }
 function processTwo(command, a) {
