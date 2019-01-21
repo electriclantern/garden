@@ -323,13 +323,32 @@ function grow(plot) {
 // HARVESTING /////// //////////////////////
 ////////////////////////////////////////////
 function harvest(num, plant, status) {
-  for (i=0; i<plots.length; i++) { //check each array
-    if (num>0) {
-      if (plots[i][0] == plant && plots[i][1] == status) {
-        plots[i] = [];
-        inventory[plant+' '+status] += 1;
-      }
-      num--;
+  fullplots = [];
+  var plotscontaining = 0;
+  for (i = 0; i < plots.length; i++) { //get fullplots
+    if (plots[i].length) {
+      fullplots.push(i);
+    }
+
+    if (plots[i][0] == plant && plots[i][1] == status) {
+      plotscontaining++;
     }
   }
+
+  if (plotscontaining > 0) { var harvestable = true; }
+  else { var harvestable = false; }
+
+  //if there are plots containing plant status and there is >= num of it
+
+  if (harvestable == true) {
+    for (i=0; i<fullplots.length; i++) { //check each array
+      if (num>0) {
+        if (fullplots[i][0] == plant && fullplots[i][1] == status) {
+          fullplots[i] = [];
+          inventory[plant+' '+status] += 1;
+        }
+        num--;
+      }
+    }
+  } else { createResponse("what are you harvesting?") }
 }
