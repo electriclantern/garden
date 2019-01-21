@@ -324,18 +324,20 @@ function grow(plot) {
 ////////////////////////////////////////////
 function harvest(num, plant, status) {
   var harvesting = plant+' '+status;
+  var harvestableplots = [];
 
   var numofharvestable = 0;
   for (i=0; i<plots.length; i++) {
     if (plots[i][0] == plant && plots[i][1] == status) {
       numofharvestable++;
+      harvestableplots.push(i);
     }
   }
 
   if (numofharvestable >= num) {
     for (n=0; n<num; n++) {
-      if (plots[i][0] == plant && plots[i][1] == status) {
-        plots[i] == [];
+      if (plots[harvestableplots[n]][0] == plant && plots[harvestableplots[n]][1] == status) {
+        plots[harvestableplots[n]] == [];
         if (harvesting in inventory) {
           inventory[harvesting] += 1;
         } else { inventory[harvesting] = 1; }
