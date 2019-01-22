@@ -52,7 +52,7 @@ function respond(s) {
         harvest(parseInt(ss[0], 10), ss[1], ss[2]);
       } else if (isNaN(s)==true && ss.length==2) {
         commandroot = "";
-        harvest(1, ss[1], ss[2]);
+        harvest(1, ss[0], ss[1]);
       } else if (s != "clear"){
         createError();
       }
