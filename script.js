@@ -326,6 +326,8 @@ function grow(plot) {
 // HARVESTING /////// //////////////////////
 ////////////////////////////////////////////
 function harvest(num, plant, status) {
+  getPlots();
+
   var harvesting = plant+' '+status;
   var harvestableplots = [];
 
