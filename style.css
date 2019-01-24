@@ -8,7 +8,7 @@ html {
 
   --sprout: #7af442; /* #48bf11 */
   --seedling: #4bc910; /* #318709 */
-  --in-bloom: #f767d7; /* #e05cc3 */
+  --blooming: #f767d7; /* #e05cc3 */
   --ripe: #d30ad3; /* purple */
   --wilting: #c08bd6; /* #654572 */
   --decaying: #b2b2b2; /* #6d6d6d */
@@ -55,7 +55,7 @@ body {
 }
 .o_plots_progress.sprout { background-color: var(--sprout); }
 .o_plots_progress.seedling { background-color: var(--seedling); }
-.o_plots_progress.in-bloom { background-color: var(--in-bloom); }
+.o_plots_progress.blooming { background-color: var(--blooming); }
 .o_plots_progress.ripe { background-color: var(--ripe); }
 .o_plots_progress.wilting { background-color: var(--wilting); }
 .o_plots_progress.decaying { background-color: var(--decaying); }
