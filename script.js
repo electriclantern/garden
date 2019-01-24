@@ -156,7 +156,7 @@ function createInventoryResponse(obj) {
     }
   }
   if (Object.keys(obj).length > 0) {
-    createResponse("inventory: "+inventoryresponse); }
+    createResponse("inventory: "+inventoryresponse);
   } else {
     createResponse("inventory: "+empty."); }
   }
