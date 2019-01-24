@@ -149,16 +149,15 @@ function createError(){ createResponse("what you say"); }
 function createInventoryResponse(obj) {
   var inventoryresponse = "";
   for (i = 0; i < Object.keys(obj).length; i++) {
-      if (obj[Object.keys(obj)[i]] > 0) { inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i]; }
-      if (i != Object.keys(obj).length - 1) {
-        inventoryresponse += ". ";
-      }
+    if (obj[Object.keys(obj)[i]] > 0) { inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i]; }
+    if (i != Object.keys(obj).length - 1) {
+      inventoryresponse += ". ";
     }
   }
   if (Object.keys(obj).length > 0) {
-    createResponse("inventory: "+inventoryresponse);
+    createResponse("inventory: "+inventoryresponse)
   } else {
-    createResponse("inventory: "+empty."); }
+    createResponse("inventory: empty.")
   }
 }
 
@@ -382,7 +381,7 @@ element_properties = {
 };
 var potionbeingnamed = "";
 
-mix(n1, a, a_status, n2, b, b_status) {
+function mix(n1, a, a_status, n2, b, b_status) {
   createResponse('mixing '+n1+' '+a+' '+a_status+' + '+n2+' '+b+' '+b_status+'...');
 
   astate = [];
@@ -437,18 +436,18 @@ mix(n1, a, a_status, n2, b, b_status) {
     commandroot = "mix>name";
   }
 }
-mixaftername() {
+function mixaftername() {
   potionbeingnamed = potionbeingnamed.replace(/[^a-zA-Z0-9]+/, '');
   inventory[potionbeingnamed] = inventory['unnamed_potion'];
   delete inventory['unnamed_potion'];
 
   createInventoryResponse(inventory);
 }
-brew(n1, a, a_status, n2, b, b_status) {
-  if (b != 'water') { mix(n1, a, a_status, n2, b, b_status) }
-  else {  }
+function brew(n1, a, a_status, n2, b, b_status) {
+  //if (b != 'water') { mix(n1, a, a_status, n2, b, b_status) }
+  //else {  }
 
-  if (b==false && a==) {
-
-  }
+  //if (b==false && a==) {
+//
+  //}
 }
