@@ -135,7 +135,7 @@ function createResponse(string) {
   output = document.createElement('div');
   output.style.width = "400px";
   output.style.paddingBottom = "var(--margin-size)";
-  output.textContent = string;
+  output.innerHTML = string;
   if (window.screen == 'gardenarea') {
     document.getElementById('garden').appendChild(output);
     output.className = "o_gardenarea";
@@ -148,9 +148,19 @@ function createResponse(string) {
 function createError(){ createResponse("what you say"); }
 function createInventoryResponse(obj) {
   var inventoryresponse = "";
+  var potionsresponse = "";
   for (i = 0; i < Object.keys(obj).length; i++) {
-    if (obj[Object.keys(obj)[i]] > 0) { inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i]+". "; }
+    if (obj[Object.keys(obj)[i]] > 0) {
+      inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i]+". ";
+    } else if (typeof obj[Object.keys(obj)[i]] === 'object') {
+      if (obj[Object.keys(obj)[i]].stock > 1) {
+        potionsresponse += "(" + obj[Object.keys(obj)[i]].stock + ") "+"< " + Object.keys(obj)[i] + " >" +". ";
+      } else {
+        potionsresponse += "< " + Object.keys(obj)[i] + " >" +". ";
+      }
+    }
   }
+  if (potionsresponse != "") { inventoryresponse+="<br />potions: "+potionsresponse }
   if (Object.keys(obj).length > 0) {
     createResponse("inventory: "+inventoryresponse)
   } else {
@@ -381,78 +391,96 @@ element_properties = {
 var potionbeingnamed = "";
 
 function mix(n1, a, a_status, n2, b, b_status) {
-  console.log('mix');
-  createResponse('mixing '+n1+' '+a+' '+a_status+' + '+n2+' '+b+' '+b_status+'...');
+  //check if ingredients are in inventory
+  var ingredients = false;
+  if (a in inventory && b in inventory) {
+    //if it's a potion, it should have more than zero. if it's a
+    if (a_status == 'potion' && inventory[a].stock >= n1) { ingredients = true; }
+    else if (inventory[a] >= n1) { ingredients = true; }
+    if (b_status == 'potion' && inventory[a].stock >= n2) { ingredients = true; }
+    else if (inventory[b] >= n2) { ingredients = true; }
 
-  astate = [];
-  bstate = [];
-  potionstate = [];
-  potionrepulsion = 0;
+    if (ingredients == true) {
+      createResponse('mixing '+n1+' '+a+' '+a_status+' + '+n2+' '+b+' '+b_status+'...');
 
-  aeffect = element_properties[a_status];
-  beffect = element_properties[b_status];
+      astate = [];
+      bstate = [];
+      potionstate = [];
+      potionrepulsion = 0;
 
-  // the state of an element is its state in an array [effect] times
-  if (a_status == 'potion') { astate = inventory[a].state }
-  else {
-    for (i=0; i<aeffect; i++) {
-      astate.push(element_properties[a].state);
-    }
-  }
-  if (b_status == 'potion') { bstate = inventory[b].state }
-  else {
-    for (i=0; i<beffect; i++) {
-      bstate.push(element_properties[b].state);
-    }
-  }
-  console.log(astate);
-  console.log(bstate);
-  potionstate = astate.concat(bstate);
-  console.log('potionstate: '+potionstate);
+      aeffect = element_properties[a_status];
+      beffect = element_properties[b_status];
 
-  //get repulsion
-  if (typeof element_properties[a_status] != "undefined") { potionrepulsion += element_properties[a_status] }
-  else if (a_status == 'potion') { potionrepulsion += inventory[a].repulsion }
-  console.log(potionrepulsion);
-  if (typeof element_properties[b_status] != "undefined") { potionrepulsion += element_properties[b_status] }
-  else if (b_status == 'potion') { potionrepulsion += inventory[b].repulsion }
-  console.log(potionrepulsion);
-  potionrepulsion = potionrepulsion/2;
-  console.log('potionrepulsion: '+potionrepulsion);
+      // the state of an element is its state in an array [effect] times
+      // FUTURE NOTE: MAKE N1 and N2 COME INTO PLAY
+      if (a_status == 'potion') { astate = inventory[a].state }
+      else {
+        for (i=0; i<aeffect; i++) {
+          astate.push(element_properties[a].state);
+        }
+      }
+      if (b_status == 'potion') { bstate = inventory[b].state }
+      else {
+        for (i=0; i<beffect; i++) {
+          bstate.push(element_properties[b].state);
+        }
+      }
+      console.log(astate);
+      console.log(bstate);
+      potionstate = astate.concat(bstate);
+      console.log('potionstate: '+potionstate);
 
-  potionrecipe = [n1, a, a_status, n2, b, b_status];
+      //get repulsion
+      if (typeof element_properties[a_status] != "undefined") { potionrepulsion += element_properties[a_status] }
+      else if (a_status == 'potion') { potionrepulsion += inventory[a].repulsion }
+      console.log(potionrepulsion);
+      if (typeof element_properties[b_status] != "undefined") { potionrepulsion += element_properties[b_status] }
+      else if (b_status == 'potion') { potionrepulsion += inventory[b].repulsion }
+      console.log(potionrepulsion);
+      potionrepulsion = potionrepulsion/2;
+      console.log('potionrepulsion: '+potionrepulsion);
 
-  for (i=0; i<Object.keys(inventory).length; i++) {
-    if (inventory[Object.keys(inventory)[i]].recipe.sort() == potionrecipe.sort()) { //if potion is the same as an existing potion
-      inventory[Object.keys(inventory)[i]].stock += 1;
-    } else {
-      potion = 'unnamed_potion';
-    }
-  }
+      potionrecipe = [n1, a, a_status, n2, b, b_status];
 
-  if (potion == 'unnamed_potion') {
-    inventory[potion] = {};
-    inventory[potion].state = potionstate;
-    inventory[potion].repulsion = potionrepulsion;
-    inventory[potion].recipe = [n1, a, a_status, n2, b, b_status];
-    inventory[potion].stock = 1;
+      for (i=0; i<Object.keys(inventory).length; i++) {
+        if (inventory[Object.keys(inventory)[i]]['recipe'] == potionrecipe) { //if potion is the same as an existing potion
+          inventory[Object.keys(inventory)[i]].stock += 1;
+        } else {
+          potion = 'unnamed_potion';
+        }
+      }
 
-    console.log(inventory['unnamed_potion']);
-    potionbeingnamed = potion;
+      //remove n1 a and n2 b
+      if (a_status == 'potion') { delete inventory[a] }
+      else { inventory[a]--; }
+      if (b_status == 'potion') { delete inventory[b] }
+      else { inventory[b]--; }
 
-    s.value = "";
-    createResponse('name the potion');
-    commandoverlay = "[only includes a-z, _, and -.]";
-    commandroot = "mix>name";
+      if (potion == 'unnamed_potion') {
+        inventory[potion] = {};
+        inventory[potion].state = potionstate;
+        inventory[potion].repulsion = potionrepulsion;
+        inventory[potion].recipe = potionrecipe;
+        inventory[potion].stock = 1;
+        potionbeingnamed = potion;
+
+        s.value = "";
+        createResponse('name the potion');
+        commandoverlay = "[only includes a-z, _, and -.]";
+        commandroot = "mix>name";
+      }
+    } else { createResponse("you haven't got enough of that") }
+  } else {
+    createResponse('what are you mixing?')
   }
 }
 function mixaftername(s) {
   potionbeingnamed = s.replace(/[^a-zA-Z0-9]+/, '');
   inventory[potionbeingnamed] = inventory['unnamed_potion'];
   delete inventory['unnamed_potion'];
-  //console.log(inventory[potionbeingnamed]);
   react(potionbeingnamed);
 
+  console.log(inventory);
   createInventoryResponse(inventory);
 }
 function react(potion) {
