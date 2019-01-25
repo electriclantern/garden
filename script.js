@@ -149,10 +149,7 @@ function createError(){ createResponse("what you say"); }
 function createInventoryResponse(obj) {
   var inventoryresponse = "";
   for (i = 0; i < Object.keys(obj).length; i++) {
-    if (obj[Object.keys(obj)[i]] > 0) { inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i]; }
-    if (i != Object.keys(obj).length - 1) {
-      inventoryresponse += ". ";
-    }
+    if (obj[Object.keys(obj)[i]] > 0) { inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i]+". "; }
   }
   if (Object.keys(obj).length > 0) {
     createResponse("inventory: "+inventoryresponse)
@@ -165,6 +162,8 @@ function createInventoryResponse(obj) {
 // PLANTING & GROWING //////////////////////
 ////////////////////////////////////////////
 inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
+inventory['venus sprout'] = 1;
+inventory['mercury sprout'] = 1;
 plots = [[], [], []];
 
 var timer = setInterval(updatePlots, 3000);
@@ -382,6 +381,7 @@ element_properties = {
 var potionbeingnamed = "";
 
 function mix(n1, a, a_status, n2, b, b_status) {
+  console.log('mix');
   createResponse('mixing '+n1+' '+a+' '+a_status+' + '+n2+' '+b+' '+b_status+'...');
 
   astate = [];
@@ -394,24 +394,36 @@ function mix(n1, a, a_status, n2, b, b_status) {
 
   // the state of an element is its state in an array [effect] times
   if (a_status == 'potion') { astate = inventory[a].state }
-  else { astate = element_properties[a].state }
+  else {
+    for (i=0; i<aeffect; i++) {
+      astate.push(element_properties[a].state);
+    }
+  }
   if (b_status == 'potion') { bstate = inventory[b].state }
-  else { bstate = element_properties[b].state }
-  potionstate = aeffect.concat(beffect);
+  else {
+    for (i=0; i<beffect; i++) {
+      bstate.push(element_properties[b].state);
+    }
+  }
+  console.log(astate);
+  console.log(bstate);
+  potionstate = astate.concat(bstate);
   console.log('potionstate: '+potionstate);
 
   //get repulsion
-  if (Object.keys(element_properties[a_status]).length > 0) { potionrepulsion += element_properties[a_status] }
+  if (typeof element_properties[a_status] != "undefined") { potionrepulsion += element_properties[a_status] }
   else if (a_status == 'potion') { potionrepulsion += inventory[a].repulsion }
-  if (Object.keys(element_properties[b_status]).length > 0) { potionrepulsion += element_properties[b_status] }
+  console.log(potionrepulsion);
+  if (typeof element_properties[b_status] != "undefined") { potionrepulsion += element_properties[b_status] }
   else if (b_status == 'potion') { potionrepulsion += inventory[b].repulsion }
+  console.log(potionrepulsion);
   potionrepulsion = potionrepulsion/2;
   console.log('potionrepulsion: '+potionrepulsion);
 
   potionrecipe = [n1, a, a_status, n2, b, b_status];
 
   for (i=0; i<Object.keys(inventory).length; i++) {
-    if (inventory[Object.keys(inventory)[i]].recipe == potionrecipe) { //if potion is the same as an existing potion
+    if (inventory[Object.keys(inventory)[i]].recipe.sort() == potionrecipe.sort()) { //if potion is the same as an existing potion
       inventory[Object.keys(inventory)[i]].stock += 1;
     } else {
       potion = 'unnamed_potion';
@@ -419,15 +431,13 @@ function mix(n1, a, a_status, n2, b, b_status) {
   }
 
   if (potion == 'unnamed_potion') {
+    inventory[potion] = {};
     inventory[potion].state = potionstate;
     inventory[potion].repulsion = potionrepulsion;
     inventory[potion].recipe = [n1, a, a_status, n2, b, b_status];
     inventory[potion].stock = 1;
 
-    react(potion);
-    if (potion in inventory) { inventory[potion] += 1; }
-    else { inventory[potion] = 1; }
-
+    console.log(inventory['unnamed_potion']);
     potionbeingnamed = potion;
 
     s.value = "";
@@ -436,14 +446,20 @@ function mix(n1, a, a_status, n2, b, b_status) {
     commandroot = "mix>name";
   }
 }
-function mixaftername() {
-  potionbeingnamed = potionbeingnamed.replace(/[^a-zA-Z0-9]+/, '');
+function mixaftername(s) {
+  potionbeingnamed = s.replace(/[^a-zA-Z0-9]+/, '');
   inventory[potionbeingnamed] = inventory['unnamed_potion'];
   delete inventory['unnamed_potion'];
+  //console.log(inventory[potionbeingnamed]);
+  react(potionbeingnamed);
 
   createInventoryResponse(inventory);
 }
+function react(potion) {
+  console.log(potion);
+}
 function brew(n1, a, a_status, n2, b, b_status) {
+  console.log('brew');
   //if (b != 'water') { mix(n1, a, a_status, n2, b, b_status) }
   //else {  }
 
