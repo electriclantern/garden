@@ -265,14 +265,14 @@ function processOne(command) {
     } else if (command == 'plots') {
       togglePlots();
     } else if (command == 'help') {
-      createResponse("help, inventory, plant, plots, clear. (tip: many of the words you see can be used as commands.)");
+      createResponse("help, inventory, plant, harvest, clear.");
     } else if (command == 'harvest') {
       commandroot = "harvest";
       commandoverlay.textContent = "[number] [plant] [status]";
     } else { createError() }
   } else if (window.screen == 'brewshop') {
     if (command == 'help') {
-      createResponse("help, inventory, clear")
+      createResponse("help, inventory, mix, clear")
     } else if (command == 'mix') {
       commandroot = "mix";
       commandoverlay.textContent = "[first element] [second element]";
