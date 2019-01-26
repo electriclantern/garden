@@ -8,28 +8,29 @@ function respond(s) {
   //console.log("input: " + s);
 
   //global commands
-  if (s == "clear") {
+  if (commandroot != 'mix>name' && s == "clear") {
     outputs = document.getElementsByClassName("o_"+window.screen);
     while (outputs.length > 0) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
     commandoverlay.textContent = "";
     commandroot = "";
-  } else if (s == 'inventory' || s == 'inv') {
+  } else if (commandroot != 'mix>name' && s == 'inventory' || s == 'inv') {
     createInventoryResponse(inventory);
-  } else if (s == 'garden') {
+  } else if (commandroot != 'mix>name' && s == 'garden') {
     menu('gardenarea');
-  } else if (s == 'brewshop') {
+  } else if (commandroot != 'mix>name' && s == 'brewshop') {
     menu('brewshop');
-  } else if (s == ":(") {
+  } else if (commandroot != 'mix>name' && s == ":(") {
     createResponse("things will work out, friend.")
-  } else if (s == ":)") {
+  } else if (commandroot != 'mix>name' && s == ":)") {
     createResponse(":)")
-  } else if (s == 'dark' || s == 'light') {
+  } else if (commandroot != 'mix>name' && s == 'dark' || s == 'light') {
     toggleTheme();
   }
 
   else if (window.screen == 'gardenarea') { //GARDEN COMMANDS :)
+    console.log('message recieved');
     if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 4) {
       processFour(ss[0], ss[1], ss[2], ss[3]);
     } else if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 3) {
@@ -45,9 +46,7 @@ function respond(s) {
         plant(parseInt(ss[0], 10), ss[1]);
       } else if (isNaN(s)==true && ss.length==1) {
         plant(1, s);
-      } else if (s != "clear"){
-        createError();
-      }
+      } else { createError(); }
     } else if (commandroot == "harvest") {
       if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==3) {
         commandroot = "";
@@ -55,9 +54,7 @@ function respond(s) {
       } else if (isNaN(s)==true && ss.length==2) {
         commandroot = "";
         harvest(1, ss[0], ss[1]);
-      } else if (s != "clear"){
-        createError();
-      }
+      } else { createError(); }
     } else {
       createError();
     }
@@ -71,7 +68,12 @@ function respond(s) {
   }
 
   else if (window.screen == 'brewshop') { //BREWSHOP COMMANDS :)
-    if (brewshopcommands.indexOf(ss[0]) != -1 && ss.length == 7) {
+    if (commandroot == 'mix>name') {
+      mixaftername(s);
+      commandroot = "";
+    }
+
+    else if (brewshopcommands.indexOf(ss[0]) != -1 && ss.length == 7) {
       processSeven(ss[0], ss[1], ss[2], ss[3], ss[4], ss[5], ss[6]);
     } else if (brewshopcommands.indexOf(ss[0]) != -1 && ss.length == 6) {
       processSix(ss[0], ss[1], ss[2], ss[3], ss[4], ss[5]);
@@ -87,10 +89,43 @@ function respond(s) {
       processOne(ss[0]);
     }
 
-    else if (commandroot == 'mix>name') {
-      mixaftername(s);
-      commandroot = "";
+    else if (commandroot == 'mix') {
+      if (ss.length==6) {
+        commandroot = "";
+        processSeven('mix', ss[0], ss[1], ss[2], ss[3], ss[4], ss[5]);
+      } else if (ss.length==5) {
+        commandroot = "";
+        processSix('mix', ss[0], ss[1], ss[2], ss[3], ss[4]);
+      } else if (ss.length==4) {
+        commandroot = "";
+        processFive('mix', ss[0], ss[1], ss[2], ss[3]);
+      } else if (ss.length==3) {
+        commandroot = "";
+        processFour('mix', ss[0], ss[1], ss[2]);
+      } else if (ss.length==2) {
+        commandroot = "";
+        processThree('mix', ss[0], ss[1]);
+      } else { createError(); }
     }
+
+    else if (commandroot == 'brew') {
+      if (ss.length==6) {
+        commandroot = "";
+        processSeven('brew', ss[0], ss[1], ss[2], ss[3], ss[4], ss[5]);
+      } else if (ss.length==5) {
+        commandroot = "";
+        processSix('brew', ss[0], ss[1], ss[2], ss[3], ss[4]);
+      } else if (ss.length==4) {
+        commandroot = "";
+        processFive('brew', ss[0], ss[1], ss[2], ss[3]);
+      } else if (ss.length==3) {
+        commandroot = "";
+        processFour('brew', ss[0], ss[1], ss[2]);
+      } else if (ss.length==2) {
+        commandroot = "";
+        processThree('brew', ss[0], ss[1]);
+      } else { createError(); }
+    } else { createError() }
 
     area = document.getElementById('potions');
     if (isOverflown(area)) {
