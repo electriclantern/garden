@@ -48,6 +48,13 @@ function toggleTheme() {
 function isOverflown(element) {
     return element.scrollHeight > element.clientHeight;
 }
+function compareArray(a, b) {
+  var i = a.length;
+  while (i--) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true
+}
 
 function menu(menu) {
   commandroot = "";
@@ -154,9 +161,9 @@ function createInventoryResponse(obj) {
       inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i]+". ";
     } else if (typeof obj[Object.keys(obj)[i]] === 'object') {
       if (obj[Object.keys(obj)[i]].stock > 1) {
-        potionsresponse += "(" + obj[Object.keys(obj)[i]].stock + ") "+"< " + Object.keys(obj)[i] + " >" +". ";
+        potionsresponse += "(" + obj[Object.keys(obj)[i]].stock + ") "+"&lt;" + Object.keys(obj)[i] + "&gt;" +". ";
       } else {
-        potionsresponse += "< " + Object.keys(obj)[i] + " >" +". ";
+        potionsresponse += "&lt;" + Object.keys(obj)[i] + "&gt;" +". ";
       }
     }
   }
@@ -172,8 +179,8 @@ function createInventoryResponse(obj) {
 // PLANTING & GROWING //////////////////////
 ////////////////////////////////////////////
 inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
-inventory['venus sprout'] = 1;
-inventory['mercury sprout'] = 1;
+inventory['venus sprout'] = 2;
+inventory['mercury sprout'] = 2;
 plots = [[], [], []];
 
 var timer = setInterval(updatePlots, 3000);
@@ -440,23 +447,32 @@ function mix(n1, a, a_status, n2, b, b_status) {
       potionrepulsion = potionrepulsion/2;
       console.log('potionrepulsion: '+potionrepulsion);
 
-      potionrecipe = [n1, a, a_status, n2, b, b_status];
+      //remove n1 a and n2 b
+      if (a_status == 'potion') { delete inventory[a] }
+      else { inventory[a+' '+a_status]--; }
+      if (b_status == 'potion') { delete inventory[b] }
+      else { inventory[b+' '+b_status]--; }
 
-      for (i=0; i<Object.keys(inventory).length; i++) {
-        if (inventory[Object.keys(inventory)[i]]['recipe'] == potionrecipe) { //if potion is the same as an existing potion
-          inventory[Object.keys(inventory)[i]].stock += 1;
+      potionrecipe = [n1, a, a_status, n2, b, b_status];
+      //if potion is the same as an existing potion
+      for (i = 0; i < Object.keys(inventory).length; i++) {
+        if (isNaN(inventory[Object.keys(inventory)[i]])) {
+          console.log(inventory[Object.keys(inventory)[i]].recipe);
+          if (compareArray(potionrecipe, inventory[Object.keys(inventory)[i]]['recipe'])) {
+            console.log('found same potion');
+            inventory[Object.keys(inventory)[i]].stock += 1;
+            unnamed_potion = false;
+            potion = Object.keys(inventory)[i];
+            break
+          }
         } else {
-          potion = 'unnamed_potion';
+          console.log('failed to find same potion');
+          unnamed_potion = true;
         }
       }
 
-      //remove n1 a and n2 b
-      if (a_status == 'potion') { delete inventory[a] }
-      else { inventory[a]--; }
-      if (b_status == 'potion') { delete inventory[b] }
-      else { inventory[b]--; }
-
-      if (potion == 'unnamed_potion') {
+      if (unnamed_potion) {
+        potion = 'unnamed_potion';
         inventory[potion] = {};
         inventory[potion].state = potionstate;
         inventory[potion].repulsion = potionrepulsion;
@@ -468,7 +484,7 @@ function mix(n1, a, a_status, n2, b, b_status) {
         createResponse('name the potion');
         commandoverlay = "[only includes a-z, _, and -.]";
         commandroot = "mix>name";
-      }
+      } else { createResponse('found same potion :D'); react(potion); createInventoryResponse() }
     } else { createResponse("you haven't got enough of that") }
   } else {
     createResponse('what are you mixing?')
@@ -479,8 +495,6 @@ function mixaftername(s) {
   inventory[potionbeingnamed] = inventory['unnamed_potion'];
   delete inventory['unnamed_potion'];
   react(potionbeingnamed);
-
-  console.log(inventory);
   createInventoryResponse(inventory);
 }
 function react(potion) {
