@@ -129,7 +129,7 @@ function checkKey(e, textarea) {
   } else if (key == 40) { // down
     histpos--;
     returnHistory();
-  } else if (key == 27) { // escape
+  } else if (key == 27 && commandroot != 'mix>name') { // escape
     histpos = -1;
     commandroot = "";
     document.getElementById('prompt').textContent = commandroot + ">";
@@ -152,7 +152,7 @@ function createResponse(string) {
     output.className = "o_brewshop";
   }
 }
-function createError(){ createResponse("what you say"); }
+function createError(){ createResponse("error :("); }
 function createInventoryResponse(obj) {
   var inventoryresponse = "";
   var potionsresponse = "";
@@ -401,13 +401,27 @@ function mix(n1, a, a_status, n2, b, b_status) {
   //check if ingredients are in inventory
   var ingredients = false;
   if (a in inventory && b in inventory) {
-    //if it's a potion, it should have more than zero. if it's a
-    if (a_status == 'potion' && inventory[a].stock >= n1) { ingredients = true; }
-    else if (inventory[a] >= n1) { ingredients = true; }
-    if (b_status == 'potion' && inventory[a].stock >= n2) { ingredients = true; }
-    else if (inventory[b] >= n2) { ingredients = true; }
+    //get available a & b
+    //if subtracting n1 from available_a > 0 then ingredients = true
+    //else ingredients = false
+    //if ingredients then do the same thing for b
 
-    if (ingredients == true) {
+    if (a == b && a_status == b_status) {
+      if (a_status == 'potion') { available_a = inventory[a].stock }
+      else { available_a = inventory[a+' '+a_status] }
+      if (available_a-n1-n2 >= 0) { ingredients = true; }
+    } else {
+      if (a_status == 'potion') { available_a = inventory[a].stock }
+      else { available_a = inventory[a+' '+a_status] }
+      if (available_a-n1 >= 0) { ingredients = true; }
+      if (ingredients) {
+        if (b_status == 'potion') { available_b = inventory[b].stock }
+        else { available_b = inventory[b+' '+b_status] }
+        if (available_b-n1 >= 0) { ingredients = true; }
+      }
+    }
+
+    if (ingredients) {
       createResponse('mixing '+n1+' '+a+' '+a_status+' + '+n2+' '+b+' '+b_status+'...');
 
       astate = [];
@@ -419,21 +433,20 @@ function mix(n1, a, a_status, n2, b, b_status) {
       beffect = element_properties[b_status];
 
       // the state of an element is its state in an array [effect] times
-      // FUTURE NOTE: MAKE N1 and N2 COME INTO PLAY
-      if (a_status == 'potion') { astate = inventory[a].state }
+      if (a_status == 'potion') { for (i=0;i<n1;i++){astate.push.apply(astate, inventory[a].state)} }
       else {
-        for (i=0; i<aeffect; i++) {
+        for (i=0; i<aeffect*n1; i++) {
           astate.push(element_properties[a].state);
         }
       }
-      if (b_status == 'potion') { bstate = inventory[b].state }
+      if (b_status == 'potion') { for (i=0;i<n2;i++){bstate.push.apply(bstate, inventory[b].state)} }
       else {
-        for (i=0; i<beffect; i++) {
+        for (i=0; i<beffect*n2; i++) {
           bstate.push(element_properties[b].state);
         }
       }
-      console.log(astate);
-      console.log(bstate);
+      console.log('a state: '+astate);
+      console.log('b state: '+bstate);
       potionstate = astate.concat(bstate);
       console.log('potionstate: '+potionstate);
 
@@ -459,14 +472,13 @@ function mix(n1, a, a_status, n2, b, b_status) {
         if (isNaN(inventory[Object.keys(inventory)[i]])) {
           console.log(inventory[Object.keys(inventory)[i]].recipe);
           if (compareArray(potionrecipe, inventory[Object.keys(inventory)[i]]['recipe'])) {
-            console.log('found same potion');
+            //found same potion
             inventory[Object.keys(inventory)[i]].stock += 1;
             unnamed_potion = false;
             potion = Object.keys(inventory)[i];
             break
           }
-        } else {
-          console.log('failed to find same potion');
+        } else { //failed to find same potion
           unnamed_potion = true;
         }
       }
@@ -484,14 +496,14 @@ function mix(n1, a, a_status, n2, b, b_status) {
         createResponse('name the potion');
         commandoverlay = "[only includes a-z, _, and -.]";
         commandroot = "mix>name";
-      } else { createResponse('found same potion :D'); react(potion); createInventoryResponse() }
+      } else { createResponse('found same potion :D'); react(potion); createInventoryResponse(inventory) }
     } else { createResponse("you haven't got enough of that") }
   } else {
     createResponse('what are you mixing?')
   }
 }
 function mixaftername(s) {
-  potionbeingnamed = s.replace(/[^a-zA-Z0-9]+/, '');
+  potionbeingnamed = s;
   inventory[potionbeingnamed] = inventory['unnamed_potion'];
   delete inventory['unnamed_potion'];
   react(potionbeingnamed);

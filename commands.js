@@ -68,8 +68,8 @@ function respond(s) {
   }
 
   else if (window.screen == 'brewshop') { //BREWSHOP COMMANDS :)
-    if (commandroot == 'mix>name') {
-      mixaftername(s);
+    if (commandroot == 'mix>name' && s.replace(/[^a-zA-Z0-9]+/, '') != '' && s.replace(/[^a-zA-Z0-9]+/, '') != 'potion') {
+      mixaftername(s.replace(/[^a-zA-Z0-9]+/, ''));
       commandroot = "";
     }
 
