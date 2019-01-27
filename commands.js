@@ -30,7 +30,6 @@ function respond(s) {
   }
 
   else if (window.screen == 'gardenarea') { //GARDEN COMMANDS :)
-    console.log('message recieved');
     if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 4) {
       processFour(ss[0], ss[1], ss[2], ss[3]);
     } else if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 3) {
@@ -60,15 +59,10 @@ function respond(s) {
     }
     //console.log("slice 'n dice it: "+ss);
     //console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
-
-    area = document.getElementById('garden');
-    if (isOverflown(area)) {
-      area.scrollTop = area.scrollHeight;
-    }
   }
 
   else if (window.screen == 'brewshop') { //BREWSHOP COMMANDS :)
-    if (commandroot == 'mix>name' && s.replace(/[^a-zA-Z0-9]+/, '') != '' && s.replace(/[^a-zA-Z0-9]+/, '') != 'potion') {
+    if (commandroot == 'mix>name' && s.replace(/[^a-zA-Z0-9]+/, '') != '' && s.replace(/[^a-zA-Z0-9]+/, '') != 'potion' && !inventory.hasOwnProperty(s.replace(/[^a-zA-Z0-9]+/, ''))) {
       mixaftername(s.replace(/[^a-zA-Z0-9]+/, ''));
       commandroot = "";
     }
@@ -126,11 +120,12 @@ function respond(s) {
         processThree('brew', ss[0], ss[1]);
       } else { createError(); }
     } else { createError() }
+  }
 
-    area = document.getElementById('potions');
-    if (isOverflown(area)) {
-      area.scrollTop = area.scrollHeight;
-    }
+  if (window.screen == 'gardenarea') { area = document.getElementById('garden'); }
+  else if (window.screen == 'brewshop') { area = document.getElementById('potions'); }
+  if (isOverflown(area)) {
+    area.scrollTop = area.scrollHeight;
   }
 
   document.getElementById('prompt').textContent = commandroot + ">";
@@ -180,11 +175,11 @@ function processFive(command, a, b, c, d) {
     if (command == 'mix') {
       if (typeof element_properties[a] != "undefined" && typeof element_properties[c] != "undefined") {
         mix(1, a, b, 1, c, d)
-      } else if (typeof element_properties[a] != "undefined" && isNaN(c) == false) {
+      } else if (typeof element_properties[a] != "undefined" && !isNaN(c)) {
         mix(1, a, b, c, d, 'potion')
-      } else if (isNaN(b) == false) {
+      } else if (!isNaN(b)) {
         mix(1, a, 'potion', b, c, d)
-      } else if (isNaN(a) == false && typeof element_properties[b] != "undefined") {
+      } else if (!isNaN(a) && typeof element_properties[b] != "undefined") {
         mix(a, b, c, 1, d, 'potion')
       } else {
         mix(a, b, 'potion', 1, c, d)
@@ -192,9 +187,9 @@ function processFive(command, a, b, c, d) {
     } else if (command == 'brew') {
       if (typeof element_properties[a] != "undefined" && typeof element_properties[c] != "undefined") {
         brew(1, a, b, 1, c, d)
-      } else if (typeof element_properties[a] != "undefined" && isNaN(c) == false) {
+      } else if (typeof element_properties[a] != "undefined" && !isNaN(c)) {
         brew(1, a, b, c, d, 'potion')
-      } else if (isNaN(a)==true) {
+      } else if (isNaN(a)) {
         brew(1, a, 'potion', 1, c, d)
       } else {
         brew(a, b, c, 1, d, 'potion')
@@ -208,9 +203,9 @@ function processFour(command, a, b, c) {
     else { createError() }
   } else if (window.screen == 'brewshop') {
     if (command == 'mix') {
-      if (isNaN(a) == false) { //a is a number
+      if (!isNaN(a)) { //a is a number
         mix(a, b, 'potion', 1, c, 'potion')
-      } else if (isNaN(b) == false) {
+      } else if (!isNaN(b)) {
         mix(1, a, 'potion', b, c, 'potion')
       } else if (typeof element_properties[a] != "undefined") { // if a is a plant name
         mix(1, a, b, 1, c, 'potion')
@@ -218,7 +213,7 @@ function processFour(command, a, b, c) {
         mix(1, a, 'potion', 1, b, c)
       }
     } else if (command == 'brew') {
-      if (isNaN(a) == false) { //a is a number
+      if (!isNaN(a)) { //a is a number
         brew(a, b, 'potion', 1, c, 'potion')
       } else if (typeof element_properties[a] != "undefined") { // if a is a plant number
         brew(1, a, b, 1, c, 'potion')
@@ -239,7 +234,7 @@ function processThree(command, a, b) {
     } else if (command == 'brew') {
       if (typeof element_properties[a] != "undefined") { //if a is a plant name
         brew(1, a, b, 1, 'water', 'potion')
-      } else if (isNaN(a) == true) { //a is a string but not a plant name
+      } else if (isNaN(a)) { //a is a string but not a plant name
         brew(1, a, 'potion', 1, 'water', 'potion')
       }
     }
@@ -250,7 +245,7 @@ function processTwo(command, a) {
     if (command == 'plant') { plant(1, a); }
     else { createError() }
   } else if (window.screen == 'brewshop') {
-    if (command == 'brew') { brew(1, a, 'potion', 1, 'water', 'potion') }
+    if (command == 'brew') { brew(1, a, 'potion', 1, 'self', 'self') }
     else { createError() }
   }
 }
