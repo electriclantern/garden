@@ -129,7 +129,7 @@ function checkKey(e, textarea) {
   } else if (key == 40) { // down
     histpos--;
     returnHistory();
-  } else if (key == 27 && commandroot != 'mix>name') { // escape
+  } else if (key == 27 && antiglobalroots.indexOf(commandroot) == -1) { // escape
     histpos = -1;
     commandroot = "";
     document.getElementById('prompt').textContent = commandroot + ">";
@@ -268,7 +268,7 @@ function getPlots() {
 
     if (!Array.isArray(plots[i]) || !plots[i].length) { //if there is no plant in this plot
       output.textContent = "[ ]";
-      if (i == 0 && firstplant == false) { output.innerHTML += "<p style='display:inline; color:var(--border-color)'> plant something!</p>" }
+      if (i == 0 && !firstplant) { output.innerHTML += "<p style='display:inline; color:var(--border-color)'> plant something!</p>" }
     }
     else { //if there is plant in this plot
       output.textContent = "["+ plots[i][0]+" "+plots[i][1]+"]"; //write name
@@ -396,10 +396,12 @@ element_properties = {
   }
 };
 var potionbeingnamed = "";
+var ingredients = false;
 
-function mix(n1, a, a_status, n2, b, b_status) {
-  //check if ingredients are in inventory
-  var ingredients = false;
+mixing = false;
+
+function checkIngredients(n1, a, a_status, n2, b, b_status) {
+  ingredients = false;
   if (a in inventory && b in inventory) {
     //get available a & b
     //if subtracting n1 from available_a > 0 then ingredients = true
@@ -420,57 +422,46 @@ function mix(n1, a, a_status, n2, b, b_status) {
         if (available_b-n1 >= 0) { ingredients = true; }
       }
     }
+  } else { createResponse('what are you mixing?') }
+}
+function checkSingleIngredient(n, a, a_status) {
+  ingredients = false;
+  if (a in inventory) {
+    if (a_status == 'potion') { available_a = inventory[a].stock }
+    else { available_a = inventory[a+' '+a_status] }
+    if (available_a-n >= 0) { ingredients = true; }
+  }
+}
 
-    if (ingredients) {
-      createResponse('mixing '+n1+' '+a+' '+a_status+' + '+n2+' '+b+' '+b_status+'...');
+function brew(n1, a, a_status, n2, b, b_status) {
+  if (b == 'self' && b_status == 'self') {
+    checkSingleIngredient(n1, a, a_status);
+    if (ingredients && n1 > 0) {
+      createResponse('brewing '+n1+' '+a+' '+a_status+'...');
 
-      astate = [];
-      bstate = [];
+      //state
       potionstate = [];
-      potionrepulsion = 0;
-
       aeffect = element_properties[a_status];
-      beffect = element_properties[b_status];
-
-      // the state of an element is its state in an array [effect] times
-      if (a_status == 'potion') { for (i=0;i<n1;i++){astate.push.apply(astate, inventory[a].state)} }
+      if (a_status == 'potion') { for (i=0;i<n1;i++){potionstate.push.apply(potionstate, inventory[a].state)} }
       else {
         for (i=0; i<aeffect*n1; i++) {
-          astate.push(element_properties[a].state);
+          potionstate.push(element_properties[a].state);
         }
       }
-      if (b_status == 'potion') { for (i=0;i<n2;i++){bstate.push.apply(bstate, inventory[b].state)} }
-      else {
-        for (i=0; i<beffect*n2; i++) {
-          bstate.push(element_properties[b].state);
-        }
-      }
-      console.log('a state: '+astate);
-      console.log('b state: '+bstate);
-      potionstate = astate.concat(bstate);
-      console.log('potionstate: '+potionstate);
 
-      //get repulsion
-      if (typeof element_properties[a_status] != "undefined") { potionrepulsion += element_properties[a_status] }
-      else if (a_status == 'potion') { potionrepulsion += inventory[a].repulsion }
-      console.log(potionrepulsion);
-      if (typeof element_properties[b_status] != "undefined") { potionrepulsion += element_properties[b_status] }
-      else if (b_status == 'potion') { potionrepulsion += inventory[b].repulsion }
-      console.log(potionrepulsion);
-      potionrepulsion = potionrepulsion/2;
-      console.log('potionrepulsion: '+potionrepulsion);
+      //repulsion
+      potionrepulsion = [];
+      if (typeof element_properties[a_status] != "undefined") { potionrepulsion.push(element_properties[a].repulsion) }
+      else if (a_status == 'potion') { potionrepulsion.push(inventory[a].repulsion) }
 
       //remove n1 a and n2 b
       if (a_status == 'potion') { delete inventory[a] }
       else { inventory[a+' '+a_status]--; }
-      if (b_status == 'potion') { delete inventory[b] }
-      else { inventory[b+' '+b_status]--; }
 
       potionrecipe = [n1, a, a_status, n2, b, b_status];
       //if potion is the same as an existing potion
       for (i = 0; i < Object.keys(inventory).length; i++) {
         if (isNaN(inventory[Object.keys(inventory)[i]])) {
-          console.log(inventory[Object.keys(inventory)[i]].recipe);
           if (compareArray(potionrecipe, inventory[Object.keys(inventory)[i]]['recipe'])) {
             //found same potion
             inventory[Object.keys(inventory)[i]].stock += 1;
@@ -490,34 +481,124 @@ function mix(n1, a, a_status, n2, b, b_status) {
         inventory[potion].repulsion = potionrepulsion;
         inventory[potion].recipe = potionrecipe;
         inventory[potion].stock = 1;
-        potionbeingnamed = potion;
 
         s.value = "";
         createResponse('name the potion');
         commandoverlay = "[only includes a-z, _, and -.]";
-        commandroot = "mix>name";
-      } else { createResponse('found same potion :D'); react(potion); createInventoryResponse(inventory) }
-    } else { createResponse("you haven't got enough of that") }
-  } else {
-    createResponse('what are you mixing?')
+        commandroot = "brew>name";
+      } else { createResponse('found same potion :D'); brewaftername(potion); }
+    }
+  }
+  else { mix(n1, a, a_status, n2, b, b_status) }
+}
+function brewaftername(potion) {
+  //brew -> turning potionstate array and potionstate repulsion into one state & array
+  //state
+  var potionstate = [];
+  for (i = 0; i < inventory[potion].state.length; i++) {
+    potionstate = potionstate.concat(inventory[potion].state[i]);
+  }
+  inventory[potion].state = potionstate;
+
+  //repulsion
+  var potionrepulsion = 0;
+  var lengthofrep = 0;
+  for (i = 0; i < inventory[potion].repulsion.length; i++) {
+    for (x = 0; x < inventory[potion].repulsion[i].length; x++) {
+      potionrepulsion += inventory[potion].repulsion[i][x];
+      lengthofrep++;
+    }
+  }
+  potionrepulsion = potionrepulsion / lengthofrep;
+  inventory[potion].repulsion = potionstate;
+
+  react(potion);
+}
+
+function mix(n1, a, a_status, n2, b, b_status) {
+  checkIngredients(n1, a, a_status, n2, b, b_status);
+
+  if (ingredients && n1 > 0 && n2 > 0) {
+    if (mixing) { createResponse('mixing '+n1+' '+a+' '+a_status+' + '+n2+' '+b+' '+b_status+'...'); }
+    else { createResponse('brewing '+n1+' '+a+' '+a_status+' + '+n2+' '+b+' '+b_status+'...'); }
+
+    astate = [];
+    bstate = [];
+    potionstate = [];
+    potionrepulsion = [];
+
+    aeffect = element_properties[a_status];
+    beffect = element_properties[b_status];
+
+    // the state of an element is its state in an array [effect] times
+    if (a_status == 'potion') { for (i=0;i<n1;i++){astate.push.apply(astate, inventory[a].state)} }
+    else {
+      for (i=0; i<aeffect*n1; i++) {
+        astate.push(element_properties[a].state);
+      }
+    }
+    if (b_status == 'potion') { for (i=0;i<n2;i++){bstate.push.apply(bstate, inventory[b].state)} }
+    else {
+      for (i=0; i<beffect*n2; i++) {
+        bstate.push(element_properties[b].state);
+      }
+    }
+    potionstate.push(astate);
+    potionstate.push(bstate);
+
+    //get repulsion
+    if (typeof element_properties[a_status] != "undefined") { potionrepulsion.push([element_properties[a].repulsion]) }
+    else if (a_status == 'potion') { potionrepulsion.push(inventory[a].repulsion) }
+    if (typeof element_properties[b_status] != "undefined") { potionrepulsion.push([element_properties[b].repulsion]) }
+    else if (b_status == 'potion') { potionrepulsion.push(inventory[b].repulsion) }
+
+    //remove n1 a and n2 b
+    if (a_status == 'potion') { delete inventory[a] }
+    else { inventory[a+' '+a_status]--; }
+    if (b_status == 'potion') { delete inventory[b] }
+    else { inventory[b+' '+b_status]--; }
+
+    potionrecipe = [n1, a, a_status, n2, b, b_status];
+    //if potion is the same as an existing potion
+    for (i = 0; i < Object.keys(inventory).length; i++) {
+      if (isNaN(inventory[Object.keys(inventory)[i]])) {
+        if (compareArray(potionrecipe, inventory[Object.keys(inventory)[i]]['recipe'])) {
+          //found same potion
+          inventory[Object.keys(inventory)[i]].stock += 1;
+          unnamed_potion = false;
+          potion = Object.keys(inventory)[i];
+          break
+        }
+      } else { //failed to find same potion
+        unnamed_potion = true;
+      }
+    }
+
+    if (unnamed_potion) {
+      potion = 'unnamed_potion';
+      inventory[potion] = {};
+      inventory[potion].state = potionstate;
+      inventory[potion].repulsion = potionrepulsion;
+      inventory[potion].recipe = potionrecipe;
+      inventory[potion].stock = 1;
+
+      s.value = "";
+      createResponse('name the potion');
+      commandoverlay = "[only includes a-z, _, and -.]";
+      if (mixing) { commandroot = "mix>name"; } else { commandroot = "brew>name"; }
+    } else { createResponse('found same potion :D'); react(potion); createInventoryResponse(inventory) }
   }
 }
 function mixaftername(s) {
   potionbeingnamed = s;
   inventory[potionbeingnamed] = inventory['unnamed_potion'];
   delete inventory['unnamed_potion'];
-  react(potionbeingnamed);
-  createInventoryResponse(inventory);
-}
-function react(potion) {
-  console.log(potion);
-}
-function brew(n1, a, a_status, n2, b, b_status) {
-  console.log('brew');
-  //if (b != 'water') { mix(n1, a, a_status, n2, b, b_status) }
-  //else {  }
 
-  //if (b==false && a==) {
-//
-  //}
+  if (mixing) { react(potionbeingnamed); }
+}
+
+function react(potion) {
+  console.log(inventory[potion]);
+  console.log('reacting '+potion);
+  //number of reactions depends on number of arrays
 }

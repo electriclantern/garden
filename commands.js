@@ -1,6 +1,7 @@
 gardencommands = ['help', 'plant', 'plots', 'harvest'];
 brewshopcommands = ['help', 'mix', 'brew',];
 ss = [];
+antiglobalroots = ['mix>name', 'brew>name']
 
 function respond(s) {
   ss = document.getElementById('command').value.split(" ");
@@ -8,24 +9,24 @@ function respond(s) {
   //console.log("input: " + s);
 
   //global commands
-  if (commandroot != 'mix>name' && s == "clear") {
+  if (antiglobalroots.indexOf(commandroot) == -1 && s == "clear") {
     outputs = document.getElementsByClassName("o_"+window.screen);
     while (outputs.length > 0) {
       outputs[0].parentNode.removeChild(outputs[0]);
     }
     commandoverlay.textContent = "";
     commandroot = "";
-  } else if (commandroot != 'mix>name' && s == 'inventory' || s == 'inv') {
+  } else if (antiglobalroots.indexOf(commandroot) == -1 && s == 'inventory' || s == 'inv') {
     createInventoryResponse(inventory);
-  } else if (commandroot != 'mix>name' && s == 'garden') {
+  } else if (antiglobalroots.indexOf(commandroot) == -1 && s == 'garden') {
     menu('gardenarea');
-  } else if (commandroot != 'mix>name' && s == 'brewshop') {
+  } else if (antiglobalroots.indexOf(commandroot) == -1 && s == 'brewshop') {
     menu('brewshop');
-  } else if (commandroot != 'mix>name' && s == ":(") {
+  } else if (antiglobalroots.indexOf(commandroot) == -1 && s == ":(") {
     createResponse("things will work out, friend.")
-  } else if (commandroot != 'mix>name' && s == ":)") {
+  } else if (antiglobalroots.indexOf(commandroot) == -1 && s == ":)") {
     createResponse(":)")
-  } else if (commandroot != 'mix>name' && s == 'dark' || s == 'light') {
+  } else if (antiglobalroots.indexOf(commandroot) == -1 && s == 'dark' || s == 'light') {
     toggleTheme();
   }
 
@@ -64,6 +65,13 @@ function respond(s) {
   else if (window.screen == 'brewshop') { //BREWSHOP COMMANDS :)
     if (commandroot == 'mix>name' && s.replace(/[^a-zA-Z0-9]+/, '') != '' && s.replace(/[^a-zA-Z0-9]+/, '') != 'potion' && !inventory.hasOwnProperty(s.replace(/[^a-zA-Z0-9]+/, ''))) {
       mixaftername(s.replace(/[^a-zA-Z0-9]+/, ''));
+      createInventoryResponse(inventory);
+      commandroot = "";
+    }
+    else if (commandroot == 'brew>name' && s.replace(/[^a-zA-Z0-9]+/, '') != '' && s.replace(/[^a-zA-Z0-9]+/, '') != 'potion' && !inventory.hasOwnProperty(s.replace(/[^a-zA-Z0-9]+/, ''))) {
+      mixaftername(s.replace(/[^a-zA-Z0-9]+/, ''))
+      brewaftername(s.replace(/[^a-zA-Z0-9]+/, ''));
+      createInventoryResponse(inventory);
       commandroot = "";
     }
 
@@ -139,8 +147,10 @@ function respond(s) {
 function processSeven(command, a, b, c, d, e, f) {
   if (window.screen == 'brewshop') {
     if (command == 'mix') {
+      mixing = true;
       mix(a, b, c, d, e, f)
     } else if (command == 'brew') {
+      mixing = false;
       brew(a, b, c, d, e, f)
     }
   }
@@ -148,6 +158,7 @@ function processSeven(command, a, b, c, d, e, f) {
 function processSix(command, a, b, c, d, e) {
   if (window.screen == 'brewshop') {
     if (command == 'mix') {
+      mixing = true;
       if (isNaN(a)==true) {
         mix(1, a, b, c, d, e)
       } else if (typeof element_properties[b] != "undefined" && isNaN(d)==true) {
@@ -158,6 +169,7 @@ function processSix(command, a, b, c, d, e) {
         mix(a, b, 'potion', c, d, e)
       }
     } else if (command == 'brew') {
+      mixing = false;
       if (isNaN(a)==true) {
         brew(1, a, b, c, d, e)
       } else if (typeof element_properties[b] != "undefined" && isNaN(d)==true) {
@@ -173,6 +185,7 @@ function processSix(command, a, b, c, d, e) {
 function processFive(command, a, b, c, d) {
   if (window.screen == 'brewshop') {
     if (command == 'mix') {
+      mixing = true;
       if (typeof element_properties[a] != "undefined" && typeof element_properties[c] != "undefined") {
         mix(1, a, b, 1, c, d)
       } else if (typeof element_properties[a] != "undefined" && !isNaN(c)) {
@@ -185,6 +198,7 @@ function processFive(command, a, b, c, d) {
         mix(a, b, 'potion', 1, c, d)
       }
     } else if (command == 'brew') {
+      mixing = false;
       if (typeof element_properties[a] != "undefined" && typeof element_properties[c] != "undefined") {
         brew(1, a, b, 1, c, d)
       } else if (typeof element_properties[a] != "undefined" && !isNaN(c)) {
@@ -203,6 +217,7 @@ function processFour(command, a, b, c) {
     else { createError() }
   } else if (window.screen == 'brewshop') {
     if (command == 'mix') {
+      mixing = true;
       if (!isNaN(a)) { //a is a number
         mix(a, b, 'potion', 1, c, 'potion')
       } else if (!isNaN(b)) {
@@ -213,6 +228,7 @@ function processFour(command, a, b, c) {
         mix(1, a, 'potion', 1, b, c)
       }
     } else if (command == 'brew') {
+      mixing = false;
       if (!isNaN(a)) { //a is a number
         brew(a, b, 'potion', 1, c, 'potion')
       } else if (typeof element_properties[a] != "undefined") { // if a is a plant number
@@ -230,8 +246,10 @@ function processThree(command, a, b) {
     else { createError() }
   } else if (window.screen == 'brewshop') {
     if (command == 'mix') {
+      mixing = true;
       mix(1, a, 'potion', 1, b, 'potion')
     } else if (command == 'brew') {
+      mixing = false;
       if (typeof element_properties[a] != "undefined") { //if a is a plant name
         brew(1, a, b, 1, 'water', 'potion')
       } else if (isNaN(a)) { //a is a string but not a plant name
@@ -245,7 +263,7 @@ function processTwo(command, a) {
     if (command == 'plant') { plant(1, a); }
     else { createError() }
   } else if (window.screen == 'brewshop') {
-    if (command == 'brew') { brew(1, a, 'potion', 1, 'self', 'self') }
+    if (command == 'brew') { mixing = false; brew(1, a, 'potion', 1, 'self', 'self') }
     else { createError() }
   }
 }
@@ -269,9 +287,11 @@ function processOne(command) {
     if (command == 'help') {
       createResponse("help, inventory, mix, clear")
     } else if (command == 'mix') {
+      mixing = true;
       commandroot = "mix";
       commandoverlay.textContent = "[first element] [second element]";
     } else if (command == 'brew') {
+      mixing = false;
       commandroot = "brew";
       commandoverlay.textContent = "[first element] [second element?]";
     } else { createError() }
