@@ -382,16 +382,36 @@ element_properties = {
   wilting:1,
   decaying:0,
 
-  mercury: {
+  mercury: { //the base
     state: 0, //static
-    repulsion: 0
+    repulsion: 1
   },
   venus: {
     state: 1,
-    repulsion: -1 //attraction
+    repulsion: 0
+  },
+  earth: { //living creature matter
+    state: 1, //because humans are basically made of 30 earth
+    repulsion: -1
+  },
+  mars: {
+    state: 0,
+    repulsion: -1
+  },
+  jupiter: {
+    state: -1,
+    repulsion: 1
   },
   saturn: {
-    state: -1,
+    state: -1, //turns back time
+    repulsion: 0
+  },
+  uranus: {
+    state: 0,
+    repulsion: 0
+  },
+  neptune: {
+    state: 1, //underwater creatures
     repulsion: -1
   }
 };
@@ -496,7 +516,7 @@ function brewaftername(potion) {
   potionrepulsion = potionrepulsion / lengthofrep;
   inventory[potion].repulsion = potionstate;
 
-  react(potion);
+  react('load', potion);
 }
 
 function mix(n1, a, a_status, n2, b, b_status) {
@@ -570,7 +590,7 @@ function mix(n1, a, a_status, n2, b, b_status) {
       createResponse('name the potion');
       commandoverlay = "[only includes a-z, _, and -.]";
       if (mixing) { commandroot = "mix>name"; } else { commandroot = "brew>name"; }
-    } else { createResponse('found same potion :D'); react(potion); createInventoryResponse(inventory) }
+    } else { createResponse('found same potion :D'); react('load', potion); createInventoryResponse(inventory) }
   }
 }
 function mixaftername(s) {
@@ -578,7 +598,7 @@ function mixaftername(s) {
   inventory[potionbeingnamed] = inventory['unnamed_potion'];
   delete inventory['unnamed_potion'];
 
-  if (mixing) { react(potionbeingnamed); }
+  if (mixing) { react('load', potionbeingnamed); }
 }
 
 function statemode(array) {
@@ -610,7 +630,7 @@ function average(array) {
   repulsion = repulsion/array.length;
   return repulsion
 }
-function react(potion) {
+function react(subject, potion) { //deal
   console.log(inventory[potion]);
   console.log('reacting '+potion);
 
@@ -618,16 +638,24 @@ function react(potion) {
   if (Object.prototype.toString.call(inventory[potion].state[0]) != '[object Array]') {
     var effectstate = statemode(inventory[potion].state);
     var effectrepulsion = average(inventory[potion].repulsion);
-    playeffect(effectstate, effectrepulsion);
+    playeffect(subject, effectstate, effectrepulsion);
   } else {
     for (i=0; i<inventory[potion].state.length; i++) { //stacked effects
       var effectstate = statemode(inventory[potion].state[i]);
       var effectrepulsion = average(inventory[potion].repulsion[i]);
-      playeffect(effectstate, effectrepulsion);
+      playeffect(subject, effectstate, effectrepulsion);
     }
   }
 }
-function playeffect(state, repulsion) {
+function playeffect(subject, state, repulsion) {
+  console.log('subject: '+subject);
   console.log('state: '+state);
   console.log('repulsion: '+repulsion);
+
+  if (state == -1) {
+    console.log('reverse time on '+subject);
+  } else if (state == 1) {
+    if (repulsion > 0) { console.log('effect_repel') }
+    else if (repulsion < 0) { console.log('effect_attract') }
+  }
 }
