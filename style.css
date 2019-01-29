@@ -1,8 +1,8 @@
 :root { font-family: monospace; }
 html {
   --border-color: #c4cecc; /* #636666 */
-  --text-color: #1C2321; /* #f7f9f8 */
-  --background-color: #f7f9f8; /* #1C2321 */
+  --text-color: #121615; /* #f7f9f8 */
+  --background-color: #f7f9f8; /* #121615 */
   --highlight-color: yellow; /* #673ab7 */
   --margin-size: 15px;
 

@@ -14,7 +14,7 @@ window.addEventListener("keydown", function(e) {
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
   if (darktheme) { //turn light
-    html.style.setProperty("--text-color", "#1C2321");
+    html.style.setProperty("--text-color", "#121615");
     html.style.setProperty("--background-color", "#f7f9f8");
     html.style.setProperty("--border-color", "#c4cecc");
     html.style.setProperty("--highlight-color", "yellow");
@@ -29,7 +29,7 @@ function toggleTheme() {
     darktheme = false;
   } else { // turn dark
     html.style.setProperty("--text-color", "#f7f9f8");
-    html.style.setProperty("--background-color", "#1C2321");
+    html.style.setProperty("--background-color", "#121615");
     html.style.setProperty("--border-color", "#636666");
     html.style.setProperty("--highlight-color", "#673ab7");
 
