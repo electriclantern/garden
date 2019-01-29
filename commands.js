@@ -74,6 +74,9 @@ function respond(s) {
       createInventoryResponse(inventory);
       commandroot = "";
     }
+    else if ((commandroot == 'mix>name' || commandroot == 'brew>name') && inventory.hasOwnProperty(s.replace(/[^a-zA-Z0-9]+/, ''))) {
+      createResponse("can't name two potions the same thing")
+    }
 
     else if (brewshopcommands.indexOf(ss[0]) != -1 && ss.length == 7) {
       processSeven(ss[0], ss[1], ss[2], ss[3], ss[4], ss[5], ss[6]);
@@ -285,7 +288,7 @@ function processOne(command) {
     } else { createError() }
   } else if (window.screen == 'brewshop') {
     if (command == 'help') {
-      createResponse("help, inventory, mix, clear")
+      createResponse("help, inventory, mix, brew, clear")
     } else if (command == 'mix') {
       mixing = true;
       commandroot = "mix";

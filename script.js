@@ -14,9 +14,9 @@ window.addEventListener("keydown", function(e) {
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
   if (darktheme) { //turn light
-    html.style.setProperty("--text-color", "black");
-    html.style.setProperty("--background-color", "white");
-    html.style.setProperty("--border-color", "lightgray");
+    html.style.setProperty("--text-color", "#1C2321");
+    html.style.setProperty("--background-color", "#f7f9f8");
+    html.style.setProperty("--border-color", "#c4cecc");
     html.style.setProperty("--highlight-color", "yellow");
 
     html.style.setProperty("--sprout", "#7af442");
@@ -28,9 +28,9 @@ function toggleTheme() {
     document.getElementById('darktheme').textContent = "dark";
     darktheme = false;
   } else { // turn dark
-    html.style.setProperty("--text-color", "white");
-    html.style.setProperty("--background-color", "black");
-    html.style.setProperty("--border-color", "#4f4f4f");
+    html.style.setProperty("--text-color", "#f7f9f8");
+    html.style.setProperty("--background-color", "#1C2321");
+    html.style.setProperty("--border-color", "#636666");
     html.style.setProperty("--highlight-color", "#673ab7");
 
     html.style.setProperty("--sprout", "#48bf11");
@@ -459,34 +459,18 @@ function brew(n1, a, a_status, n2, b, b_status) {
       else { inventory[a+' '+a_status]--; }
 
       potionrecipe = [n1, a, a_status, n2, b, b_status];
-      //if potion is the same as an existing potion
-      for (i = 0; i < Object.keys(inventory).length; i++) {
-        if (isNaN(inventory[Object.keys(inventory)[i]])) {
-          if (compareArray(potionrecipe, inventory[Object.keys(inventory)[i]]['recipe'])) {
-            //found same potion
-            inventory[Object.keys(inventory)[i]].stock += 1;
-            unnamed_potion = false;
-            potion = Object.keys(inventory)[i];
-            break
-          }
-        } else { //failed to find same potion
-          unnamed_potion = true;
-        }
-      }
 
-      if (unnamed_potion) {
-        potion = 'unnamed_potion';
-        inventory[potion] = {};
-        inventory[potion].state = potionstate;
-        inventory[potion].repulsion = potionrepulsion;
-        inventory[potion].recipe = potionrecipe;
-        inventory[potion].stock = 1;
+      potion = 'unnamed_potion';
+      inventory[potion] = {};
+      inventory[potion].state = potionstate;
+      inventory[potion].repulsion = potionrepulsion;
+      inventory[potion].recipe = potionrecipe;
+      inventory[potion].stock = 1;
 
-        s.value = "";
-        createResponse('name the potion');
-        commandoverlay = "[only includes a-z, _, and -.]";
-        commandroot = "brew>name";
-      } else { createResponse('found same potion :D'); brewaftername(potion); }
+      s.value = "";
+      createResponse('name the potion');
+      commandoverlay = "[only includes a-z, _, and -.]";
+      commandroot = "brew>name";
     }
   }
   else { mix(n1, a, a_status, n2, b, b_status) }
@@ -562,7 +546,7 @@ function mix(n1, a, a_status, n2, b, b_status) {
     //if potion is the same as an existing potion
     for (i = 0; i < Object.keys(inventory).length; i++) {
       if (isNaN(inventory[Object.keys(inventory)[i]])) {
-        if (compareArray(potionrecipe, inventory[Object.keys(inventory)[i]]['recipe'])) {
+        if (compareArray(potionrecipe, inventory[Object.keys(inventory)[i]].recipe) && compareArray(potionstate, inventory[Object.keys(inventory)[i]].state) && compareArray(potionrepulsion, inventory[Object.keys(inventory)[i]].repulsion)) {
           //found same potion
           inventory[Object.keys(inventory)[i]].stock += 1;
           unnamed_potion = false;
@@ -597,8 +581,53 @@ function mixaftername(s) {
   if (mixing) { react(potionbeingnamed); }
 }
 
+function statemode(array) {
+	var modelist = {};
+	for (var x=0; x<array.length; x++) {
+  	el = array[x];
+    if (modelist[el] == null) {
+    	modelist[el] = 1
+    } else { modelist[el]++ }
+  }
+
+  var maxel = Object.keys(modelist)[0];
+  for (var c=1; c<Object.keys(modelist).length; c++) {
+  	if (modelist[Object.keys(modelist)[c]] > modelist[Object.keys(modelist)[maxel]]) {
+    	maxel = Object.keys(modelist)[c];
+    } else if (modelist[Object.keys(modelist)[c]] == modelist[Object.keys(modelist)[maxel]]) {
+    	if (Object.keys(modelist)[c] == modelist['0']) {
+      	maxel = Object.keys(modelist)[c];
+      } else if (Object.keys(modelist)[c] == modelist['1']) {
+      	maxel = Object.keys(modelist)[c];
+      }
+    }
+  }
+  return maxel
+}
+function average(array) {
+  var repulsion = 0;
+  for (var x=0; x<array.length; x++) { repulsion += array[x] }
+  repulsion = repulsion/array.length;
+  return repulsion
+}
 function react(potion) {
   console.log(inventory[potion]);
   console.log('reacting '+potion);
-  //number of reactions depends on number of arrays
+
+  //if state does not contain arrays:
+  if (Object.prototype.toString.call(inventory[potion].state[0]) != '[object Array]') {
+    var effectstate = statemode(inventory[potion].state);
+    var effectrepulsion = average(inventory[potion].repulsion);
+    playeffect(effectstate, effectrepulsion);
+  } else {
+    for (i=0; i<inventory[potion].state.length; i++) { //stacked effects
+      var effectstate = statemode(inventory[potion].state[i]);
+      var effectrepulsion = average(inventory[potion].repulsion[i]);
+      playeffect(effectstate, effectrepulsion);
+    }
+  }
+}
+function playeffect(state, repulsion) {
+  console.log('state: '+state);
+  console.log('repulsion: '+repulsion);
 }
