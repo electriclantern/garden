@@ -1,4 +1,5 @@
 if (document.cookie=='') {document.cookie = 'darktheme=false;'}
+else if (readCookie('darktheme') == 'true') { toggleTheme() }
 commandroot = "";
 commandoverlay = document.getElementById('commandoverlay');
 
@@ -23,7 +24,6 @@ function readCookie(c) {
   }
 }
 
-if (readCookie('darktheme') == 'true') { toggleTheme() }
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
   if (readCookie('darktheme') == 'true') { //turn light
