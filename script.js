@@ -23,10 +23,10 @@ function readCookie(c) {
   }
 }
 
-if (readCookie('darktheme')) { toggleTheme() }
+if (readCookie('darktheme') == 'true') { toggleTheme() }
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
-  if (readCookie('darktheme')) { //turn light
+  if (readCookie('darktheme') == 'true') { //turn light
     html.style.setProperty("--text-color", "#121615");
     html.style.setProperty("--background-color", "#f7f9f8");
     html.style.setProperty("--border-color", "#c4cecc");
