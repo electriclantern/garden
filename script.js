@@ -11,10 +11,22 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 
-if (document.cookie == 'darktheme=true;') { toggleTheme() }
+function readCookie(c) {
+  var allcookies = document.cookie;
+  cookiearray = document.cookie.split(';');
+
+  for (var i=0; i<cookiearray.length; i++) {
+    name = cookiearray[i].split('=')[0];
+    if (name == c) {
+      return cookiearray[i].split('=')[1]
+    }
+  }
+}
+
+if (readCookie('darktheme')) { toggleTheme() }
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
-  if (document.cookie == 'darktheme=true;') { //turn light
+  if (readCookie('darktheme')) { //turn light
     html.style.setProperty("--text-color", "#121615");
     html.style.setProperty("--background-color", "#f7f9f8");
     html.style.setProperty("--border-color", "#c4cecc");
@@ -28,7 +40,7 @@ function toggleTheme() {
     html.style.setProperty("--decaying", "#b2b2b2");
     document.getElementById('darktheme').textContent = "dark";
     document.cookie = 'darktheme=false;'
-  } else if (document.cookie == 'darktheme=false;') { // turn dark
+  } else { // turn dark
     html.style.setProperty("--text-color", "#f7f9f8");
     html.style.setProperty("--background-color", "#121615");
     html.style.setProperty("--border-color", "#636666");
