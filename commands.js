@@ -1,7 +1,7 @@
-gardencommands = ['help', 'plant', 'plots', 'harvest'];
-brewshopcommands = ['help', 'mix', 'brew',];
+gardencommands = ['help', 'plant', 'plots', 'harvest', 'deal'];
+brewshopcommands = ['help', 'mix', 'brew', 'deal'];
+antiglobalroots = ['mix>name', 'brew>name'];
 ss = [];
-antiglobalroots = ['mix>name', 'brew>name']
 
 function respond(s) {
   ss = document.getElementById('command').value.split(" ");
@@ -31,7 +31,9 @@ function respond(s) {
   }
 
   else if (window.screen == 'gardenarea') { //GARDEN COMMANDS :)
-    if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 4) {
+    if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 5) {
+      processFive(ss[0], ss[1], ss[2], ss[3], ss[4]);
+    } else if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 4) {
       processFour(ss[0], ss[1], ss[2], ss[3]);
     } else if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 3) {
       processThree(ss[0], ss[1], ss[2]);
@@ -47,7 +49,8 @@ function respond(s) {
       } else if (isNaN(s)==true && ss.length==1) {
         plant(1, s);
       } else { createError(); }
-    } else if (commandroot == "harvest") {
+    }
+    else if (commandroot == "harvest") {
       if (s && isNaN(ss[0])==false && isNaN(ss[1])==true && ss.length==3) {
         commandroot = "";
         harvest(parseInt(ss[0], 10), ss[1], ss[2]);
@@ -55,9 +58,18 @@ function respond(s) {
         commandroot = "";
         harvest(1, ss[0], ss[1]);
       } else { createError(); }
-    } else {
-      createError();
     }
+    else if (commandroot == 'deal') {
+      if (ss.length==4) {
+        commandroot = "";
+        processFive('deal', ss[0], ss[1], ss[2], ss[3]);
+      } else if (ss.length==3) {
+        commandroot = "";
+        processFour('deal', ss[0], ss[1], ss[2]);
+      } else { createError() }
+    }
+
+    else { createError() }
     //console.log("slice 'n dice it: "+ss);
     //console.log("processing: " + ss[0] +" "+ ss[1] +" "+ ss[2]);
   }
@@ -129,8 +141,19 @@ function respond(s) {
       } else if (ss.length==2) {
         commandroot = "";
         processThree('brew', ss[0], ss[1]);
-      } else { createError(); }
-    } else { createError() }
+      } else { createError() }
+    }
+
+    else if (commandroot == 'deal') {
+      if (ss.length==4) {
+        commandroot = "";
+        processFive('deal', ss[0], ss[1], ss[2], ss[3]);
+      } else if (ss.length==3) {
+        commandroot = "";
+        processFour('deal', ss[0], ss[1], ss[2]);
+      } else { createError() }
+    }
+    else { createError() }
   }
 
   if (window.screen == 'gardenarea') { area = document.getElementById('garden'); }
@@ -186,7 +209,12 @@ function processSix(command, a, b, c, d, e) {
   }
 }
 function processFive(command, a, b, c, d) {
-  if (window.screen == 'brewshop') {
+  if (command == 'deal') {
+    if (b == 'to') {
+      deal(a, c, d);
+    } else { createResponse("must include 'to' in a deal command")}
+  }
+  else if (window.screen == 'brewshop') {
     if (command == 'mix') {
       mixing = true;
       if (typeof element_properties[a] != "undefined" && typeof element_properties[c] != "undefined") {
@@ -215,7 +243,12 @@ function processFive(command, a, b, c, d) {
   }
 }
 function processFour(command, a, b, c) {
-  if (window.screen == 'gardenarea') {
+  if (command == 'deal') {
+    if (b == 'to') {
+      deal(a, c, '');
+    } else { createResponse("must include 'to' in a deal command")}
+  }
+  else if (window.screen == 'gardenarea') {
     if (command == 'harvest') { harvest(a, b, c); }
     else { createError() }
   } else if (window.screen == 'brewshop') {
@@ -273,7 +306,10 @@ function processTwo(command, a) {
 function processOne(command) {
   commandoverlay.textContent = "";
   commandroot = "";
-  if (window.screen == 'gardenarea') {
+  if (command == 'deal') {
+    commandroot = 'deal';
+    commandoverlay.textContent = "[potion] to [subject]";
+  } else if (window.screen == 'gardenarea') {
     if (command == 'plant') {
       commandroot = "plant";
       commandoverlay.textContent = "[number] [plant]";

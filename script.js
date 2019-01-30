@@ -1,4 +1,4 @@
-darktheme = false;
+document.cookie = 'darktheme=false;'
 commandroot = "";
 commandoverlay = document.getElementById('commandoverlay');
 
@@ -11,9 +11,10 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 
+if (document.cookie == 'darktheme=true;') { toggleTheme() }
 function toggleTheme() {
   html = document.getElementsByTagName('html')[0];
-  if (darktheme) { //turn light
+  if (document.cookie == 'darktheme=true;') { //turn light
     html.style.setProperty("--text-color", "#121615");
     html.style.setProperty("--background-color", "#f7f9f8");
     html.style.setProperty("--border-color", "#c4cecc");
@@ -26,8 +27,8 @@ function toggleTheme() {
     html.style.setProperty("--wilting", "#c08bd6");
     html.style.setProperty("--decaying", "#b2b2b2");
     document.getElementById('darktheme').textContent = "dark";
-    darktheme = false;
-  } else { // turn dark
+    document.cookie = 'darktheme=false;'
+  } else if (document.cookie == 'darktheme=false;') { // turn dark
     html.style.setProperty("--text-color", "#f7f9f8");
     html.style.setProperty("--background-color", "#121615");
     html.style.setProperty("--border-color", "#636666");
@@ -40,7 +41,7 @@ function toggleTheme() {
     html.style.setProperty("--wilting", "#654572");
     html.style.setProperty("--decaying", "#6d6d6d");
     document.getElementById('darktheme').textContent = "light";
-    darktheme = true;
+    document.cookie = 'darktheme=true;'
   }
   commandroot = "";
 }
@@ -109,6 +110,11 @@ function checkKey(e, textarea) {
     commandoverlay.textContent = "";
   }
 
+  //if ((key >= 65 && key <= 90) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key >= 186 && key <= 192) || (key >= 219 && key <= 222) || key == 8 || key == 13 || key == 32) {
+  //  var typesound = new Audio('pop.wav'); //:)
+  //  typesound.play();
+  //}
+
   if (key == 13) { //hit enter key
     //remove "type help" thing
     s.value = s.value.trim();
@@ -156,7 +162,7 @@ function createError(){ createResponse("error :("); }
 function createInventoryResponse(obj) {
   var inventoryresponse = "";
   var potionsresponse = "";
-  for (i = 0; i < Object.keys(obj).length; i++) {
+  for (var i = 0; i < Object.keys(obj).length; i++) {
     if (obj[Object.keys(obj)[i]] > 0) {
       inventoryresponse += "(" + obj[Object.keys(obj)[i]] + ") " + Object.keys(obj)[i]+". ";
     } else if (typeof obj[Object.keys(obj)[i]] === 'object') {
@@ -187,18 +193,18 @@ var timer = setInterval(updatePlots, 3000);
 
 function updatePlots() {
   var fullplots = [];
-  for (i = 0; i < plots.length; i++) { //get fullplots
+  for (var i = 0; i < plots.length; i++) { //get fullplots
     if (plots[i].length) {
       fullplots.push(i);
     }
   }
 
-  for (i = 0; i < fullplots.length; i++) { //for each plot that is full
+  for (var i = 0; i < fullplots.length; i++) { //for each plot that is full
     var growth = plots[fullplots[i]][2];
-    var plotelement = document.getElementsByClassName('o_plots_progress')[fullplots[i]];
 
   	if (growth < 100) { //increment
-    	plots[fullplots[i]][2]++;
+    	if (plots[fullplots[i]][3] == 1) { plots[fullplots[i]][2]++; }
+      else if (plots[fullplots[i]][3] == -1) { plots[fullplots[i]][2]--; }
     }
 
     var growth = plots[fullplots[i]][2];
@@ -213,8 +219,13 @@ function updatePlots() {
       plots[fullplots[i]][1] = 'blooming';
     } else if (growth >= 20) {
       plots[fullplots[i]][1] = 'seedling';
-    } else {
+    } else if (growth >= 0) {
       plots[fullplots[i]][1] = 'sprout';
+    } else if (growth < 0) {
+      inventory[plots[fullplots[i]][0]]++;
+      createResponse('the mercury you planted has ungrowed right back to your inventory!');
+      createInventoryResponse(inventory);
+      plots[fullplots[i]] = [];
     }
   }
 
@@ -253,7 +264,7 @@ function getPlots() {
   document.getElementById('garden').style.height = newgardenheight + "px";
 
   //draw
-  for (i = 0; i < plots.length; i++) { //for each plot
+  for (var i = 0; i < plots.length; i++) { //for each plot
 		output = document.createElement('div'); //create name
     output.style.paddingBottom = "var(--margin-size)";
 
@@ -300,7 +311,7 @@ function plant(num, plant) {
   emptyplots = [];
   successnum = 0;
 
-  for (i=0; i < plots.length; i++) {
+  for (var i=0; i < plots.length; i++) {
     if (plots[i].length==0) {
       emptyplots.push(i);
     }
@@ -308,7 +319,7 @@ function plant(num, plant) {
 
   if (num <= inventory[plant]) {
     console.log("emptyplots: " + emptyplots);
-    for (i = 0; i < num; i++) {
+    for (var i = 0; i < num; i++) {
       if (i < emptyplots.length) {
         plots[emptyplots[i]].push(plant);
         grow(plots[emptyplots[i]]);
@@ -333,6 +344,7 @@ function plant(num, plant) {
 function grow(plot) {
   plot.push('sprout');
   plot.push(1);
+  plot.push(1);
 }
 
 ////////////////////////////////////////////
@@ -345,7 +357,7 @@ function harvest(num, plant, status) {
   var harvestableplots = [];
 
   var numofharvestable = 0;
-  for (i=0; i<plots.length; i++) {
+  for (var i=0; i<plots.length; i++) {
     if (plots[i][0] == plant && plots[i][1] == status) {
       numofharvestable++;
       harvestableplots.push(i);
@@ -353,14 +365,14 @@ function harvest(num, plant, status) {
   }
 
   if (numofharvestable >= num) {
-    for (n=0; n<num; n++) {
+    for (var n=0; n<num; n++) {
       if (plots[harvestableplots[n]][0] == plant && plots[harvestableplots[n]][1] == status) {
         plots[harvestableplots[n]] = [];
         if (harvesting in inventory) {
           inventory[harvesting] += 1;
         } else { inventory[harvesting] = 1; }
         if (status == 'blooming') {
-          inventory[plant] += 1;
+          inventory[plant]++;
         }
       }
     }
@@ -462,9 +474,9 @@ function brew(n1, a, a_status, n2, b, b_status) {
       //state
       potionstate = [];
       aeffect = element_properties[a_status];
-      if (a_status == 'potion') { for (i=0;i<n1;i++){potionstate.push.apply(potionstate, inventory[a].state)} }
+      if (a_status == 'potion') { for (var i=0;i<n1;i++){potionstate.push.apply(potionstate, inventory[a].state)} }
       else {
-        for (i=0; i<aeffect*n1; i++) {
+        for (var i=0; i<aeffect*n1; i++) {
           potionstate.push(element_properties[a].state);
         }
       }
@@ -499,7 +511,7 @@ function brewaftername(potion) {
   //brew -> turning potionstate array and potionstate repulsion into one state & array
   //state
   var potionstate = [];
-  for (i = 0; i < inventory[potion].state.length; i++) {
+  for (var i = 0; i < inventory[potion].state.length; i++) {
     potionstate = potionstate.concat(inventory[potion].state[i]);
   }
   inventory[potion].state = potionstate;
@@ -507,8 +519,8 @@ function brewaftername(potion) {
   //repulsion
   var potionrepulsion = 0;
   var lengthofrep = 0;
-  for (i = 0; i < inventory[potion].repulsion.length; i++) {
-    for (x = 0; x < inventory[potion].repulsion[i].length; x++) {
+  for (var i = 0; i < inventory[potion].repulsion.length; i++) {
+    for (var x = 0; x < inventory[potion].repulsion[i].length; x++) {
       potionrepulsion += inventory[potion].repulsion[i][x];
       lengthofrep++;
     }
@@ -535,15 +547,15 @@ function mix(n1, a, a_status, n2, b, b_status) {
     beffect = element_properties[b_status];
 
     // the state of an element is its state in an array [effect] times
-    if (a_status == 'potion') { for (i=0;i<n1;i++){astate.push.apply(astate, inventory[a].state)} }
+    if (a_status == 'potion') { for (var i=0;i<n1;i++){astate.push.apply(astate, inventory[a].state)} }
     else {
-      for (i=0; i<aeffect*n1; i++) {
+      for (var i=0; i<aeffect*n1; i++) {
         astate.push(element_properties[a].state);
       }
     }
-    if (b_status == 'potion') { for (i=0;i<n2;i++){bstate.push.apply(bstate, inventory[b].state)} }
+    if (b_status == 'potion') { for (var i=0;i<n2;i++){bstate.push.apply(bstate, inventory[b].state)} }
     else {
-      for (i=0; i<beffect*n2; i++) {
+      for (var i=0; i<beffect*n2; i++) {
         bstate.push(element_properties[b].state);
       }
     }
@@ -564,7 +576,7 @@ function mix(n1, a, a_status, n2, b, b_status) {
 
     potionrecipe = [n1, a, a_status, n2, b, b_status];
     //if potion is the same as an existing potion
-    for (i = 0; i < Object.keys(inventory).length; i++) {
+    for (var i = 0; i < Object.keys(inventory).length; i++) {
       if (isNaN(inventory[Object.keys(inventory)[i]])) {
         if (compareArray(potionrecipe, inventory[Object.keys(inventory)[i]].recipe) && compareArray(potionstate, inventory[Object.keys(inventory)[i]].state) && compareArray(potionrepulsion, inventory[Object.keys(inventory)[i]].repulsion)) {
           //found same potion
@@ -653,9 +665,45 @@ function playeffect(subject, state, repulsion) {
   console.log('repulsion: '+repulsion);
 
   if (state == -1) {
-    console.log('reverse time on '+subject);
+    if (subject == 'load') { createResponse('the potion turns back into its original ingredients') }
+    else if (subject == 'self') { createResponse("a strange feeling passes over you. it almost feels as if you're growing younger ????") }
+    else if (typeof element_properties[subject] != "undefined") { effect_reverseGrowth(subject) }
   } else if (state == 1) {
     if (repulsion > 0) { console.log('effect_repel') }
     else if (repulsion < 0) { console.log('effect_attract') }
   }
+}
+function effect_reverseGrowth(plant) {
+  //find first plot with plant
+  for (var i=0; i<plots.length; i++) {
+    if (plots[i][0] == plant) {
+      var plotwithplant = plots[i];
+      break
+    }
+  }
+
+  if (plotwithplant) {
+    plotwithplant[3] = -1;
+    createResponse('the '+plotwithplant[0]+' '+plotwithplant[1]+' starts ungrowing.')
+  } else { createError() }
+}
+function effect_repel(subject) {
+  if (subject == 'load') {
+
+  }
+}
+
+function deal(potion, subject, subject_status) {
+  console.log('potion: '+potion);
+  console.log('subject: '+subject);
+  console.log('subject_status: "'+subject_status+'"');
+  createResponse('dealing '+potion+' to '+subject+' '+subject_status+'...');
+
+  //check if the potion exists & remove it from inventory
+  checkSingleIngredient(potion);
+  if (ingredient) {
+    playeffect(subject, potion);
+    inventory[potion].stock--;
+    if (inventory[potion].stock <= 0) { delete inventory[potion] }
+  } else { createResponse("no such potion") }
 }
