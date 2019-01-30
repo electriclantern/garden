@@ -1,4 +1,7 @@
-document.cookie = 'darktheme=false;'
+var expiration_date = new Date();
+expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+date = expiration_date.toUTCString();
+document.cookie = 'darktheme=false; expires='+date+'; path=/'
 commandroot = "";
 commandoverlay = document.getElementById('commandoverlay');
 
