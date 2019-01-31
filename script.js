@@ -25,7 +25,7 @@ function toggleTheme() {
     html.style.setProperty("--wilting", "#c08bd6");
     html.style.setProperty("--decaying", "#b2b2b2");
     document.getElementById('darktheme').textContent = "dark";
-    document.cookie = 'darktheme=false;'
+    document.cookie = 'darktheme=false; expires=Tue, 19 Jan 2038 03:14:07 UTC;'
   } else { // turn dark
     html.style.setProperty("--text-color", "#f7f9f8");
     html.style.setProperty("--background-color", "#121615");
@@ -39,7 +39,7 @@ function toggleTheme() {
     html.style.setProperty("--wilting", "#654572");
     html.style.setProperty("--decaying", "#6d6d6d");
     document.getElementById('darktheme').textContent = "light";
-    document.cookie = 'darktheme=true;'
+    document.cookie = 'darktheme=true; expires=Tue, 19 Jan 2038 03:14:07 UTC;'
   }
   commandroot = "";
 }

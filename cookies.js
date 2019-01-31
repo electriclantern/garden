@@ -1,4 +1,7 @@
-if (readCookie('darktheme')==undefined) {document.cookie = 'darktheme=false; expires=Tue, 19 Jan 2038 03:14:07 UTC;'}
+if (readCookie('darktheme')==undefined) {
+  console.log('darktheme cookie created');
+  document.cookie = 'darktheme=false; expires=Tue, 19 Jan 2038 03:14:07 UTC;'
+}
 else if (readCookie('darktheme') == 'true') { toggleTheme() }
 
 function readCookie(c) {
