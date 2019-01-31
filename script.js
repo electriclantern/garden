@@ -459,7 +459,7 @@ function checkSingleIngredient(n, a, a_status) {
 }
 
 function brew(n1, a, a_status, n2, b, b_status) {
-  if (b == 'self' && b_status == 'self') {
+  if (b == 'water' && b_status == 'potion') {
     checkSingleIngredient(n1, a, a_status);
     if (ingredients && n1 > 0) {
       createResponse('brewing '+n1+' '+a+' '+a_status+'...');
@@ -634,7 +634,6 @@ function average(array) {
 selfstate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 function react(subject, potion) { //deal
   console.log(inventory[potion]);
-  console.log('reacting '+potion);
 
   if (subject == 'self') { inventory[potion].state = inventory[potion].state.concat(selfstate) }
 
@@ -659,7 +658,7 @@ function playeffect(subject, state, repulsion) {
   } else if (state == 1) {
     if (repulsion > 0) { effect_repel(subject, repulsion) }
     else if (repulsion < 0) { effect_attract(subject, repulsion) }
-  }
+  } else {createResponse('nothing happened.')}
 }
 function effect_reverseGrowth(plant) {
   //find first plot with plant
@@ -687,7 +686,7 @@ function effect_repel(subject, repulsion) {
     }
   } else if (subject == 'self') {
     createResponse("this potion could kill a man.");
-    createResponse("taking the smallest sip, you only feel numb.");
+    createResponse("being immune, you only feel numb.");
   } else if (typeof element_properties[subject] != "undefined") {
     for (var i=0; i<plots.length; i++) {
       if (plots[i][0] == subject) {
@@ -714,7 +713,7 @@ function effect_attract(subject, repulsion) {
     }
   } else if (subject == 'self') {
     createResponse("this potion could kill a man.");
-    createResponse("taking the smallest sip, you just feel strong."); //TODO: strong!
+    createResponse("being immune, you just feel strong."); //TODO: strong!
   } else if (typeof element_properties[subject] != "undefined") {
     for (var i=0; i<plots.length; i++) {
       if (plots[i][0] == subject) {
