@@ -11,7 +11,7 @@ window.addEventListener("keydown", function(e) {
 }, false);
 
 function toggleTheme() {
-  html = document.getElementsByTagName('html')[0];
+  var html = document.getElementsByTagName('html')[0];
   if (readCookie('darktheme') == 'true') { //turn light
     html.style.setProperty("--text-color", "#121615");
     html.style.setProperty("--background-color", "#f7f9f8");
