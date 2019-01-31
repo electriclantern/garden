@@ -109,8 +109,8 @@ function checkKey(e, textarea) {
   }
 
   //if ((key >= 65 && key <= 90) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key >= 186 && key <= 192) || (key >= 219 && key <= 222) || key == 8 || key == 13 || key == 32) {
-  //  var typesound = new Audio('pop.wav'); //:)
-  //  typesound.play();
+    //var typesound = new Audio('pop.wav'); //:)
+    //typesound.play();
   //}
 
   if (key == 13) { //hit enter key
@@ -432,12 +432,7 @@ mixing = false;
 
 function checkIngredients(n1, a, a_status, n2, b, b_status) {
   ingredients = false;
-  if (a in inventory && b in inventory) {
-    //get available a & b
-    //if subtracting n1 from available_a > 0 then ingredients = true
-    //else ingredients = false
-    //if ingredients then do the same thing for b
-
+  if (a in inventory && b in inventory && (typeof element_properties[a_status] != "undefined" || a_status == 'potion') && (typeof element_properties[b_status] != "undefined" || b_status == 'potion')) {
     if (a == b && a_status == b_status) {
       if (a_status == 'potion') { available_a = inventory[a].stock }
       else { available_a = inventory[a+' '+a_status] }
@@ -499,7 +494,7 @@ function brew(n1, a, a_status, n2, b, b_status) {
 
       s.value = "";
       createResponse('name the potion');
-      commandoverlay = "[only includes a-z, _, and -.]";
+      commandoverlay.textContent = "[only includes a-z, _, and -.]";
       commandroot = "brew>name";
     }
   }
@@ -545,26 +540,22 @@ function mix(n1, a, a_status, n2, b, b_status) {
     beffect = element_properties[b_status];
 
     // the state of an element is its state in an array [effect] times
-    if (a_status == 'potion') { for (var i=0;i<n1;i++){astate.push.apply(astate, inventory[a].state)} }
+    if (a_status == 'potion') {for(var i=0;i<n1;i++){potionstate.push.apply(potionstate, inventory[a].state)} }
     else {
-      for (var i=0; i<aeffect*n1; i++) {
-        astate.push(element_properties[a].state);
-      }
+      for (var i=0; i<aeffect*n1; i++) {astate.push(element_properties[a].state)}
+      potionstate.push(astate);
     }
-    if (b_status == 'potion') { for (var i=0;i<n2;i++){bstate.push.apply(bstate, inventory[b].state)} }
+    if (b_status == 'potion') { for (var i=0;i<n2;i++){potionstate.push.apply(potionstate, inventory[b].state)} }
     else {
-      for (var i=0; i<beffect*n2; i++) {
-        bstate.push(element_properties[b].state);
-      }
+      for (var i=0; i<beffect*n2; i++) {bstate.push(element_properties[b].state)}
+      potionstate.push(bstate);
     }
-    potionstate.push(astate);
-    potionstate.push(bstate);
 
     //get repulsion
     if (typeof element_properties[a_status] != "undefined") { potionrepulsion.push([element_properties[a].repulsion]) }
-    else if (a_status == 'potion') { potionrepulsion.push(inventory[a].repulsion) }
+    else if (a_status == 'potion') { potionrepulsion.push.apply(potionrepulsion, inventory[a].repulsion) }
     if (typeof element_properties[b_status] != "undefined") { potionrepulsion.push([element_properties[b].repulsion]) }
-    else if (b_status == 'potion') { potionrepulsion.push(inventory[b].repulsion) }
+    else if (b_status == 'potion') { potionrepulsion.push.apply(potionrepulsion, inventory[b].repulsion) }
 
     //remove n1 a and n2 b
     if (a_status == 'potion') { delete inventory[a] }
@@ -598,7 +589,7 @@ function mix(n1, a, a_status, n2, b, b_status) {
 
       s.value = "";
       createResponse('name the potion');
-      commandoverlay = "[only includes a-z, _, and -.]";
+      commandoverlay.textContent = "[only includes a-z, _, and -.]";
       if (mixing) { commandroot = "mix>name"; } else { commandroot = "brew>name"; }
     } else { createResponse('found same potion :D'); react('load', potion); createInventoryResponse(inventory) }
   }
@@ -640,9 +631,12 @@ function average(array) {
   repulsion = repulsion/array.length;
   return repulsion
 }
+selfstate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 function react(subject, potion) { //deal
   console.log(inventory[potion]);
   console.log('reacting '+potion);
+
+  if (subject == 'self') { inventory[potion].state = inventory[potion].state.concat(selfstate) }
 
   //if state does not contain arrays:
   if (Object.prototype.toString.call(inventory[potion].state[0]) != '[object Array]') {
@@ -658,17 +652,13 @@ function react(subject, potion) { //deal
   }
 }
 function playeffect(subject, state, repulsion) {
-  console.log('subject: '+subject);
-  console.log('state: '+state);
-  console.log('repulsion: '+repulsion);
-
   if (state == -1) {
     if (subject == 'load') { createResponse('the potion turns back into its original ingredients') }
     else if (subject == 'self') { createResponse("a strange feeling passes over you. it almost feels as if you're growing younger ????") }
     else if (typeof element_properties[subject] != "undefined") { effect_reverseGrowth(subject) }
   } else if (state == 1) {
-    if (repulsion > 0) { console.log('effect_repel') }
-    else if (repulsion < 0) { console.log('effect_attract') }
+    if (repulsion > 0) { effect_repel(subject, repulsion) }
+    else if (repulsion < 0) { effect_attract(subject, repulsion) }
   }
 }
 function effect_reverseGrowth(plant) {
@@ -685,23 +675,78 @@ function effect_reverseGrowth(plant) {
     createResponse('the '+plotwithplant[0]+' '+plotwithplant[1]+' starts ungrowing.')
   } else { createError() }
 }
-function effect_repel(subject) {
+function effect_repel(subject, repulsion) {
   if (subject == 'load') {
-
+    if (repulsion >= 9) { //explosion
+      createResponse("the potion explodes!");
+      //TODO: get response from people in brewshop
+      createResponse("it dissipates into your workshop...")
+    } else {
+      createResponse("the potion turns gassy.");
+      createResponse("it swirls around in the vial...")
+    }
+  } else if (subject == 'self') {
+    createResponse("this potion could kill a man.");
+    createResponse("taking the smallest sip, you only feel numb.");
+  } else if (typeof element_properties[subject] != "undefined") {
+    for (var i=0; i<plots.length; i++) {
+      if (plots[i][0] == subject) {
+        if (repulsion >= 9) { createResponse("your "+subject+" "+plots[i][1]+" bursts and disappears."); }
+        else {
+          createResponse("your "+subject+" "+plots[i][1]+" melts a bit.");
+          if (plots[i][2] >= 10) { plots[i][2] -= 10; }
+          else { plots[i][2] = 0; }
+        }
+        break
+      }
+    }
+  }
+}
+function effect_attract(subject, repulsion) {
+  if (subject == 'load') {
+    if (repulsion <= -9) { //explosion
+      createResponse("the potion implodes, sucked into nonexistence.");
+      //TODO: get response from people in brewshop
+      createResponse("it's gone.")
+    } else {
+      createResponse("the potion turns solid.");
+      createResponse("its texture is glossy and translucent.") //TODO: change depending on origin?
+    }
+  } else if (subject == 'self') {
+    createResponse("this potion could kill a man.");
+    createResponse("taking the smallest sip, you just feel strong."); //TODO: strong!
+  } else if (typeof element_properties[subject] != "undefined") {
+    for (var i=0; i<plots.length; i++) {
+      if (plots[i][0] == subject) {
+        if (repulsion <= -9) { createResponse("your "+subject+" "+plots[i][1]+" shrivels up and disappears."); } //extreme outcome
+        else { createResponse("your "+subject+" "+plots[i][1]+" stands rigid."); }
+        break
+      }
+    }
   }
 }
 
 function deal(potion, subject, subject_status) {
-  console.log('potion: '+potion);
-  console.log('subject: '+subject);
-  console.log('subject_status: "'+subject_status+'"');
-  createResponse('dealing '+potion+' to '+subject+' '+subject_status+'...');
+  if (subject_status != '') {createResponse('dealing '+potion+' to '+subject+' '+subject_status+'...')}
+  else {createResponse('dealing '+potion+' to '+subject+'...')}
+
+  //check if subject exists TODO: check NPCS
+  if (typeof element_properties[subject] != "undefined") {
+    for (var i=0; i<plots.length; i++) {
+      if (plots[i][0] == subject && plots[i][1] == subject_status) {
+        var subject_exists = true;
+        break
+      } else { var subject_exists = false }
+    }
+  } else { var subject_exists = true}
 
   //check if the potion exists & remove it from inventory
-  checkSingleIngredient(potion);
-  if (ingredient) {
-    playeffect(subject, potion);
+  checkSingleIngredient(1, potion, 'potion');
+  if (ingredients && subject_exists) {
+    //get state and change state of potion
+    react(subject, potion);
     inventory[potion].stock--;
     if (inventory[potion].stock <= 0) { delete inventory[potion] }
-  } else { createResponse("no such potion") }
+  } else if (!ingredients) { createResponse("no such potion") }
+  else if (!subject_exists) { createResponse("no such subject") }
 }
