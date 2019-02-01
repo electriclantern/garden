@@ -1,4 +1,4 @@
-:root { font-family: monospace; }
+:root { font-family: Consolas, monospace; font-size: 13px;  }
 html {
   --border-color: #c4cecc; /* #636666 */
   --text-color: #121615; /* #f7f9f8 */
@@ -97,18 +97,20 @@ body {
   margin-right: 1em;
 }
 #command {
-  width: inherit;
   height: var(--margin-size);
   padding: 0px;
   margin-top: var(--margin-size);
-  border: none;
   border-top: 1px solid var(--border-color);
   padding-top: var(--margin-size);
+  position: absolute;
+}
+input {
+  width: inherit;
+  border: none;
   font-family: inherit;
   font-size: inherit;
   background-color: inherit;
   color: inherit;
-  position: absolute;
 }
 input:focus { outline: none; }
 ::selection { background-color: var(--highlight-color); }

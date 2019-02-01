@@ -70,7 +70,7 @@ function menu(menu) {
   document.getElementById(menu+'button').style.display = 'block';
 
   if (menu == 'handbook') {
-    commandoverlay.textContent = '[chapter or chapter name]';
+    commandoverlay.textContent = '[chapter]';
     commandroot = 'help';
   }
 
@@ -768,10 +768,22 @@ function help(command) {
   document.getElementById('handbookbutton').style.display = 'block';
   var handbook = document.getElementById('handbook');
 
-  if (command=='i' || command=='plant') {
+  if (command=='i' || command=="1") {
+    handbook.innerHTML = "I. plant</br />Places a plant from your inventory into a plot to grow.</br /></br />USAGE: plant [number] [plant]<br />TIP: If you're only planting one, there's no need to type the number.<br /><br />EXAMPLES:<br />plant mercury ....  <i>places 1 mercury in a plot</i><br />plant 2 mercury .. <i>places 2 mercury in a plot</i>"
+  } else if (command == 'ii' || command=="2") {
+    handbook.innerHTML = "I. plant</br /></br />:)"
+  } else if (command == 'iii' || command=="3") {
+    handbook.innerHTML = "I. plant</br /></br />:)"
+  } else if (command == 'iv' || command=="4") {
+    handbook.innerHTML = "I. plant</br /></br />:)"
+  } else if (command == 'v' || command=="5") {
+    handbook.innerHTML = "I. plant</br /></br />:)"
+  } else if (command == 'vi' || command=="6") {
+    handbook.innerHTML = "I. plant</br /></br />:)"
+  } else if (command == 'vii' || command=="7") {
     handbook.innerHTML = "I. plant</br /></br />:)"
   } else {
-    handbook.innerHTML = "The Potionmaster's Handbook [1st Edition]<br />W. E. Potio<br /><br />dedicated to my apprentice<br /><br />I.&nbsp;&nbsp; plant<br />II.&nbsp; harvest<br />III. mix<br />IV.&nbsp; brew<br />V.&nbsp;&nbsp; deal<br />VI.&nbsp; miscellaneous commands<br /><br />VII. Intro to Theoretical Alchemy"
+    handbook.innerHTML = "The Potionmaster's Handbook [1st Edition]<br />W. E. Potio<br /><br />dedicated to my apprentice<br /><br />I.&nbsp;&nbsp; plant<br />II.&nbsp; harvest<br />III. mix<br />IV.&nbsp; brew<br />V.&nbsp;&nbsp; deal<br />VI.&nbsp; (miscellaneous commands)<br /><br />VII. Intro to Theoretical Alchemy"
   }
 
   menu('handbook');

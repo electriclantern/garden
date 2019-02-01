@@ -328,7 +328,7 @@ function processOne(command) {
       console.log(commandoverlay.textContent);
     } else if (command == 'help' || command == 'handbook') {
       commandroot = 'help';
-      commandoverlay.textContent = '[chapter or chapter name]'
+      commandoverlay.textContent = '[chapter]'
       help();
     } else { createError() }
   } else if (window.screen == 'brewshop') {
@@ -346,7 +346,7 @@ function processOne(command) {
       console.log(commandoverlay.textContent);
     } else if (command == 'help' || command == 'handbook') {
       commandroot = 'help';
-      commandoverlay.textContent = '[chapter or chapter name]'
+      commandoverlay.textContent = '[chapter]'
       help();
     } else { createError() }
   }
