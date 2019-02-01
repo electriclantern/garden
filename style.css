@@ -44,7 +44,8 @@ body {
   height: 500px;
   float: right;
 }
-#gardenarea { width: inherit; height: 450px; }
+.menubutton { margin-bottom: var(--margin-size) }
+.menubutton:hover { cursor: pointer; }
 #garden { width: inherit; height: 450px; overflow: scroll; margin-right: -50px; padding-right: 50px;}
 #plots { width: inherit; display: none; border-bottom: 1px solid var(--border-color); margin-bottom: var(--margin-size); position: relative; }
 .o_plots_progress {
@@ -60,7 +61,7 @@ body {
 .o_plots_progress.wilting { background-color: var(--wilting); }
 .o_plots_progress.decaying { background-color: var(--decaying); }
 
-#brewshop { width: inherit; height: 450px; }
+.menu { width: inherit; height: 450px }
 #potions {
   width: inherit;
   height: calc(60% - var(--margin-size));
@@ -92,8 +93,8 @@ body {
 
 #prompt {
   float: right;
-  margin-top: 420px;
-  padding-right: var(--margin-size);
+  margin-top: 480.75px;
+  margin-right: 5px;
 }
 #command {
   width: inherit;

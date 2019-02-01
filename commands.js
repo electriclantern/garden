@@ -1,5 +1,5 @@
-gardencommands = ['help', 'plant', 'plots', 'harvest', 'deal'];
-brewshopcommands = ['help', 'mix', 'brew', 'deal'];
+gardencommands = ['help', 'handbook', 'plant', 'plots', 'harvest', 'deal'];
+brewshopcommands = ['help', 'handbook', 'mix', 'brew', 'deal'];
 antiglobalroots = ['mix>name', 'brew>name'];
 ss = [];
 
@@ -17,6 +17,8 @@ function respond(s) {
     commandoverlay.textContent = "";
     commandroot = "";
   } else if (antiglobalroots.indexOf(commandroot) == -1 && s == 'inventory' || s == 'inv') {
+    commandoverlay.textContent = "";
+    commandroot = "";
     createInventoryResponse(inventory);
   } else if (antiglobalroots.indexOf(commandroot) == -1 && s == 'garden') {
     menu('gardenarea');
@@ -28,6 +30,10 @@ function respond(s) {
     createResponse(":)")
   } else if (antiglobalroots.indexOf(commandroot) == -1 && s == 'dark' || s == 'light') {
     toggleTheme();
+  }
+
+  else if (window.screen == 'handbook') {
+    processTwo('help', ss[0])
   }
 
   else if (window.screen == 'gardenarea') { //GARDEN COMMANDS :)
@@ -156,8 +162,9 @@ function respond(s) {
     else { createError() }
   }
 
-  if (window.screen == 'gardenarea') { area = document.getElementById('garden'); }
-  else if (window.screen == 'brewshop') { area = document.getElementById('potions'); }
+  if (window.screen == 'gardenarea') { area = document.getElementById('garden') }
+  else if (window.screen == 'brewshop') { area = document.getElementById('potions') }
+  else if (window.screen == 'handbook') { area = document.getElementById('handbook') }
   if (isOverflown(area)) {
     area.scrollTop = area.scrollHeight;
   }
@@ -292,10 +299,14 @@ function processThree(command, a, b) {
 function processTwo(command, a) {
   if (window.screen == 'gardenarea') {
     if (command == 'plant') { plant(1, a); }
+    else if (command == 'help' || command == 'handbook') {help(a)}
     else { createError() }
   } else if (window.screen == 'brewshop') {
     if (command == 'brew') { mixing = false; brew(1, a, 'potion', 1, 'self', 'self') }
+    else if (command == 'help' || command == 'handbook') {help(a)}
     else { createError() }
+  } else if (window.screen == 'handbook') {
+    help(a);
   }
 }
 function processOne(command) {
@@ -308,8 +319,6 @@ function processOne(command) {
       createInventoryResponse(inventory);
     } else if (command == 'plots') {
       togglePlots();
-    } else if (command == 'help') {
-      createResponse("help, inventory, plant, harvest, clear.");
     } else if (command == 'harvest') {
       commandroot = "harvest";
       commandoverlay.textContent = "[number] [plant] [status]";
@@ -317,11 +326,13 @@ function processOne(command) {
       commandroot = 'deal';
       commandoverlay.textContent = "[potion] to [subject]";
       console.log(commandoverlay.textContent);
+    } else if (command == 'help' || command == 'handbook') {
+      commandroot = 'help';
+      commandoverlay.textContent = '[chapter or chapter name]'
+      help();
     } else { createError() }
   } else if (window.screen == 'brewshop') {
-    if (command == 'help') {
-      createResponse("help, inventory, mix, brew, clear")
-    } else if (command == 'mix') {
+    if (command == 'mix') {
       mixing = true;
       commandroot = "mix";
       commandoverlay.textContent = "[first element] [second element]";
@@ -333,6 +344,10 @@ function processOne(command) {
       commandroot = 'deal';
       commandoverlay.textContent = "[potion] to [subject]";
       console.log(commandoverlay.textContent);
+    } else if (command == 'help' || command == 'handbook') {
+      commandroot = 'help';
+      commandoverlay.textContent = '[chapter or chapter name]'
+      help();
     } else { createError() }
   }
 }

@@ -59,17 +59,21 @@ function menu(menu) {
   commandroot = "";
   commandoverlay.textContent = "";
   document.getElementById('prompt').textContent = commandroot + ">";
+  document.getElementById('handbookbutton').style.display = 'none';
 
+  var menus = document.getElementsByClassName('menu');
+  for (var i=0; i<menus.length; i++) {document.getElementsByClassName('menu')[i].style.display = 'none'}
   document.getElementById(menu).style.display = "block";
-  if (menu=='gardenarea') {
-    document.getElementById('brewshop').style.display = "none";
-    document.getElementById('gardenbutton').style.background = "var(--highlight-color)";
-    document.getElementById('brewshopbutton').style.background = "none";
-  } else {
-    document.getElementById('gardenarea').style.display = "none";
-    document.getElementById('gardenbutton').style.background = "none";
-    document.getElementById('brewshopbutton').style.background = "var(--highlight-color)";
+  var menubuttons = document.getElementsByClassName('menubutton');
+  for (var i=0; i<menubuttons.length; i++) {document.getElementsByClassName('menubutton')[i].style.background = 'none'}
+  document.getElementById(menu+'button').style.background = 'var(--highlight-color)';
+  document.getElementById(menu+'button').style.display = 'block';
+
+  if (menu == 'handbook') {
+    commandoverlay.textContent = '[chapter or chapter name]';
+    commandroot = 'help';
   }
+
   window.screen = menu;
 }
 
@@ -118,6 +122,13 @@ function checkKey(e, textarea) {
     s.value = s.value.trim();
     if (s != "" && document.getElementById('helpline')) {
       document.getElementById('helpline').parentNode.removeChild(document.getElementById('helpline'));
+    }
+
+    if (document.querySelector('.handbook') !== null) {
+      var elements = document.getElementsByClassName('handbook');
+      while(elements.length > 0){
+          elements[0].parentNode.removeChild(elements[0]);
+      }
     }
 
     if (s.value != "") {
@@ -748,4 +759,20 @@ function deal(potion, subject, subject_status) {
     if (inventory[potion].stock <= 0) { delete inventory[potion] }
   } else if (!ingredients) { createResponse("no such potion") }
   else if (!subject_exists) { createResponse("no such subject") }
+}
+
+////////////////////////////////////////////
+// THE POTIONMASTER'S HANDBOOK /////////////
+////////////////////////////////////////////
+function help(command) {
+  document.getElementById('handbookbutton').style.display = 'block';
+  var handbook = document.getElementById('handbook');
+
+  if (command=='i' || command=='plant') {
+    handbook.innerHTML = "I. plant</br /></br />:)"
+  } else {
+    handbook.innerHTML = "The Potionmaster's Handbook [1st Edition]<br />W. E. Potio<br /><br />dedicated to my apprentice<br /><br />I.&nbsp;&nbsp; plant<br />II.&nbsp; harvest<br />III. mix<br />IV.&nbsp; brew<br />V.&nbsp;&nbsp; deal<br />VI.&nbsp; miscellaneous commands<br /><br />VII. Intro to Theoretical Alchemy"
+  }
+
+  menu('handbook');
 }
