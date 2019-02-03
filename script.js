@@ -73,6 +73,9 @@ function menu(menu) {
     commandoverlay.textContent = '[chapter]';
     commandroot = 'help';
   }
+  if (menu == 'brewshop') {
+    document.getElementById('brewshopbutton').style.fontStyle = 'normal';
+  }
 
   window.screen = menu;
 }
@@ -193,12 +196,15 @@ function createInventoryResponse(obj) {
 ////////////////////////////////////////////
 // PLANTING & GROWING //////////////////////
 ////////////////////////////////////////////
-inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:0, uranus:0, neptune:0};
-inventory['venus sprout'] = 2;
-inventory['mercury sprout'] = 2;
+inventory = {mercury:6, venus:1, earth:0, mars:1, jupiter:0, saturn:1, uranus:1, neptune:0};
 plots = [[], [], []];
 
-var timer = setInterval(updatePlots, 3000);
+var timer = setInterval(update, 3000);
+
+function update() {
+  updatePlots();
+  updateStory();
+}
 
 function updatePlots() {
   var fullplots = [];
@@ -438,6 +444,7 @@ element_properties = {
 };
 var potionbeingnamed = "";
 var ingredients = false;
+potionsmade = 0;
 
 mixing = false;
 
@@ -501,6 +508,7 @@ function brew(n1, a, a_status, n2, b, b_status) {
       inventory[potion].state = potionstate;
       inventory[potion].repulsion = potionrepulsion;
       inventory[potion].recipe = potionrecipe;
+      inventory[potion].attr = 0;
       inventory[potion].stock = 1;
 
       s.value = "";
@@ -596,6 +604,7 @@ function mix(n1, a, a_status, n2, b, b_status) {
       inventory[potion].state = potionstate;
       inventory[potion].repulsion = potionrepulsion;
       inventory[potion].recipe = potionrecipe;
+      inventory[potion].attr = 0;
       inventory[potion].stock = 1;
 
       s.value = "";
@@ -646,29 +655,34 @@ selfstate = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 function react(subject, potion) { //deal
   console.log(inventory[potion]);
 
+  potionsmade++;
+
   if (subject == 'self') { inventory[potion].state = inventory[potion].state.concat(selfstate) }
 
   //if state does not contain arrays:
   if (Object.prototype.toString.call(inventory[potion].state[0]) != '[object Array]') {
     var effectstate = statemode(inventory[potion].state);
     var effectrepulsion = average(inventory[potion].repulsion);
-    playeffect(subject, effectstate, effectrepulsion);
+    playeffect(subject, potion, effectstate, effectrepulsion);
   } else {
     for (i=0; i<inventory[potion].state.length; i++) { //stacked effects
       var effectstate = statemode(inventory[potion].state[i]);
       var effectrepulsion = average(inventory[potion].repulsion[i]);
-      playeffect(subject, effectstate, effectrepulsion);
+      playeffect(subject, potion, effectstate, effectrepulsion);
     }
   }
 }
-function playeffect(subject, state, repulsion) {
+function playeffect(subject, potion, state, repulsion) {
   if (state == -1) {
     if (subject == 'load') { createResponse('the potion turns back into its original ingredients') }
     else if (subject == 'self') { createResponse("a strange feeling passes over you. it almost feels as if you're growing younger ????") }
     else if (typeof element_properties[subject] != "undefined") { effect_reverseGrowth(subject) }
   } else if (state == 1) {
-    if (repulsion > 0) { effect_repel(subject, repulsion) }
-    else if (repulsion < 0) { effect_attract(subject, repulsion) }
+    if (subject == 'load') { inventory[potion].attribute += repulsion; var attribute = inventory[potion.attribute] }
+    else if (typeof element_properties[subject] != "undefined") { var attribute = repulsion }
+    else if (subject == 'self') { var attribute = repulsion }
+    if (repulsion != 0) { effect_repel(subject, potion) }
+    else {createResponse('nothing happened.')}
   } else {createResponse('nothing happened.')}
 }
 function effect_reverseGrowth(plant) {
@@ -685,51 +699,64 @@ function effect_reverseGrowth(plant) {
     createResponse('the '+plotwithplant[0]+' '+plotwithplant[1]+' starts ungrowing.')
   } else { createError() }
 }
-function effect_repel(subject, repulsion) {
+function effect_repel(subject, potion) {
   if (subject == 'load') {
-    if (repulsion >= 9) { //explosion
+    var attribute = inventory[potion].attribute;
+    if (attribute >= 9) { //explosion
       createResponse("the potion explodes!");
       //TODO: get response from people in brewshop
-      createResponse("it dissipates into your workshop...")
-    } else {
-      createResponse("the potion turns gassy.");
+      createResponse("it dissipates into your workshop...");
+      delete inventory[potion]
+    } else if (attribute >= 5) {
+      createResponse("the potion is gassy.");
       createResponse("it swirls around in the vial...")
+    } else if (attribute > 0) {
+      createResponse("the potion is a light, airy liquid.")
+    } else if (attribute == 0) {
+      createResponse("the potion is watery.");
+    } else if (attribute < 0) {
+      createResponse("the potion is a viscous liquid.");
+    } else if (attribute <= -5) {
+      createResponse("the potion turns solid.");
+      createResponse("its texture is glossy and translucent.") //TODO: change depending on origin?
+    } else if (attribute <= -9) {
+      createResponse("the potion implodes, sucked into nonexistence.");
+      //TODO: get response from people in brewshop
+      createResponse("it's gone.");
+      delete inventory[potion]
     }
-  } else if (subject == 'self') {
-    createResponse("this potion could kill a man.");
-    createResponse("being immune, you only feel numb.");
-  } else if (typeof element_properties[subject] != "undefined") {
+  }
+
+  else if (subject == 'self') {
+    var attribute = inventory[potion].repulsion;
+    if (attribute >= 5) {
+      createResponse("this potion could kill a man.");
+      createResponse("being immune, you only feel numb.");
+    } else if (attribute <= -5) {
+      createResponse("this potion could kill a man.");
+      createResponse("being immune, you just feel strong."); //TODO: strong!
+    } else { createResponse("you don't feel anything.") }
+  }
+
+  else if (typeof element_properties[subject] != "undefined") {
+    var repulsion = inventory[potion].repulsion;
     for (var i=0; i<plots.length; i++) {
       if (plots[i][0] == subject) {
-        if (repulsion >= 9) { createResponse("your "+subject+" "+plots[i][1]+" bursts and disappears."); }
-        else {
+        if (repulsion >= 9) {
+          createResponse("your "+subject+" "+plots[i][1]+" bursts and disappears.");
+          plots[i] = []
+        }
+        else if (repulsion > 0) {
           createResponse("your "+subject+" "+plots[i][1]+" melts a bit.");
           if (plots[i][2] >= 10) { plots[i][2] -= 10; }
           else { plots[i][2] = 0; }
         }
-        break
-      }
-    }
-  }
-}
-function effect_attract(subject, repulsion) {
-  if (subject == 'load') {
-    if (repulsion <= -9) { //explosion
-      createResponse("the potion implodes, sucked into nonexistence.");
-      //TODO: get response from people in brewshop
-      createResponse("it's gone.")
-    } else {
-      createResponse("the potion turns solid.");
-      createResponse("its texture is glossy and translucent.") //TODO: change depending on origin?
-    }
-  } else if (subject == 'self') {
-    createResponse("this potion could kill a man.");
-    createResponse("being immune, you just feel strong."); //TODO: strong!
-  } else if (typeof element_properties[subject] != "undefined") {
-    for (var i=0; i<plots.length; i++) {
-      if (plots[i][0] == subject) {
-        if (repulsion <= -9) { createResponse("your "+subject+" "+plots[i][1]+" shrivels up and disappears."); } //extreme outcome
-        else { createResponse("your "+subject+" "+plots[i][1]+" stands rigid."); }
+        else if (repulsion == 0) { createResponse('nothing happened.') }
+        else if (repulsion < 0) { createResponse("your "+subject+" "+plots[i][1]+" stands rigid.") }
+        else if (repulsion <= -9) {
+          createResponse("your "+subject+" "+plots[i][1]+" shrivels up and disappears.")
+          plots[i] = []
+        }
         break
       }
     }
@@ -768,23 +795,69 @@ function help(command) {
   document.getElementById('handbookbutton').style.display = 'block';
   var handbook = document.getElementById('handbook');
 
-  if (command=='i' || command=="1") {
-    handbook.innerHTML = "I. plant</br />Places a plant from your inventory into a plot to grow.</br /></br />USAGE: plant [number] [plant]<br />TIP: If you're only planting one, there's no need to type the number.<br /><br />EXAMPLES:<br />plant mercury ....  <i>places 1 mercury in a plot</i><br />plant 2 mercury .. <i>places 2 mercury in a plot</i>"
-  } else if (command == 'ii' || command=="2") {
-    handbook.innerHTML = "I. plant</br /></br />:)"
-  } else if (command == 'iii' || command=="3") {
-    handbook.innerHTML = "I. plant</br /></br />:)"
-  } else if (command == 'iv' || command=="4") {
-    handbook.innerHTML = "I. plant</br /></br />:)"
-  } else if (command == 'v' || command=="5") {
-    handbook.innerHTML = "I. plant</br /></br />:)"
-  } else if (command == 'vi' || command=="6") {
-    handbook.innerHTML = "I. plant</br /></br />:)"
-  } else if (command == 'vii' || command=="7") {
-    handbook.innerHTML = "I. plant</br /></br />:)"
+  if (command=='i' || command=="1" || command=='plant') {
+    handbook.innerHTML = "I. plant</br />Places a plant from your inventory into a plot to grow.</br /></br />USAGE: plant [number] [plant]<br />TIP: If you're only planting one, there's no need to type the number.<br /><br />EXAMPLES:<br />plant mercury .............. <i>places 1 mercury in a plot</i><br />plant 2 mercury ............ <i>places 2 mercury in a plot</i>"
+  } else if (command == 'ii' || command=="2" || command=='harvest') {
+    handbook.innerHTML = "II. harvest</br /></br />Takes a plant from a plot and adds a grown plant into your inventory.<br /><br />USAGE: harvest [number] [plant] [status]<br />A plant's status determines the its effectiveness.<br />TIP: If you harvest a plant when it's blooming, you can harvest its seeds as well.<br /><br />EXAMPLES:<br />harvest mercury sprout<br /><i>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp .. places 1 mercury sprout in your inventory</i><br />harvest mercury blooming<br /><i>places 1 mercury & 1 mercury blooming in your inventory</i>"
+  } else if (command == 'iii' || command=="3" || command=='mix') {
+    handbook.innerHTML = "III. mix</br /></br />Combines two elements (harvested plants / potions) and creates a new potion.<br /><br />USAGE: mix [first element] [second element]<br />TIP: If you're mixing more than one of any element, you can add a number before it.<br /><br />EXAMPLES:<br />mix mercury sprout venus sprout<br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp .... <i>mixes 1 mercury sprout + 1 venus sprout</i><br />mix 2 mercury sprout venus bloom<br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp .... <i>mixes 2 mercury sprout + 1 venus sprout</i>"
+  } else if (command == 'iv' || command=="4" || command=='brew') {
+    handbook.innerHTML = "IV. brew</br /></br />Combines elements thoroughly and creates a new potion.<br /><br />USAGE: brew [first element] [optional second element]<br /><br />EXAMPLES:<br />brew mercury sprout .............. <i>brews mercury sprout</i><br />brew mercury sprout venus sprout<br /> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp.... <i>brews 1 mercury sprout + 1 venus sprout</i>"
+  } else if (command == 'v' || command=="5" || command=='deal') {
+    handbook.innerHTML = "V. deal</br /></br />Tests or gives a potion. Can be done on all things living.<br /><br />USAGE: deal [potion] to [subject]<br /><br />EXAMPLES:<br />deal death_potion to bob<br /> ................... <i>kills bob.</i><br />deal growth_potion to mercury sprout<br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp .............................. <i>take a guess.</i>"
+  } else if (command == 'vi' || command=="6" || command=='miscellaneous' || command=='misc') {
+    handbook.innerHTML = "VI. miscellaneous commands</br /></br />Commands you don't need but can be of use.<br /><br />inv/inventory<br />plots<br />garden/brewshop<br />dark/light<br />clear"
+  } else if (command == 'vii' || command=="7" || command=='a' || command=='letter') {
+    handbook.innerHTML = "VII. a letter</br />To be frank, only wrote this book because I feel bad for dying on you. No apprentice of mine should need something like this. That's on me, of course.<br /><br />Santerosia Valley might not be the best place to go. (Don't let yourself get caught up in those old legends, I didn't spend half a year teaching some fairy tale zealot.) But I suppose you'll learn a lot. The city isn't for potionmasters like us anyway. Nobody has any respect for the science.<br /><br />I only wish I could see you brew your first potion."
   } else {
-    handbook.innerHTML = "The Potionmaster's Handbook [1st Edition]<br />W. E. Potio<br /><br />dedicated to my apprentice<br /><br />I.&nbsp;&nbsp; plant<br />II.&nbsp; harvest<br />III. mix<br />IV.&nbsp; brew<br />V.&nbsp;&nbsp; deal<br />VI.&nbsp; (miscellaneous commands)<br /><br />VII. Intro to Theoretical Alchemy"
+    handbook.innerHTML = "The Potionmaster's Handbook [1st Edition]<br />W. E. Potio<br /><br />dedicated to my apprentice<br /><br />I.&nbsp;&nbsp; plant<br />II.&nbsp; harvest<br />III. mix<br />IV.&nbsp; brew<br />V.&nbsp;&nbsp; deal<br />VI.&nbsp; (miscellaneous commands)<br /><br />VII. a letter"
   }
 
   menu('handbook');
+}
+
+////////////////////////////////////////////
+// NPC!!!!! ////////////////////////////////
+////////////////////////////////////////////
+
+npcs_met = [];
+bob = [1, 'Well howdy there, friend.', "Been some time since I seen a new face 'round these parts.", "I see you've got some sorta brewshop open.", "Well, best of business to you, potionmaster. I'll be seein' you around. I climb that big ol mountain, y'see. I come around often.", 0, "Maybe I'll need one of yer potions someday."]
+me = [1, 'hey, thanks for trying out this prototype :D', "if you've got any feedback so far i'd love to hear it"]
+function updateStory() {
+  if (potionsmade >= 1) { //bob's first appearance
+    if (!npcs_met.includes('bob')) { npcs_met.push('bob'); createDialogue('bob', bob[1]) }
+  }
+
+  if (npcs_met.includes('bob')) {
+    if (bob[0]<bob.length-1) {
+      bob[0]++; //bob turn
+      createDialogue('bob', bob[bob[0]])
+    } else if (bob[0]==bob.length-1) { npcs_met.push('me') }
+  } else if (npcs_met.includes('me')) {
+    if (me[0]<me.length-1) {
+      me[0]++;
+      createDialogue(0, me[me[0]]);
+    }
+  }
+}
+
+function createDialogue(char, dialogue) {
+  if (dialogue != 0) {
+    output = document.createElement('div');
+
+    if (char == 'bob') {
+      output.style.color = "#8c5d17";
+    } else { console.log('not an existing character') }
+
+    output.style.width = "400px";
+    output.style.paddingBottom = "var(--margin-size)";
+    output.innerHTML = dialogue;
+    document.getElementById('dialogue').appendChild(output);
+    output.className = "o_brewshop";
+
+    if (window.screen != 'brewshop') {
+      //TODO: audio cue
+      document.getElementById('brewshopbutton').style.fontStyle = 'italic';
+    }
+  }
 }

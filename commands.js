@@ -47,6 +47,8 @@ function respond(s) {
       processTwo(ss[0], ss[1]);
     } else if (gardencommands.indexOf(ss[0]) != -1 && ss.length == 1) {
       processOne(ss[0]);
+    } else if (brewshopcommands.indexOf(ss[0]) != -1) {
+      createResponse('error: that command can only be used in the brewshop.')
     }
 
     else if (commandroot == "plant") {
@@ -110,6 +112,8 @@ function respond(s) {
       processTwo(ss[0], ss[1]);
     } else if (brewshopcommands.indexOf(ss[0]) != -1 && ss.length == 1) {
       processOne(ss[0]);
+    } else if (gardencommands.indexOf(ss[0]) != -1) {
+      createResponse('error: that command can only be used in the garden.')
     }
 
     else if (commandroot == 'mix') {
