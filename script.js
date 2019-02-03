@@ -804,7 +804,7 @@ function help(command) {
   } else if (command == 'iv' || command=="4" || command=='brew') {
     handbook.innerHTML = "IV. brew</br /></br />Combines elements thoroughly and creates a new potion.<br /><br />USAGE: brew [first element] [optional second element]<br /><br />EXAMPLES:<br />brew mercury sprout .............. <i>brews mercury sprout</i><br />brew mercury sprout venus sprout<br /> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp.... <i>brews 1 mercury sprout + 1 venus sprout</i>"
   } else if (command == 'v' || command=="5" || command=='deal') {
-    handbook.innerHTML = "V. deal</br /></br />Tests or gives a potion. Can be done on all things living.<br /><br />USAGE: deal [potion] to [subject]<br /><br />EXAMPLES:<br />deal death_potion to bob<br /> ................... <i>kills bob.</i><br />deal growth_potion to mercury sprout<br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp .............................. <i>take a guess.</i>"
+    handbook.innerHTML = "V. deal</br /></br />Tests or gives a potion. Can be done on all things living.<br /><br />USAGE: deal [potion] to [subject]<br /><br />EXAMPLES:<br />deal death_potion to bob................... <i>kills bob.</i><br />deal growth_potion to mercury sprout<br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp .............................. <i>take a guess.</i>"
   } else if (command == 'vi' || command=="6" || command=='miscellaneous' || command=='misc') {
     handbook.innerHTML = "VI. miscellaneous commands</br /></br />Commands you don't need but can be of use.<br /><br />inv/inventory<br />plots<br />garden/brewshop<br />dark/light<br />clear"
   } else if (command == 'vii' || command=="7" || command=='a' || command=='letter') {
