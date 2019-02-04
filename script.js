@@ -81,8 +81,6 @@ function menu(menu) {
 }
 
 s = document.getElementById('command');
-type = {};
-type = {a: 'sound/a.wav', b: 'sound/b.wav', c: 'sound/c.wav', d: 'sound/d.wav', e: 'sound/e.wav', f: 'sound/f.wav', g: 'sound/g.wav', h: 'sound/h.wav', i: 'sound/i.wav', j: 'sound/j.wav', k: 'sound/k.wav', l: 'sound/l.wav', m: 'sound/m.wav', n: 'sound/n.wav', o: 'sound/o.wav', p: 'sound/p.wav', q: 'sound/q.wav', r: 'sound/r.wav', s: 'sound/s.wav', t: 'sound/t.wav', u: 'sound/u.wav', v: 'sound/v.wav', w: 'sound/w.wav', x: 'sound/x.wav', y: 'sound/y.wav', z: 'sound/z.wav'};
 commandHistory = [];
 function rememberCommand(string) {
   if (string != commandHistory[commandHistory.length-1]) {
@@ -115,13 +113,6 @@ function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
   if (key >= 48 && key <= 90 || key >= 96 && key <= 105) {
     commandoverlay.textContent = "";
-  }
-
-  //if ((key >= 65 && key <= 90) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key >= 186 && key <= 192) || (key >= 219 && key <= 222) || key == 8 || key == 13 || key == 32) {
-  if (key >= 65 && key <= 90) { var typesound = new Audio(type[e.key]); typesound.play() }
-  else if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key >= 186 && key <= 192) || (key >= 219 && key <= 222) || key == 8 || key == 13 || key == 32) {
-    var typesound = new Audio(type[Object.keys(type)[Math.floor(Math.random()*Object.keys(type).length)]]);
-    typesound.play()
   }
 
   if (key == 13) { //hit enter key
