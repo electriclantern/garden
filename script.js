@@ -822,8 +822,8 @@ function help(command) {
 ////////////////////////////////////////////
 
 npcs_met = [];
-bob = [1, 'Well howdy there, friend.', "Been some time since I seen a new face 'round these parts.", "I see you've got some sorta brewshop open.", "Well, best of business to you, potionmaster. I'll be seein' you around. I climb that big ol mountain, y'see. I come around often.", 0, "Maybe I'll need one of yer potions someday."]
-me = [1, 'hey, thanks for trying out this prototype :D', "if you've got any feedback so far i'd love to hear it"]
+bob = [0, 'Well howdy there, friend.', "Been some time since I seen a new face 'round these parts.", "I see you've got some sorta brewshop open.", "Well, best of business to you, potionmaster. I'll be seein' you around. I climb that big ol mountain, y'see. I come around often.", 0, "Maybe I'll need one of yer potions someday."]
+me = [0, 'hey, thanks for trying out this prototype :D', "if you've got any feedback so far i'd love to hear it"]
 function updateStory() {
   if (potionsmade >= 1) { //bob's first appearance
     if (!npcs_met.includes('bob')) { npcs_met.push('bob') }
