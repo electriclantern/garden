@@ -306,7 +306,7 @@ function processTwo(command, a) {
     else if (command == 'help' || command == 'handbook') {help(a)}
     else { createError() }
   } else if (window.screen == 'brewshop') {
-    if (command == 'brew') { mixing = false; brew(1, a, 'potion', 1, 'self', 'self') }
+    if (command == 'brew') { mixing = false; brew(1, a, 'potion', 1, 'water', 'potion') }
     else if (command == 'help' || command == 'handbook') {help(a)}
     else { createError() }
   } else if (window.screen == 'handbook') {

@@ -81,6 +81,8 @@ function menu(menu) {
 }
 
 s = document.getElementById('command');
+type = {};
+type = {a: 'sound/a.wav', b: 'sound/b.wav', c: 'sound/c.wav', d: 'sound/d.wav', e: 'sound/e.wav', f: 'sound/f.wav', g: 'sound/g.wav', h: 'sound/h.wav', i: 'sound/i.wav', j: 'sound/j.wav', k: 'sound/k.wav', l: 'sound/l.wav', m: 'sound/m.wav', n: 'sound/n.wav', o: 'sound/o.wav', p: 'sound/p.wav', q: 'sound/q.wav', r: 'sound/r.wav', s: 'sound/s.wav', t: 'sound/t.wav', u: 'sound/u.wav', v: 'sound/v.wav', w: 'sound/w.wav', x: 'sound/x.wav', y: 'sound/y.wav', z: 'sound/z.wav'};
 commandHistory = [];
 function rememberCommand(string) {
   if (string != commandHistory[commandHistory.length-1]) {
@@ -113,6 +115,11 @@ function checkKey(e, textarea) {
   key = (e.keyCode ? e.keyCode : e.which);
   if (key >= 48 && key <= 90 || key >= 96 && key <= 105) {
     commandoverlay.textContent = "";
+  }
+
+  if ((key >= 65 && key <= 90) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key >= 186 && key <= 192) || (key >= 219 && key <= 222) || key == 8 || key == 13 || key == 32) {
+    var typesound = new Audio(type[Object.keys(type)[Math.floor(Math.random()*Object.keys(type).length)]]);
+    typesound.play();
   }
 
   if (key == 13) { //hit enter key
@@ -677,7 +684,6 @@ function playeffect(subject, potion, state, repulsion) {
     else if (typeof element_properties[subject] != "undefined") { var attribute = repulsion }
     else if (subject == 'self') { var attribute = repulsion }
     if (repulsion != 0) { effect_repel(subject, potion) }
-    else {createResponse('nothing happened.')}
   } else {createResponse('nothing happened.')}
 }
 function effect_reverseGrowth(plant) {
@@ -820,7 +826,7 @@ bob = [1, 'Well howdy there, friend.', "Been some time since I seen a new face '
 me = [1, 'hey, thanks for trying out this prototype :D', "if you've got any feedback so far i'd love to hear it"]
 function updateStory() {
   if (potionsmade >= 1) { //bob's first appearance
-    if (!npcs_met.includes('bob')) { npcs_met.push('bob'); createDialogue('bob', bob[1]) }
+    if (!npcs_met.includes('bob')) { npcs_met.push('bob') }
   }
 
   if (npcs_met.includes('bob')) {
