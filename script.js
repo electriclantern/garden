@@ -675,16 +675,21 @@ function react(subject, potion) { //deal
   }
 }
 function playeffect(subject, potion, state, repulsion) {
-  if (state == -1) {
-    if (subject == 'load') { createResponse('the potion turns back into its original ingredients') }
-    else if (subject == 'self') { createResponse("a strange feeling passes over you. it almost feels as if you're growing younger ????") }
-    else if (typeof element_properties[subject] != "undefined") { effect_reverseGrowth(subject) }
-  } else if (state == 1) {
-    if (subject == 'load') { inventory[potion].attribute += repulsion; var attribute = inventory[potion.attribute] }
-    else if (typeof element_properties[subject] != "undefined") { var attribute = repulsion }
-    else if (subject == 'self') { var attribute = repulsion }
-    if (repulsion != 0) { effect_repel(subject, potion) }
-  } else {createResponse('nothing happened.')}
+  if (subject == 'load' || subject == 'self' || npcs_met.includes(subject) || typeof element_properties[subject] != "undefined") {
+    if (state == -1) {
+      if (subject == 'load') { createResponse('the potion turns back into its original ingredients'); //TODO
+    }
+      else if (subject == 'self') { createResponse("a strange feeling passes over you. it almost feels as if you're growing younger ????") }
+      else if (subject == 'bob') { createDialogue("This for me? Sorry, man, but I don't tend to drink potions I don't know.") }
+      else if (typeof element_properties[subject] != "undefined") { effect_reverseGrowth(subject) }
+    } else if (state == 1) {
+      if (subject == 'load') { inventory[potion].attribute += repulsion; var attribute = inventory[potion.attribute] }
+      else if (typeof element_properties[subject] != "undefined") { var attribute = repulsion }
+      else if (subject == 'self') { var attribute = repulsion }
+      else if (subject == 'bob') { createDialogue("This for me? Sorry, man, but I don't tend to drink potions I don't know.") }
+      if (repulsion != 0) { effect_repel(subject, potion) }
+    } else {createResponse('nothing happened.')}
+  } else { createResponse('to who?') }
 }
 function effect_reverseGrowth(plant) {
   //find first plot with plant
@@ -822,7 +827,7 @@ function help(command) {
 ////////////////////////////////////////////
 
 npcs_met = [];
-bob = [0, 'Well howdy there, friend.', "Been some time since I seen a new face 'round these parts.", "I see you've got some sorta brewshop open.", "Well, best of business to you, potionmaster. I'll be seein' you around. I climb that big ol mountain, y'see. I come around often.", 0, "Maybe I'll need one of yer potions someday."]
+bob = [0, 0, 'Well howdy there, friend.', "Been some time since I seen a new face 'round these parts.", "I see you've got some sorta brewshop open.", "Well, best of business to you, potionmaster. I'll be seein' you around. I climb that big ol mountain, y'see. I come around often.", 0, "Maybe I'll need one of yer potions someday."]
 me = [0, 'hey, thanks for trying out this prototype :D', "if you've got any feedback so far i'd love to hear it"]
 function updateStory() {
   if (potionsmade >= 1) { //bob's first appearance
@@ -833,7 +838,7 @@ function updateStory() {
     if (bob[0]<bob.length-1) {
       bob[0]++; //bob turn
       createDialogue('bob', bob[bob[0]])
-    } else if (bob[0]==bob.length-1) { npcs_met.push('me') }
+    } else if (bob[0]>=bob.length-1) { npcs_met.push('me') }
   } else if (npcs_met.includes('me')) {
     if (me[0]<me.length-1) {
       me[0]++;
