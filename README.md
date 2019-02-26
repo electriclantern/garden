@@ -1,6 +1,8 @@
 # [garden](https://electriclantern.github.io/garden/)
 
-> as an aspiring potionmaster, you've set up shop in Santerosia Valley. it's a quiet place, but those in need of potions often come this way.
+> your mother, a famous potionmaster, passed away as she was developing a cure for her ailment. 
+
+> you enter her brewshop. the place is barren. most of her things are gone.
 
 > invent potions, trade with the townspeople and travelers, and explore the old mystery behind Mt. Santerosia.
 
