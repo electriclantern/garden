@@ -64,10 +64,6 @@ body {
 .menu { width: inherit; height: 450px }
 #potions {
   width: inherit;
-  height: calc(60% - var(--margin-size));
-  height: -moz-calc(60% - var(--margin-size));
-  height: -webkit-calc(60% - var(--margin-size));
-  height: -o-calc(60% - var(--margin-size));
   overflow: scroll;
   margin-right: -50px; padding-right: 50px;
 }
