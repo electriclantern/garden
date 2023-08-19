@@ -12,6 +12,4 @@ my goal is to make something meditative and relaxing, and interesting to mess ar
 
 ![alt text](https://i.ibb.co/2ZHq2Gj/asdfasdf.png)
 
-[itch.io demo](https://electriclantern.itch.io/garden)
-
 [tigsource devlog](https://forums.tigsource.com/index.php?topic=66669.msg1398518#msg1398518)
